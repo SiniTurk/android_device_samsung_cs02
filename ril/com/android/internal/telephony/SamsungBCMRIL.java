@@ -40,13 +40,13 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
 
     private static int sEnabledDataSimId = -1;
 
-    public SamsungBCMRIL(Context context, int networkMode, int cdmaSubscription) {
-        this(context, networkMode, cdmaSubscription, null);
+    public SamsungBCMRIL(Context context, int preferredNetworkType, int cdmaSubscription) {
+        this(context, preferredNetworkType, cdmaSubscription, null);
     }
 
-    public SamsungBCMRIL(Context context, int networkMode,
+    public SamsungBCMRIL(Context context, int preferredNetworkType,
             int cdmaSubscription, Integer instanceId) {
-        super(context, networkMode, cdmaSubscription, instanceId);
+        super(context, preferredNetworkType, cdmaSubscription, instanceId);
         mQANElements = 6;
     }
 
