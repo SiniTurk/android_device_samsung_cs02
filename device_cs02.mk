@@ -36,16 +36,11 @@ PRODUCT_COPY_FILES += \
 	device/samsung/cs02/keylayouts/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 	device/samsung/cs02/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
 
-# Copy Apps
-# 	device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
-#PRODUCT_COPY_FILES += \
-#	device/samsung/cs02/apk/Effem.apk:system/app/Effem.apk
-
 # Insecure ADBD
 # (ro.adb.secure=3)
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
-	persist.service.adb.enable=0
+	persist.service.adb.enable=1
 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -71,6 +66,7 @@ PRODUCT_PACKAGES += \
 	audio.r_submix.default \
 	libaudio-resampler \
 	audio_policy.hawaii \
+	libnetcmdiface \
 	audio.primary.default
 
 # Device-specific packages
@@ -78,20 +74,40 @@ PRODUCT_PACKAGES += \
 	SamsungServiceMode \
 	Torch
 
-# Charger
-#PRODUCT_PACKAGES += \
-#	charger \
-#	charger_res_images
+# NFC packages
+PRODUCT_PACKAGES += \
+    libnfc-nci \
+    libnfc_nci_jni \
+    nfc.nci.hawaii \
+    NfcNci \
+    Tag \
+    com.android.nfc_extras
+
+# NFCEE access control
+NFCEE_ACCESS_PATH := device/samsung/vivaltonfc3g/nfc/nfcee_access.xml
+
+# NFC access control + feature files + configuration
+PRODUCT_COPY_FILES += \
+    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
+    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
+    device/samsung/vivaltonfc3g/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
+    device/samsung/vivaltonfc3g/nfc/libnfc-brcm-20795a10.conf:system/etc/libnfc-brcm-20795a10.conf \
+    device/samsung/vivaltonfc3g/nfc/libnfc-sec.conf:system/etc/libnfc-sec.conf
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+	frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \	
 	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
 	frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
 	frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
 	frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
 	frameworks/native/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
 	frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+	frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+	frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
 	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
 	frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
 	frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \

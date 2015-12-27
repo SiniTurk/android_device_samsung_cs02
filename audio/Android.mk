@@ -1,4 +1,4 @@
-ifeq ($(TARGET_DEVICE),logan)
+ifeq ($(TARGET_DEVICE),cs02)
 ifeq ($(TARGET_BOARD_PLATFORM),hawaii)
 
 LOCAL_PATH:= $(call my-dir)
