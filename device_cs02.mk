@@ -12,6 +12,9 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 DEVICE_PACKAGE_OVERLAYS += device/samsung/cs02/overlay
 
+# TWRP.fstab
+PRODUCT_COPY_FILES += device/samsung/cs02/ramdisk/twrp.fstab:recovery/root/etc/twrp.fstab
+
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/cs02/ramdisk/fstab.hawaii_ss_cs02:root/fstab.hawaii_ss_cs02 \
