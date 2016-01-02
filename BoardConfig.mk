@@ -60,10 +60,11 @@ WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nv
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_BAND                   := 802_11_ABG
 
-# Resolution
+# Display
 TARGET_SCREEN_HEIGHT := 800
 TARGET_SCREEN_WIDTH := 480
 DEVICE_RESOLUTION := 480x800
+BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
 # Hardware rendering
 BOARD_EGL_CFG := device/samsung/cs02/configs/egl.cfg
@@ -79,6 +80,7 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC
 BOARD_USE_BGRA_8888 := true
 
 # Audio
+OPENSOURCE_ALSA_AUDIO := true
 BOARD_USES_ALSA_AUDIO := true
 
 # Enable dex-preoptimization to speed up the first boot sequence

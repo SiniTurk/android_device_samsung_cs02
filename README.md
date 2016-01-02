@@ -24,6 +24,7 @@ W.I.P Tree. Almost ready for daily use!
   Thanks to:
   @KadjarT for helping and guiding me!
   @ZIM555 for the original device tree.
+  @SandPox for fixing audio/calls.
   And everyone other who has been working for CyanogenMod and _hawaii_-boards.
 
 ### Patch
