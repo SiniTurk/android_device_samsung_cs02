@@ -6,7 +6,6 @@ W.I.P Tree. Almost ready for daily use!
 ### What does work
   - EGL
   - Wifi
-  - Bluetooth
   - RIL
   - Storages
   - Vibration
@@ -18,7 +17,8 @@ W.I.P Tree. Almost ready for daily use!
 ### What doesn't work
   - Audio outputs
   - Microphone
-  - NFC (not tested/installed)
+  - NFC
+  - Bluetooth (partially)
 
 ### Credits
   Thanks to:
