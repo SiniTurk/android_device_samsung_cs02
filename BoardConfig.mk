@@ -107,6 +107,10 @@ BOARD_HAL_STATIC_LIBRARIES := libhealthd-cs02.hawaii
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/cs02/ril/
 
+# FM
+BOARD_HAVE_FM_RADIO := true
+BOARD_FM_DEVICE := bcm4329
+
 # Recovery
 #TARGET_RECOVERY_INITRC := 
 TARGET_RECOVERY_FSTAB := device/samsung/cs02/ramdisk/fstab.hawaii_ss_cs02
