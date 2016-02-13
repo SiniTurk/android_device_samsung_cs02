@@ -71,7 +71,7 @@ on post-fs-data
  # permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
-	chown bluetooth net_bt_stack /dev/ttyS0
+    chown bluetooth net_bt_stack /dev/ttyS0
     chmod 0600 /dev/ttyS0
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
