@@ -93,9 +93,6 @@ COMMON_GLOBAL_CFLAGS                        += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWA
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK       := true
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS       := true
 
-# Enable WEBGL in WebKit
-ENABLE_WEBGL                                := true
-
 # External apps on SD
 TARGET_EXTERNAL_APPS                        := sdcard1
 
