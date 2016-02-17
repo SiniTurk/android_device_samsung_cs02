@@ -1,0 +1,36 @@
+#
+# KYLEPRO (GT-S7580)
+#
+
+persist.brcm.log=none
+persist.brcm.cp_crash=none
+persist.brcm.ap_crash=none
+
+rild.libpath=/system/lib/libbrcm_ril.so
+#rild.libargs=-d /dev/ttyS0
+ro.sf.lcd_density=240
+ro.lcd_brightness=160
+ro.lcd_min_brightness=10
+
+# MultiTouch support
+ro.product.multi_touch_enabled=true
+ro.product.max_num_touch=2
+
+net.streaming.rtsp.uaprof=http://wap.samsungmobile.com/uaprof/
+
+ro.opengles.version=131072
+debug.hwui.render_dirty_regions=false
+ro.tvout.enable=false
+gralloc.use_sync_mode=true
+
+# Adative video encoding
+video.enc.h264.adaptive_quality=1
+video.enc.h264.timing_window_sz=4
+video.enc.h264.timing_thr0=295
+video.enc.h264.timing_thr1=215
+video.enc.h264.timing_thr2=145
+
+sf.metadata_use_plat_sw_codecs=1
+
+ro.ril.hsxpa=1
+ro.ril.gprsclass=10

@@ -1,0 +1,46 @@
+# For graphic
+/dev/graphics/fb0           0666    system  graphics
+/dev/video0                 0660    system  camera
+/dev/video1                 0660    system  camera
+
+# For Camera
+/dev/bcm_unicam             0660    system  camera
+/dev/bcm_isp                0660    system  camera
+/dev/i2c-0                  0660    system  camera
+/dev/i2c-1                  0660    system  camera
+/dev/i2c-2                  0660    system  camera
+
+# For MM memory
+/dev/ion                    0666    system  graphics
+
+# For V3D
+/dev/pmem                   0660    system  graphics
+
+# For VCE
+/dev/vce                    0660    system  graphics
+
+# For Hawaii
+/dev/mm_v3d                 0666    system  graphics
+/dev/mm_isp                 0660    system  camera
+/dev/bcm_isp                0660    system  camera
+/dev/mm_isp                 0666    system  camera
+/dev/mm_interlock           0666    system  graphics
+/dev/mm_h264                0660    media   media
+/dev/h264_ol                0660    media   media
+
+# For h/w codec
+/dev/brcm_h264              0660    media   media
+
+# Permission for NV partition 
+/dev/block/mmcblk0p1        0770    radio   system
+
+# SYSTEM Status
+/dev/block/mmcblk0p11       0660    system  root 
+
+# For RIL to be able to open Kernel RPC drivers
+/dev/bcm_irpc               0660    radio   radio
+
+# Misc
+/dev/mem                    0660    system  root
+/dev/ttyGS0                 0660    system  system
+/dev/snd/controlC0          0660    system  audio
