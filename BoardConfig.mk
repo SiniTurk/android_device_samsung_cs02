@@ -103,9 +103,6 @@ EXTENDED_FONT_FOOTPRINT                     := true
 BOARD_USES_HWCOMPOSER                       := true
 BOARD_USE_BGRA_8888                         := true
 
-# Audio
-BOARD_USES_ALSA_AUDIO                       := true
-
 # BootAnimation
 TARGET_BOOTANIMATION_PRELOAD                := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE          := true
