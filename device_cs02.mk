@@ -69,8 +69,6 @@ PRODUCT_PACKAGES += \
 	audio.usb.default \
 	audio.r_submix.default \
 	libaudio-resampler \
-        libfmradio \
-        libanalogradiobroadcasting \
 	audio_policy.hawaii \
 	libnetcmdiface \
 	audio.primary.default
@@ -81,28 +79,25 @@ PRODUCT_PACKAGES += \
 	Torch
 
 # NFC packages
-#PRODUCT_PACKAGES += \
-#    libnfc-nci \
-#    libnfc_nci_jni \
-#    nfc.nci.hawaii \
-#    NfcNci \
-#    Tag \
-#    com.android.nfc_extras
+PRODUCT_PACKAGES += \
+    libnfc-nci \
+    libnfc_nci_jni \
+    nfc.nci.hawaii \
+    NfcNci \
+    Tag \
+    com.android.nfc_extras
 
 # NFCEE access control
-#NFCEE_ACCESS_PATH := device/samsung/cs02/nfc/nfcee_access.xml
+NFCEE_ACCESS_PATH := device/samsung/cs02/nfc/nfcee_access.xml
 
 # NFC access control + feature files + configuration
-#PRODUCT_COPY_FILES += \
-#    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
-#    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
-#    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-#    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
-#    device/samsung/cs02/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-#    device/samsung/cs02/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
-
-#	frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-#	frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
+PRODUCT_COPY_FILES += \
+    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
+    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml \
+    device/samsung/cs02/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
+    device/samsung/cs02/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -118,16 +113,14 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
 	frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
 	frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-	frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
-	frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
 	frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
 	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
 	frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
 	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
 	frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml \
-	frameworks/native/data/etc/com.stericsson.hardware.fm.transmitter.xml:system/etc/permissions/com.stericsson.hardware.fm.transmitter.xml \
-	frameworks/native/data/etc/com.stericsson.hardware.fm.receiver.xml:system/etc/permissions/com.stericsson.hardware.fm.receiver.xml
+#	frameworks/native/data/etc/com.stericsson.hardware.fm.transmitter.xml:system/etc/permissions/com.stericsson.hardware.fm.transmitter.xml \
+#	frameworks/native/data/etc/com.stericsson.hardware.fm.receiver.xml:system/etc/permissions/com.stericsson.hardware.fm.receiver.xml
 	
 # Support for Browser's saved page feature. This allows
 # for pages saved on previous versions of the OS to be

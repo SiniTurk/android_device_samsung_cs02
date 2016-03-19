@@ -201,6 +201,17 @@ on boot
     chown system radio /sys/class/sensors/magnetic_sensor/chip_id
     chmod 0660 /sys/class/sensors/magnetic_sensor/selftest
     chmod 0660 /sys/class/sensors/magnetic_sensor/op_mode
+
+# permissions for NFC - BRCM
+    setprop ro.nfc.port "I2C"
+    chmod 0600 /dev/bcm2079x
+    chown nfc nfc /dev/bcm2079x
+    mkdir /data/bcmnfc
+    mkdir /data/bcmnfc/param
+    chmod 0755 /data/bcmnfc
+    chmod 0755 /data/bcmnfc/param
+    chown nfc nfc /data/bcmnfc
+    chown nfc nfc /data/bcmnfc/param
 	
 # required so RIL can open kernel RPC drivers
     chmod 0660 /dev/bcm_rpc
