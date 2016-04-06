@@ -1,10 +1,10 @@
 Samsung Galaxy Core Plus SM-G350 (_cs02_)
 ======================
 
-W.I.P Tree. Almost ready for daily use!
+As stable as possible tree for SM-G350. Ready for daily use!
 
 ### What does work
-  - EGL
+  - EGL (mostly)
   - Audio
   - Wifi
   - RIL
@@ -12,12 +12,13 @@ W.I.P Tree. Almost ready for daily use!
   - Vibration
   - Buttons
   - Earjack
-  - Camera (Partially)
+  - Camera
   - MTP
 
 ### What doesn't work
-  - NFC
-  - Bluetooth (partially)
+  - Some apps can't use certain codecs.
+  - Some apps can't handle OpenGL ES correctly.
+  - Bluetooth audio has some playback problems.
 
 ### Credits
   Thanks to:
@@ -25,6 +26,3 @@ W.I.P Tree. Almost ready for daily use!
   - ZIM555 for the original device tree.
   - SandPox for fixing audio/calls.
   - And everyone other who has been working for CyanogenMod and _hawaii_-boards.
-
-### Patch
-  Open the readme file in .patch folder.
