@@ -1,7 +1,7 @@
 diff -ur a/build/core/tasks/kernel.mk b/build/core/tasks/kernel.mk
---- a/build/core/tasks/kernel.mk	2016-02-15 14:15:26.040779000 +0000
-+++ b/build/core/tasks/kernel.mk	2016-02-15 14:44:40.620779000 +0000
-@@ -202,7 +202,11 @@
+--- a/build/core/tasks/kernel.mk	2016-05-08 03:42:44.688995999 +0000
++++ b/build/core/tasks/kernel.mk	2016-05-08 03:34:25.212995999 +0000
+@@ -230,7 +230,11 @@
      ccache := $(strip $(wildcard $(ccache)))
  endif
  
@@ -15,8 +15,8 @@ diff -ur a/build/core/tasks/kernel.mk b/build/core/tasks/kernel.mk
  
  define mv-modules
 diff -ur a/external/icu/icu4c/source/common/ucnv.c b/external/icu/icu4c/source/common/ucnv.c
---- a/external/icu/icu4c/source/common/ucnv.c	2016-02-15 14:15:34.788779000 +0000
-+++ b/external/icu/icu4c/source/common/ucnv.c	2016-02-15 14:44:40.624779000 +0000
+--- a/external/icu/icu4c/source/common/ucnv.c	2016-05-08 03:43:11.920995999 +0000
++++ b/external/icu/icu4c/source/common/ucnv.c	2016-05-08 03:34:25.212995999 +0000
 @@ -2914,6 +2914,76 @@
              return FALSE;
      }
@@ -95,9 +95,9 @@ diff -ur a/external/icu/icu4c/source/common/ucnv.c b/external/icu/icu4c/source/c
  
  /*
 diff -ur a/external/sepolicy/domain.te b/external/sepolicy/domain.te
---- a/external/sepolicy/domain.te	2016-02-15 14:15:32.456779000 +0000
-+++ b/external/sepolicy/domain.te	2016-02-15 14:44:40.624779000 +0000
-@@ -236,7 +232,7 @@
+--- a/external/sepolicy/domain.te	2016-05-08 03:43:28.956995999 +0000
++++ b/external/sepolicy/domain.te	2016-05-08 03:34:25.216995999 +0000
+@@ -236,7 +236,7 @@
  # init starts in kernel domain and switches to init domain via setcon in
  # the init.rc, so the setenforce occurs while still in kernel. After
  # switching domains, there is never any need to setenforce again by init.
@@ -106,7 +106,7 @@ diff -ur a/external/sepolicy/domain.te b/external/sepolicy/domain.te
  neverallow { domain -kernel } kernel:security setcheckreqprot;
  
  # No booleans in AOSP policy, so no need to ever set them.
-@@ -323,11 +319,7 @@
+@@ -323,11 +323,7 @@
  
  # Restrict context mounts to specific types marked with
  # the contextmount_type attribute.
@@ -120,8 +120,8 @@ diff -ur a/external/sepolicy/domain.te b/external/sepolicy/domain.te
  # Ensure that context mount types are not writable, to ensure that
  # the write to /system restriction above is not bypassed via context=
 diff -ur a/frameworks/av/include/media/stagefright/ColorConverter.h b/frameworks/av/include/media/stagefright/ColorConverter.h
---- a/frameworks/av/include/media/stagefright/ColorConverter.h	2016-02-15 14:14:34.156779000 +0000
-+++ b/frameworks/av/include/media/stagefright/ColorConverter.h	2016-02-15 14:44:40.624779000 +0000
+--- a/frameworks/av/include/media/stagefright/ColorConverter.h	2016-05-08 03:43:37.008995999 +0000
++++ b/frameworks/av/include/media/stagefright/ColorConverter.h	2016-05-08 03:34:25.216995999 +0000
 @@ -67,6 +67,9 @@
      status_t convertCbYCrY(
              const BitmapParams &src, const BitmapParams &dst);
@@ -133,9 +133,9 @@ diff -ur a/frameworks/av/include/media/stagefright/ColorConverter.h b/frameworks
              const BitmapParams &src, const BitmapParams &dst);
  
 diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/libstagefright/ACodec.cpp
---- a/frameworks/av/media/libstagefright/ACodec.cpp	2016-02-15 14:14:34.100779000 +0000
-+++ b/frameworks/av/media/libstagefright/ACodec.cpp	2016-02-15 14:44:40.628779000 +0000
-@@ -777,6 +777,7 @@
+--- a/frameworks/av/media/libstagefright/ACodec.cpp	2016-05-08 03:43:37.076995999 +0000
++++ b/frameworks/av/media/libstagefright/ACodec.cpp	2016-05-08 03:34:25.216995999 +0000
+@@ -778,6 +778,7 @@
  }
  
  status_t ACodec::allocateBuffersOnPort(OMX_U32 portIndex) {
@@ -143,7 +143,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      CHECK(portIndex == kPortIndexInput || portIndex == kPortIndexOutput);
  
      CHECK(mDealer[portIndex] == NULL);
-@@ -784,20 +785,21 @@
+@@ -785,20 +786,21 @@
  
      status_t err;
      if (mNativeWindow != NULL && portIndex == kPortIndexOutput) {
@@ -169,7 +169,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              MetadataBufferType type =
                  portIndex == kPortIndexOutput ? mOutputMetadataType : mInputMetadataType;
              int32_t bufSize = def.nBufferSize;
-@@ -865,9 +867,11 @@
+@@ -866,9 +868,11 @@
                  mBuffers[portIndex].push(info);
              }
          }
@@ -181,7 +181,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          return err;
      }
  
-@@ -875,6 +879,7 @@
+@@ -876,6 +880,7 @@
      notify->setInt32("what", CodecBase::kWhatBuffersAllocated);
  
      notify->setInt32("portIndex", portIndex);
@@ -189,7 +189,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
  
      sp<PortDescription> desc = new PortDescription;
  
-@@ -892,14 +897,17 @@
+@@ -893,14 +898,17 @@
  
  status_t ACodec::setupNativeWindowSizeFormatAndUsage(
          ANativeWindow *nativeWindow /* nonnull */, int *finalUsage /* nonnull */) {
@@ -207,7 +207,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          return err;
      }
  
-@@ -924,6 +932,20 @@
+@@ -925,6 +933,20 @@
      setNativeWindowColorFormat(eNativeColorFormat);
  #endif
  
@@ -226,9 +226,9 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
 +    }
 +
      ALOGV("gralloc usage: %#x(OMX) => %#x(ACodec)", omxUsage, usage);
-     err = setNativeWindowSizeFormatAndUsage(
-             nativeWindow,
-@@ -932,7 +954,7 @@
+     int32_t width = 0, height = 0;
+     int32_t isAdaptivePlayback = 0;
+@@ -947,7 +969,7 @@
  #ifdef USE_SAMSUNG_COLORFORMAT
              eNativeColorFormat,
  #else
@@ -237,7 +237,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
  #endif
              mRotationDegrees,
              usage);
-@@ -961,6 +983,7 @@
+@@ -976,6 +998,7 @@
  status_t ACodec::configureOutputBuffersFromNativeWindow(
          OMX_U32 *bufferCount, OMX_U32 *bufferSize,
          OMX_U32 *minUndequeuedBuffers) {
@@ -245,7 +245,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      OMX_PARAM_PORTDEFINITIONTYPE def;
      InitOMXParams(&def);
      def.nPortIndex = kPortIndexOutput;
-@@ -972,6 +995,7 @@
+@@ -987,6 +1010,7 @@
          err = setupNativeWindowSizeFormatAndUsage(mNativeWindow.get(), &mNativeWindowUsageBits);
      }
      if (err != OK) {
@@ -253,7 +253,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          mNativeWindowUsageBits = 0;
          return err;
      }
-@@ -1694,8 +1718,10 @@
+@@ -1709,8 +1733,10 @@
  
  status_t ACodec::configureCodec(
          const char *mime, const sp<AMessage> &msg) {
@@ -264,7 +264,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          encoder = false;
      }
  
-@@ -1710,6 +1736,7 @@
+@@ -1725,6 +1751,7 @@
      status_t err = setComponentRole(encoder /* isEncoder */, mime);
  
      if (err != OK) {
@@ -272,7 +272,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          return err;
      }
  
-@@ -1726,6 +1753,7 @@
+@@ -1741,6 +1768,7 @@
      if (encoder
              && msg->findInt32("store-metadata-in-buffers", &storeMeta)
              && storeMeta != 0) {
@@ -280,7 +280,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          err = mOMX->storeMetaDataInBuffers(mNode, kPortIndexInput, OMX_TRUE, &mInputMetadataType);
          if (err != OK) {
              ALOGE("[%s] storeMetaDataInBuffers (input) failed w/ err %d",
-@@ -1736,16 +1764,11 @@
+@@ -1751,16 +1779,11 @@
          // For this specific case we could be using camera source even if storeMetaDataInBuffers
          // returns Gralloc source. Pretend that we are; this will force us to use nBufferSize.
          if (mInputMetadataType == kMetadataBufferTypeGrallocSource) {
@@ -299,7 +299,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      }
  
      int32_t prependSPSPPS = 0;
-@@ -1753,6 +1776,7 @@
+@@ -1768,6 +1791,7 @@
              && msg->findInt32("prepend-sps-pps-to-idr-frames", &prependSPSPPS)
              && prependSPSPPS != 0) {
          OMX_INDEXTYPE index;
@@ -307,7 +307,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          err = mOMX->getExtensionIndex(
                  mNode,
                  "OMX.google.android.index.prependSPSPPSToIDRFrames",
-@@ -1784,7 +1808,7 @@
+@@ -1799,7 +1823,7 @@
          OMX_BOOL enable = (OMX_BOOL) (prependSPSPPS
              && msg->findInt32("store-metadata-in-buffers-output", &storeMeta)
              && storeMeta != 0);
@@ -316,7 +316,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          err = mOMX->storeMetaDataInBuffers(mNode, kPortIndexOutput, enable, &mOutputMetadataType);
          if (err != OK) {
              ALOGE("[%s] storeMetaDataInBuffers (output) failed w/ err %d",
-@@ -1794,28 +1818,33 @@
+@@ -1809,28 +1833,33 @@
          if (!msg->findInt64(
                      "repeat-previous-frame-after",
                      &mRepeatFrameDelayUs)) {
@@ -351,7 +351,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      // NOTE: we only use native window for video decoders
      sp<RefBase> obj;
      bool haveNativeWindow = msg->findObject("native-window", &obj)
-@@ -1837,7 +1866,7 @@
+@@ -1852,7 +1881,7 @@
      if (haveNativeWindow) {
          sp<ANativeWindow> nativeWindow =
              static_cast<ANativeWindow *>(static_cast<Surface *>(obj.get()));
@@ -360,7 +360,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          // START of temporary support for automatic FRC - THIS WILL BE REMOVED
          int32_t autoFrc;
          if (msg->findInt32("auto-frc", &autoFrc)) {
-@@ -1855,13 +1884,13 @@
+@@ -1870,13 +1899,13 @@
              }
          }
          // END of temporary support for automatic FRC
@@ -376,7 +376,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              int32_t audioHwSync = 0;
              if (!msg->findInt32("audio-hw-sync", &audioHwSync)) {
                  ALOGW("No Audio HW Sync provided for video tunnel");
-@@ -1885,12 +1914,14 @@
+@@ -1900,12 +1929,14 @@
                      // allow failure
                      err = OK;
                  } else {
@@ -391,7 +391,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              ALOGV("Configuring CPU controlled video playback.");
              mTunneled = false;
  
-@@ -1904,6 +1935,7 @@
+@@ -1919,6 +1950,7 @@
              }
  
              // Always try to enable dynamic output buffers on native surface
@@ -399,7 +399,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              err = mOMX->storeMetaDataInBuffers(
                      mNode, kPortIndexOutput, OMX_TRUE, &mOutputMetadataType);
              if (err != OK) {
-@@ -1953,8 +1985,10 @@
+@@ -1968,8 +2000,10 @@
                      }
                  }
                  // allow failure
@@ -410,7 +410,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
                  ALOGV("[%s] storeMetaDataInBuffers succeeded",
                          mComponentName.c_str());
                  CHECK(storingMetadataInDecodedBuffers());
-@@ -1965,6 +1999,7 @@
+@@ -1980,6 +2014,7 @@
              }
  
              int32_t push;
@@ -418,7 +418,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              if (msg->findInt32("push-blank-buffers-on-shutdown", &push)
                      && push != 0) {
                  mFlags |= kFlagPushBlankBuffersToNativeWindowOnShutdown;
-@@ -1972,6 +2007,7 @@
+@@ -1993,6 +2028,7 @@
          }
  
          int32_t rotationDegrees;
@@ -426,7 +426,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          if (msg->findInt32("rotation-degrees", &rotationDegrees)) {
              mRotationDegrees = rotationDegrees;
          } else {
-@@ -1980,6 +2016,7 @@
+@@ -2001,6 +2037,7 @@
      }
  
      if (video) {
@@ -434,7 +434,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          // determine need for software renderer
          bool usingSwRenderer = false;
          if (haveNativeWindow && (mComponentName.startsWith("OMX.google.") ||
-@@ -1989,28 +2026,35 @@
+@@ -2010,28 +2047,35 @@
          }
  
          if (encoder) {
@@ -470,7 +470,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              int32_t requestedColorFormat = OMX_COLOR_FormatUnused;
              if (msg->findInt32("color-format", &requestedColorFormat) &&
                      requestedColorFormat == OMX_COLOR_FormatYUV420Flexible) {
-@@ -2058,6 +2102,7 @@
+@@ -2079,6 +2123,7 @@
          }
  
          if (usingSwRenderer) {
@@ -478,7 +478,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              outputFormat->setInt32("using-sw-renderer", 1);
          }
      } else if (!strcasecmp(mime, MEDIA_MIMETYPE_AUDIO_MPEG)) {
-@@ -2247,20 +2292,23 @@
+@@ -2268,20 +2313,23 @@
          err = setMinBufferSize(kPortIndexInput, 8192);  // XXX
      }
  
@@ -515,7 +515,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
  
      mBaseOutputFormat = outputFormat;
  
-@@ -2798,6 +2846,7 @@
+@@ -2819,6 +2867,7 @@
          OMX_VIDEO_CODINGTYPE compressionFormat,
          OMX_COLOR_FORMATTYPE colorFormat,
          bool usingNativeBuffers) {
@@ -523,7 +523,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      OMX_VIDEO_PARAM_PORTFORMATTYPE format;
      InitOMXParams(&format);
      format.nPortIndex = portIndex;
-@@ -2807,11 +2856,13 @@
+@@ -2828,11 +2877,13 @@
      OMX_U32 index = 0;
      for (;;) {
          format.nIndex = index;
@@ -537,7 +537,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              return err;
          }
  
-@@ -2821,7 +2872,7 @@
+@@ -2842,7 +2893,7 @@
                  && isFlexibleColorFormat(
                          mOMX, mNode, format.eColorFormat, usingNativeBuffers, &flexibleEquivalent)
                  && colorFormat == flexibleEquivalent) {
@@ -546,7 +546,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
                      mComponentName.c_str(), format.eColorFormat, colorFormat);
              colorFormat = format.eColorFormat;
          }
-@@ -2854,6 +2905,7 @@
+@@ -2875,6 +2926,7 @@
      }
  
      if (!found) {
@@ -554,7 +554,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          return UNKNOWN_ERROR;
      }
  
-@@ -2879,6 +2931,7 @@
+@@ -2900,6 +2952,7 @@
  // For legacy support, we prefer a standard format, but will settle for a SW readable
  // flex-YUV format.
  status_t ACodec::setSupportedOutputFormat(bool getLegacyFlexibleFormat) {
@@ -562,7 +562,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      OMX_VIDEO_PARAM_PORTFORMATTYPE format, legacyFormat;
      InitOMXParams(&format);
      format.nPortIndex = kPortIndexOutput;
-@@ -2889,10 +2942,12 @@
+@@ -2910,10 +2963,12 @@
  
      for (OMX_U32 index = 0; ; ++index) {
          format.nIndex = index;
@@ -575,7 +575,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              // no more formats, pick legacy format if found
              if (legacyFormat.eColorFormat != OMX_COLOR_FormatUnused) {
                   memcpy(&format, &legacyFormat, sizeof(format));
-@@ -2924,6 +2979,7 @@
+@@ -2945,6 +3000,7 @@
              memcpy(&legacyFormat, &format, sizeof(format));
          }
      }
@@ -583,7 +583,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      return mOMX->setParameter(
              mNode, OMX_IndexParamVideoPortFormat,
              &format, sizeof(format));
-@@ -2977,6 +3033,7 @@
+@@ -2998,6 +3054,7 @@
  
  status_t ACodec::setupVideoDecoder(
          const char *mime, const sp<AMessage> &msg, bool haveNativeWindow) {
@@ -591,7 +591,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      int32_t width, height;
      if (!msg->findInt32("width", &width)
              || !msg->findInt32("height", &height)) {
-@@ -3004,11 +3061,15 @@
+@@ -3025,11 +3082,15 @@
      if (msg->findInt32("color-format", &tmp)) {
          OMX_COLOR_FORMATTYPE colorFormat =
              static_cast<OMX_COLOR_FORMATTYPE>(tmp);
@@ -607,7 +607,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              err = setSupportedOutputFormat(!haveNativeWindow /* getLegacyFlexibleFormat */);
          }
      } else {
-@@ -3046,6 +3107,7 @@
+@@ -3067,6 +3128,7 @@
  }
  
  status_t ACodec::setupVideoEncoder(const char *mime, const sp<AMessage> &msg) {
@@ -615,7 +615,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      int32_t tmp;
      if (!msg->findInt32("color-format", &tmp)) {
          return INVALID_OPERATION;
-@@ -3054,6 +3116,8 @@
+@@ -3075,6 +3137,8 @@
      OMX_COLOR_FORMATTYPE colorFormat =
          static_cast<OMX_COLOR_FORMATTYPE>(tmp);
  
@@ -624,7 +624,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      status_t err = setVideoPortFormatType(
              kPortIndexInput, OMX_VIDEO_CodingUnused, colorFormat);
  
-@@ -3210,7 +3274,7 @@
+@@ -3231,7 +3295,7 @@
      }
  
      if (err == OK) {
@@ -633,7 +633,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      }
  
      return err;
-@@ -3736,6 +3800,7 @@
+@@ -3757,6 +3821,7 @@
  
  status_t ACodec::verifySupportForProfileAndLevel(
          int32_t profile, int32_t level) {
@@ -641,7 +641,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      OMX_VIDEO_PARAM_PROFILELEVELTYPE params;
      InitOMXParams(&params);
      params.nPortIndex = kPortIndexOutput;
-@@ -3748,6 +3813,7 @@
+@@ -3769,6 +3834,7 @@
                  sizeof(params));
  
          if (err != OK) {
@@ -649,7 +649,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              return err;
          }
  
-@@ -3810,15 +3876,18 @@
+@@ -3831,15 +3897,18 @@
          OMX_U32 portIndex,
          int32_t width, int32_t height, OMX_VIDEO_CODINGTYPE compressionFormat,
          float frameRate) {
@@ -668,7 +668,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          return err;
      }
  
-@@ -3846,6 +3915,7 @@
+@@ -3867,6 +3936,7 @@
          }
      }
  
@@ -676,7 +676,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      err = mOMX->setParameter(
              mNode, OMX_IndexParamPortDefinition, &def, sizeof(def));
  
-@@ -3941,6 +4011,7 @@
+@@ -3962,6 +4032,7 @@
  
  // static
  bool ACodec::describeDefaultColorFormat(DescribeColorFormatParams &params) {
@@ -684,7 +684,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      MediaImage &image = params.sMediaImage;
      memset(&image, 0, sizeof(image));
  
-@@ -3948,6 +4019,20 @@
+@@ -3969,6 +4040,20 @@
      image.mNumPlanes = 0;
  
      const OMX_COLOR_FORMATTYPE fmt = params.eColorFormat;
@@ -705,7 +705,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      image.mWidth = params.nFrameWidth;
      image.mHeight = params.nFrameHeight;
  
-@@ -3988,7 +4073,9 @@
+@@ -4009,7 +4094,9 @@
  
      switch ((int)fmt) {
          case HAL_PIXEL_FORMAT_YV12:
@@ -715,7 +715,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
                  size_t ystride = align(params.nStride, 16);
                  size_t cstride = align(params.nStride / 2, 16);
                  image.mPlane[image.Y].mRowInc = ystride;
-@@ -4007,11 +4094,13 @@
+@@ -4028,11 +4115,13 @@
                  image.mPlane[image.U].mVertSubsampling = 2;
                  break;
              } else {
@@ -729,7 +729,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              image.mPlane[image.U].mOffset = params.nStride * params.nSliceHeight;
              image.mPlane[image.U].mColInc = 1;
              image.mPlane[image.U].mRowInc = params.nStride / 2;
-@@ -4030,6 +4119,7 @@
+@@ -4051,6 +4140,7 @@
              // FIXME: NV21 for sw-encoder, NV12 for decoder and hw-encoder
          case OMX_COLOR_FormatYUV420PackedSemiPlanar:
          case OMX_TI_COLOR_FormatYUV420PackedSemiPlanar:
@@ -737,7 +737,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              // NV12
              image.mPlane[image.U].mOffset = params.nStride * params.nSliceHeight;
              image.mPlane[image.U].mColInc = 2;
-@@ -4055,6 +4145,7 @@
+@@ -4076,6 +4166,7 @@
          const sp<IOMX> &omx, IOMX::node_id node,
          DescribeColorFormatParams &describeParams)
  {
@@ -745,7 +745,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      OMX_INDEXTYPE describeColorFormatIndex;
      if (omx->getExtensionIndex(
              node, "OMX.google.android.index.describeColorFormat",
-@@ -4064,6 +4155,7 @@
+@@ -4085,6 +4176,7 @@
              &describeParams, sizeof(describeParams)) != OK) {
          return describeDefaultColorFormat(describeParams);
      }
@@ -753,7 +753,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      return describeParams.sMediaImage.mType !=
              MediaImage::MEDIA_IMAGE_TYPE_UNKNOWN;
  }
-@@ -4112,13 +4204,16 @@
+@@ -4133,13 +4225,16 @@
  }
  
  status_t ACodec::getPortFormat(OMX_U32 portIndex, sp<AMessage> &notify) {
@@ -770,7 +770,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          return err;
      }
  
-@@ -5843,8 +5938,10 @@
+@@ -5864,8 +5959,10 @@
      AString mime;
  
      if (!msg->findString("mime", &mime)) {
@@ -781,7 +781,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          err = mCodec->configureCodec(mime.c_str(), msg);
      }
      if (err != OK) {
-@@ -5912,6 +6009,7 @@
+@@ -5933,6 +6030,7 @@
              observer->setNotificationMessage(notify);
              mCodec->mComponentName = componentName;
  
@@ -789,7 +789,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
              err = mCodec->configureCodec(mime.c_str(), msg);
          }
  
-@@ -6564,14 +6662,15 @@
+@@ -6585,14 +6683,15 @@
          }
      }
  
@@ -814,8 +814,8 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      return OK;
  }
 diff -ur a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp b/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp
---- a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2016-02-15 14:14:34.088779000 +0000
-+++ b/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2016-02-15 14:44:40.632779000 +0000
+--- a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2016-05-08 03:43:37.284995999 +0000
++++ b/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2016-05-08 03:34:25.216995999 +0000
 @@ -44,6 +44,7 @@
      switch (mSrcFormat) {
          case OMX_COLOR_FormatYUV420Planar:
@@ -908,9 +908,9 @@ diff -ur a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp
              signed v_r = v * 409;
  
 diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/media/libstagefright/MPEG4Writer.cpp
---- a/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-02-15 14:14:34.088779000 +0000
-+++ b/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-02-15 14:44:40.632779000 +0000
-@@ -2202,6 +2202,7 @@
+--- a/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-05-08 03:43:37.084995999 +0000
++++ b/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-05-08 03:38:34.524995999 +0000
+@@ -2216,6 +2216,7 @@
  }
  
  status_t MPEG4Writer::Track::threadEntry() {
@@ -918,7 +918,7 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
      int32_t count = 0;
      const int64_t interleaveDurationUs = mOwner->interleaveDuration();
      const bool hasMultipleTracks = (mOwner->numTracks() > 1);
-@@ -2229,6 +2230,7 @@
+@@ -2243,6 +2244,7 @@
      }
  
      if (mOwner->isRealTimeRecording()) {
@@ -926,7 +926,7 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
          androidSetThreadPriority(0, ANDROID_PRIORITY_AUDIO);
      }
  
-@@ -2356,8 +2358,7 @@
+@@ -2370,8 +2372,7 @@
  
          timestampUs -= previousPausedDurationUs;
          if (WARN_UNLESS(timestampUs >= 0ll, "for %s track", trackName)) {
@@ -936,7 +936,7 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
          }
  
          if (!mIsAudio) {
-@@ -2372,8 +2373,7 @@
+@@ -2386,8 +2387,7 @@
              cttsOffsetTimeUs =
                      timestampUs - decodingTimeUs;
              if (WARN_UNLESS(kMaxCttsOffsetTimeUs >= decodingTimeUs - timestampUs, "for %s track", trackName)) {
@@ -946,7 +946,7 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
              }
  
              timestampUs = decodingTimeUs;
-@@ -2384,8 +2384,7 @@
+@@ -2398,8 +2398,7 @@
              currCttsOffsetTimeTicks =
                      (cttsOffsetTimeUs * mTimeScale + 500000LL) / 1000000LL;
              if (WARN_UNLESS(currCttsOffsetTimeTicks <= 0x0FFFFFFFFLL, "for %s track", trackName)) {
@@ -956,7 +956,7 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
              }
  
              if (mStszTableEntries->count() == 0) {
-@@ -2426,8 +2425,7 @@
+@@ -2440,8 +2439,7 @@
          }
  
          if (WARN_UNLESS(timestampUs >= 0ll, "for %s track", trackName)) {
@@ -966,17 +966,19 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
          }
  
          ALOGV("%s media time stamp: %" PRId64 " and previous paused duration %" PRId64,
-@@ -2447,8 +2445,7 @@
+@@ -2461,10 +2459,7 @@
          if (currDurationTicks < 0ll) {
              ALOGE("timestampUs %" PRId64 " < lastTimestampUs %" PRId64 " for %s track",
                  timestampUs, lastTimestampUs, trackName);
 -            copy->release();
--            return UNKNOWN_ERROR;
+-            err = UNKNOWN_ERROR;
+-            mSource->notifyError(err);
+-            return err;
 +            ALOGE("MPEG4Writer:PATCH:threadEntry ERROR_MALFORMED 5");
          }
  
          // if the duration is different for this sample, see if it is close enough to the previous
-@@ -2546,7 +2543,7 @@
+@@ -2562,7 +2557,7 @@
      }
  
      if (isTrackMalFormed()) {
@@ -985,9 +987,28 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
      }
  
      mOwner->trackProgressStatus(mTrackId, -1, err);
+diff -ur a/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp b/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp
+--- a/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp	2016-05-08 03:43:37.296995999 +0000
++++ b/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp	2016-05-08 03:34:25.224995999 +0000
+@@ -369,6 +369,7 @@
+             }
+         } else if (type == kMetadataBufferTypeANWBuffer
+                 && header->nAllocLen >= sizeof(VideoNativeMetadata)) {
++#ifndef HAWAII_HWC
+             VideoNativeMetadata &nativeMeta = *(VideoNativeMetadata *)data;
+             if (nativeMeta.pBuffer != codecBuffer.mGraphicBuffer->getNativeBuffer()) {
+                 // should never happen
+@@ -376,6 +377,7 @@
+                         nativeMeta.pBuffer, codecBuffer.mGraphicBuffer->getNativeBuffer());
+                 CHECK(!"codecBufferEmptied: mismatched buffer");
+             }
++#endif
+         }
+     }
+ 
 diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media/libstagefright/OMXCodec.cpp
---- a/frameworks/av/media/libstagefright/OMXCodec.cpp	2016-02-15 14:14:33.844779000 +0000
-+++ b/frameworks/av/media/libstagefright/OMXCodec.cpp	2016-02-15 14:44:40.636779000 +0000
+--- a/frameworks/av/media/libstagefright/OMXCodec.cpp	2016-05-08 03:43:37.088995999 +0000
++++ b/frameworks/av/media/libstagefright/OMXCodec.cpp	2016-05-08 03:34:25.220995999 +0000
 @@ -347,7 +347,7 @@
                  InstantiateSoftwareEncoder(componentName, source, meta);
  
@@ -1006,7 +1027,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
  
              sp<OMXCodec> codec = new OMXCodec(
                      omx, node, quirks, flags,
-@@ -524,7 +524,7 @@
+@@ -527,7 +527,7 @@
  }
  
  status_t OMXCodec::configureCodec(const sp<MetaData> &meta) {
@@ -1015,7 +1036,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
           (mFlags & kEnableGrallocUsageProtected) ? 1 : 0);
  
      if (!(mFlags & kIgnoreCodecSpecificData)) {
-@@ -755,6 +755,7 @@
+@@ -758,6 +758,7 @@
          OMX_U32 portIndex,
          OMX_VIDEO_CODINGTYPE compressionFormat,
          OMX_COLOR_FORMATTYPE colorFormat) {
@@ -1023,7 +1044,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
      OMX_VIDEO_PARAM_PORTFORMATTYPE format;
      InitOMXParams(&format);
      format.nPortIndex = portIndex;
-@@ -764,11 +765,13 @@
+@@ -767,11 +768,13 @@
      OMX_U32 index = 0;
      for (;;) {
          format.nIndex = index;
@@ -1037,7 +1058,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
              return err;
          }
  
-@@ -791,11 +794,13 @@
+@@ -794,11 +797,13 @@
          if (index >= kMaxColorFormatSupported) {
              CODEC_LOGE("color format %d or compression format %d is not supported",
                  colorFormat, compressionFormat);
@@ -1051,7 +1072,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
          return UNKNOWN_ERROR;
      }
  
-@@ -838,11 +843,13 @@
+@@ -841,11 +846,13 @@
  status_t OMXCodec::findTargetColorFormat(
          const sp<MetaData>& meta, OMX_COLOR_FORMATTYPE *colorFormat) {
      ALOGV("findTargetColorFormat");
@@ -1065,7 +1086,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
          *colorFormat = (OMX_COLOR_FORMATTYPE) targetColorFormat;
      }
  
-@@ -852,6 +859,7 @@
+@@ -855,6 +862,7 @@
  
  status_t OMXCodec::isColorFormatSupported(
          OMX_COLOR_FORMATTYPE colorFormat, int portIndex) {
@@ -1073,7 +1094,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
      ALOGV("isColorFormatSupported: %d", static_cast<int>(colorFormat));
  
      // Enumerate all the color formats supported by
-@@ -863,6 +871,7 @@
+@@ -866,6 +874,7 @@
      OMX_U32 index = 0;
      portFormat.nIndex = index;
      while (true) {
@@ -1081,7 +1102,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
          if (OMX_ErrorNone != mOMX->getParameter(
                  mNode, OMX_IndexParamVideoPortFormat,
                  &portFormat, sizeof(portFormat))) {
-@@ -871,7 +880,9 @@
+@@ -874,7 +883,9 @@
          // Make sure that omx component does not overwrite
          // the incremented index (bug 2897413).
          CHECK_EQ(index, portFormat.nIndex);
@@ -1091,7 +1112,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
              CODEC_LOGV("Found supported color format: %d", portFormat.eColorFormat);
              return OK;  // colorFormat is supported!
          }
-@@ -891,6 +902,7 @@
+@@ -894,6 +905,7 @@
  void OMXCodec::setVideoInputFormat(
          const char *mime, const sp<MetaData>& meta) {
  
@@ -1099,7 +1120,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
      int32_t width, height, frameRate, bitRate, stride, sliceHeight;
      bool success = meta->findInt32(kKeyWidth, &width);
      success = success && meta->findInt32(kKeyHeight, &height);
-@@ -1213,6 +1225,7 @@
+@@ -1216,6 +1228,7 @@
  }
  
  status_t OMXCodec::setupAVCEncoderParameters(const sp<MetaData>& meta) {
@@ -1107,7 +1128,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
      int32_t iFramesInterval, frameRate, bitRate;
      bool success = meta->findInt32(kKeyBitRate, &bitRate);
      success = success && meta->findInt32(kKeyFrameRate, &frameRate);
-@@ -1289,12 +1302,13 @@
+@@ -1292,12 +1305,13 @@
  status_t OMXCodec::setVideoOutputFormat(
          const char *mime, const sp<MetaData>& meta) {
  
@@ -1122,7 +1143,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
  
      OMX_VIDEO_CODINGTYPE compressionFormat = OMX_VIDEO_CodingUnused;
      if (!strcasecmp(MEDIA_MIMETYPE_VIDEO_AVC, mime)) {
-@@ -1321,6 +1335,7 @@
+@@ -1324,6 +1338,7 @@
              kPortIndexInput, compressionFormat, OMX_COLOR_FormatUnused);
  
      if (err != OK) {
@@ -1130,7 +1151,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
          return err;
      }
  
-@@ -1338,6 +1353,12 @@
+@@ -1341,6 +1356,12 @@
          CHECK_EQ((int)format.eCompressionFormat, (int)OMX_VIDEO_CodingUnused);
  
          int32_t colorFormat;
@@ -1143,7 +1164,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
          if (meta->findInt32(kKeyColorFormat, &colorFormat)
                  && colorFormat != OMX_COLOR_FormatUnused
                  && colorFormat != format.eColorFormat) {
-@@ -1350,6 +1371,10 @@
+@@ -1353,6 +1374,10 @@
                  if (format.eColorFormat == colorFormat) {
                      break;
                  }
@@ -1154,7 +1175,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
              }
              if (format.eColorFormat != colorFormat) {
                  CODEC_LOGE("Color format %d is not supported", colorFormat);
-@@ -1838,11 +1863,32 @@
+@@ -1841,11 +1866,32 @@
  #endif
      }
  
@@ -1188,7 +1209,7 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
              rotationDegrees,
              usage | GRALLOC_USAGE_HW_TEXTURE | GRALLOC_USAGE_EXTERNAL_DISP);
      if (err != 0) {
-@@ -4499,7 +4545,13 @@
+@@ -4502,7 +4548,13 @@
                      caps->mColorFormats.push(flexibleEquivalent);
                  }
              }
@@ -1204,9 +1225,9 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
      }
  
 diff -ur a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java
---- a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2016-02-15 14:14:41.484779000 +0000
-+++ b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2016-02-15 14:44:40.636779000 +0000
-@@ -3301,49 +3301,19 @@
+--- a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2016-05-08 03:43:50.488995999 +0000
++++ b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2016-05-08 03:34:25.220995999 +0000
+@@ -3341,49 +3341,19 @@
       * @hide
       */
      public static void setTelephonyProperty(int phoneId, String property, String value) {
@@ -1261,7 +1282,7 @@ diff -ur a/frameworks/base/telephony/java/android/telephony/TelephonyManager.jav
      }
  
      /**
-@@ -3440,15 +3410,22 @@
+@@ -3480,15 +3450,22 @@
       * @hide
       */
      public static String getTelephonyProperty(int phoneId, String property, String defaultVal) {
@@ -1293,8 +1314,8 @@ diff -ur a/frameworks/base/telephony/java/android/telephony/TelephonyManager.jav
  
      /** @hide */
 diff -ur a/frameworks/native/include/gui/ISurfaceComposer.h b/frameworks/native/include/gui/ISurfaceComposer.h
---- a/frameworks/native/include/gui/ISurfaceComposer.h	2016-02-15 14:14:33.144779000 +0000
-+++ b/frameworks/native/include/gui/ISurfaceComposer.h	2016-02-15 14:44:40.640779000 +0000
+--- a/frameworks/native/include/gui/ISurfaceComposer.h	2016-05-08 03:43:52.104995999 +0000
++++ b/frameworks/native/include/gui/ISurfaceComposer.h	2016-05-08 03:34:25.220995999 +0000
 @@ -150,6 +150,18 @@
              Rotation rotation = eRotateNone,
              bool isCpuConsumer = false) = 0;
@@ -1325,8 +1346,8 @@ diff -ur a/frameworks/native/include/gui/ISurfaceComposer.h b/frameworks/native/
          GET_ACTIVE_CONFIG,
          SET_ACTIVE_CONFIG,
 diff -ur a/frameworks/native/include/gui/SurfaceComposerClient.h b/frameworks/native/include/gui/SurfaceComposerClient.h
---- a/frameworks/native/include/gui/SurfaceComposerClient.h	2016-02-15 14:14:33.144779000 +0000
-+++ b/frameworks/native/include/gui/SurfaceComposerClient.h	2016-02-15 14:44:40.640779000 +0000
+--- a/frameworks/native/include/gui/SurfaceComposerClient.h	2016-05-08 03:43:52.104995999 +0000
++++ b/frameworks/native/include/gui/SurfaceComposerClient.h	2016-05-08 03:34:25.224995999 +0000
 @@ -40,6 +40,9 @@
  
  class DisplayInfo;
@@ -1348,8 +1369,8 @@ diff -ur a/frameworks/native/include/gui/SurfaceComposerClient.h b/frameworks/na
      mutable sp<IGraphicBufferProducer> mProducer;
      CpuConsumer::LockedBuffer mBuffer;
 diff -ur a/frameworks/native/libs/binder/Parcel.cpp b/frameworks/native/libs/binder/Parcel.cpp
---- a/frameworks/native/libs/binder/Parcel.cpp	2016-02-15 14:14:33.132779000 +0000
-+++ b/frameworks/native/libs/binder/Parcel.cpp	2016-02-15 14:44:40.640779000 +0000
+--- a/frameworks/native/libs/binder/Parcel.cpp	2016-05-08 03:43:52.116995999 +0000
++++ b/frameworks/native/libs/binder/Parcel.cpp	2016-05-08 03:34:25.224995999 +0000
 @@ -859,6 +859,12 @@
      return writeString16(str.string(), str.size());
  }
@@ -1364,8 +1385,8 @@ diff -ur a/frameworks/native/libs/binder/Parcel.cpp b/frameworks/native/libs/bin
  {
      if (str == NULL) return writeInt32(-1);
 diff -ur a/frameworks/native/libs/gui/Android.mk b/frameworks/native/libs/gui/Android.mk
---- a/frameworks/native/libs/gui/Android.mk	2016-02-15 14:14:33.132779000 +0000
-+++ b/frameworks/native/libs/gui/Android.mk	2016-02-15 14:44:40.640779000 +0000
+--- a/frameworks/native/libs/gui/Android.mk	2016-05-08 03:43:52.116995999 +0000
++++ b/frameworks/native/libs/gui/Android.mk	2016-05-08 03:34:25.224995999 +0000
 @@ -82,6 +82,10 @@
  	liblog
  
@@ -1378,8 +1399,8 @@ diff -ur a/frameworks/native/libs/gui/Android.mk b/frameworks/native/libs/gui/An
  
  ifeq ($(TARGET_BOARD_PLATFORM), tegra)
 diff -ur a/frameworks/native/libs/gui/BufferQueueProducer.cpp b/frameworks/native/libs/gui/BufferQueueProducer.cpp
---- a/frameworks/native/libs/gui/BufferQueueProducer.cpp	2016-02-15 14:14:33.128779000 +0000
-+++ b/frameworks/native/libs/gui/BufferQueueProducer.cpp	2016-02-15 14:44:40.640779000 +0000
+--- a/frameworks/native/libs/gui/BufferQueueProducer.cpp	2016-05-08 03:43:52.116995999 +0000
++++ b/frameworks/native/libs/gui/BufferQueueProducer.cpp	2016-05-08 03:34:25.224995999 +0000
 @@ -193,7 +193,12 @@
              const int newUndequeuedCount =
                  maxBufferCount - (dequeuedCount + 1);
@@ -1393,28 +1414,9 @@ diff -ur a/frameworks/native/libs/gui/BufferQueueProducer.cpp b/frameworks/nativ
              if (newUndequeuedCount < minUndequeuedCount) {
                  BQ_LOGE("%s: min undequeued buffer count (%d) exceeded "
                          "(dequeued=%d undequeued=%d)",
-diff -ur a/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp b/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp
---- a/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp	2016-02-15 14:14:33.128779000 +0000
-+++ b/frameworks/av/media/libstagefright/omx/GraphicBufferSource.cpp	2016-02-15 14:44:40.644779000 +0000
-@@ -369,6 +369,7 @@ void GraphicBufferSource::codecBufferEmptied(OMX_BUFFERHEADERTYPE* header, int f
-             }
-         } else if (type == kMetadataBufferTypeANWBuffer
-                 && header->nAllocLen >= sizeof(VideoNativeMetadata)) {
-+#ifndef HAWAII_HWC
-             VideoNativeMetadata &nativeMeta = *(VideoNativeMetadata *)data;
-             if (nativeMeta.pBuffer != codecBuffer.mGraphicBuffer->getNativeBuffer()) {
-                 // should never happen
-@@ -376,6 +377,7 @@ void GraphicBufferSource::codecBufferEmptied(OMX_BUFFERHEADERTYPE* header, int f
-                         nativeMeta.pBuffer, codecBuffer.mGraphicBuffer->getNativeBuffer());
-                 CHECK(!"codecBufferEmptied: mismatched buffer");
-             }
-+#endif
-         }
-     }
- 
 diff -ur a/frameworks/native/libs/gui/ISurfaceComposer.cpp b/frameworks/native/libs/gui/ISurfaceComposer.cpp
---- a/frameworks/native/libs/gui/ISurfaceComposer.cpp	2016-02-15 14:14:33.128779000 +0000
-+++ b/frameworks/native/libs/gui/ISurfaceComposer.cpp	2016-02-15 14:44:40.644779000 +0000
+--- a/frameworks/native/libs/gui/ISurfaceComposer.cpp	2016-05-08 03:43:52.120995999 +0000
++++ b/frameworks/native/libs/gui/ISurfaceComposer.cpp	2016-05-08 03:34:25.224995999 +0000
 @@ -98,6 +98,33 @@
          remote()->transact(BnSurfaceComposer::BOOT_FINISHED, data, &reply);
      }
@@ -1482,8 +1484,8 @@ diff -ur a/frameworks/native/libs/gui/ISurfaceComposer.cpp b/frameworks/native/l
              CHECK_INTERFACE(ISurfaceComposer, data, reply);
              sp<IBinder> display = data.readStrongBinder();
 diff -ur a/frameworks/native/libs/gui/SurfaceComposerClient.cpp b/frameworks/native/libs/gui/SurfaceComposerClient.cpp
---- a/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-02-15 14:14:33.128779000 +0000
-+++ b/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-02-15 14:44:40.644779000 +0000
+--- a/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-05-08 03:43:52.120995999 +0000
++++ b/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-05-08 03:34:25.224995999 +0000
 @@ -764,6 +764,14 @@
          uint32_t minLayerZ, uint32_t maxLayerZ, bool useIdentityTransform) {
      sp<ISurfaceComposer> s(ComposerService::getComposerService());
@@ -1545,9 +1547,9 @@ diff -ur a/frameworks/native/libs/gui/SurfaceComposerClient.cpp b/frameworks/nat
  
  void const* ScreenshotClient::getPixels() const {
 diff -ur a/frameworks/native/services/surfaceflinger/Android.mk b/frameworks/native/services/surfaceflinger/Android.mk
---- a/frameworks/native/services/surfaceflinger/Android.mk	2016-02-15 14:14:33.144779000 +0000
-+++ b/frameworks/native/services/surfaceflinger/Android.mk	2016-02-15 14:44:40.644779000 +0000
-@@ -64,6 +64,10 @@
+--- a/frameworks/native/services/surfaceflinger/Android.mk	2016-05-08 03:43:52.204995999 +0000
++++ b/frameworks/native/services/surfaceflinger/Android.mk	2016-05-08 03:34:25.224995999 +0000
+@@ -69,6 +69,10 @@
      LOCAL_CFLAGS += -DRUNNING_WITHOUT_SYNC_FRAMEWORK
  endif
  
@@ -1559,8 +1561,8 @@ diff -ur a/frameworks/native/services/surfaceflinger/Android.mk b/frameworks/nat
  ifneq ($(VSYNC_EVENT_PHASE_OFFSET_NS),)
      LOCAL_CFLAGS += -DVSYNC_EVENT_PHASE_OFFSET_NS=$(VSYNC_EVENT_PHASE_OFFSET_NS)
 diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp
---- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2016-02-15 14:14:33.144779000 +0000
-+++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2016-02-15 14:44:40.644779000 +0000
+--- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2016-05-08 03:43:52.212995999 +0000
++++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2016-05-08 03:34:25.228995999 +0000
 @@ -26,6 +26,9 @@
  #include <stdatomic.h>
  
@@ -1571,7 +1573,7 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/framew
  
  #include <cutils/log.h>
  #include <cutils/iosched_policy.h>
-@@ -3008,12 +3011,18 @@
+@@ -3024,12 +3027,18 @@
              break;
          }
          case CAPTURE_SCREEN:
@@ -1590,7 +1592,7 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/framew
                      !PermissionCache::checkPermission(sReadFramebuffer, pid, uid)) {
                  ALOGE("Permission Denial: "
                          "can't read framebuffer pid=%d, uid=%d", pid, uid);
-@@ -3349,9 +3358,18 @@
+@@ -3389,9 +3398,18 @@
              Mutex::Autolock _l(flinger->mStateLock);
              sp<const DisplayDevice> hw(flinger->getDisplayDevice(display));
              bool useReadPixels = this->useReadPixels && !flinger->mGpuToCpuSupported;
@@ -1612,7 +1614,7 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/framew
              static_cast<GraphicProducerWrapper*>(IInterface::asBinder(producer).get())->exit(result);
              return true;
          }
-@@ -3469,6 +3487,11 @@
+@@ -3509,6 +3527,11 @@
  {
      ATRACE_CALL();
  
@@ -1624,7 +1626,7 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/framew
      // get screen geometry
      uint32_t hw_w = hw->getWidth();
      uint32_t hw_h = hw->getHeight();
-@@ -3671,6 +3694,139 @@
+@@ -3711,6 +3734,139 @@
      drawWormhole(hw, region);
  }
  
@@ -1764,7 +1766,7 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/framew
  // ---------------------------------------------------------------------------
  
  SurfaceFlinger::LayerVector::LayerVector() {
-@@ -3717,6 +3873,7 @@
+@@ -3757,6 +3913,7 @@
  }; // namespace android
  
  
@@ -1772,14 +1774,14 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/framew
  #if defined(__gl_h_)
  #error "don't include gl/gl.h in this file"
  #endif
-@@ -3724,3 +3881,4 @@
+@@ -3764,3 +3921,4 @@
  #if defined(__gl2_h_)
  #error "don't include gl2/gl2.h in this file"
  #endif
 +#endif
 diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.h b/frameworks/native/services/surfaceflinger/SurfaceFlinger.h
---- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2016-02-15 14:14:33.144779000 +0000
-+++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2016-02-15 14:44:40.652779000 +0000
+--- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2016-05-08 03:43:52.212995999 +0000
++++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2016-05-08 03:34:25.228995999 +0000
 @@ -218,6 +218,13 @@
              uint32_t minLayerZ, uint32_t maxLayerZ,
              bool useIdentityTransform, ISurfaceComposer::Rotation rotation,
@@ -1811,9 +1813,9 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.h b/framewor
       * EGL
       */
 diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java
---- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2016-02-15 14:14:44.164779000 +0000
-+++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2016-02-15 14:44:42.504779000 +0000
-@@ -232,6 +232,7 @@
+--- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2016-05-08 03:43:52.820995999 +0000
++++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2016-05-08 03:34:25.228995999 +0000
+@@ -235,6 +235,7 @@
      boolean mDnsCheckDisabled;
      public DcTrackerBase mDcTracker;
      boolean mDoesRilSendMultipleCallRing;
@@ -1821,7 +1823,7 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/Phon
      int mCallRingContinueToken;
      int mCallRingDelay;
      public boolean mIsTheCurrentActivePhone = true;
-@@ -463,6 +464,11 @@
+@@ -468,6 +469,11 @@
                  TelephonyProperties.PROPERTY_RIL_SENDS_MULTIPLE_CALL_RING, true);
          Rlog.d(LOG_TAG, "mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
  
@@ -1833,7 +1835,7 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/Phon
          mCallRingDelay = SystemProperties.getInt(
                  TelephonyProperties.PROPERTY_CALL_RING_DELAY, 3000);
          Rlog.d(LOG_TAG, "mCallRingDelay=" + mCallRingDelay);
-@@ -2172,6 +2178,18 @@
+@@ -2177,6 +2183,18 @@
      public void notifyNewRingingConnectionP(Connection cn) {
          if (!mIsVoiceCapable)
              return;
@@ -1852,7 +1854,7 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/Phon
          AsyncResult ar = new AsyncResult(null, cn, null);
          mNewRingingConnectionRegistrants.notifyRegistrants(ar);
      }
-@@ -2767,6 +2785,7 @@
+@@ -2787,6 +2805,7 @@
          pw.println(" mDnsCheckDisabled=" + mDnsCheckDisabled);
          pw.println(" mDcTracker=" + mDcTracker);
          pw.println(" mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
@@ -1861,8 +1863,8 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/Phon
          pw.println(" mCallRingDelay=" + mCallRingDelay);
          pw.println(" mIsTheCurrentActivePhone=" + mIsTheCurrentActivePhone);
 diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java
---- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2016-02-15 14:14:44.156779000 +0000
-+++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2016-02-15 14:44:42.504779000 +0000
+--- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2016-05-08 03:43:52.824995999 +0000
++++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2016-05-08 03:34:25.228995999 +0000
 @@ -303,7 +303,7 @@
      static final int RESPONSE_SOLICITED = 0;
      static final int RESPONSE_UNSOLICITED = 1;
@@ -1873,8 +1875,8 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.
      static final int SOCKET_OPEN_RETRY_MILLIS = 4 * 1000;
  
 diff -ur a/hardware/broadcom/libbt/src/userial_vendor.c b/hardware/broadcom/libbt/src/userial_vendor.c
---- a/hardware/broadcom/libbt/src/userial_vendor.c	2016-02-15 14:14:00.740779000 +0000
-+++ b/hardware/broadcom/libbt/src/userial_vendor.c	2016-02-15 14:44:42.504779000 +0000
+--- a/hardware/broadcom/libbt/src/userial_vendor.c	2016-05-08 03:43:53.804995999 +0000
++++ b/hardware/broadcom/libbt/src/userial_vendor.c	2016-05-08 03:34:25.228995999 +0000
 @@ -197,6 +197,10 @@
      uint16_t parity;
      uint8_t stop_bits;
@@ -1901,8 +1903,8 @@ diff -ur a/hardware/broadcom/libbt/src/userial_vendor.c b/hardware/broadcom/libb
  #endif
  
 diff -ur a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java
---- a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2016-02-15 14:14:50.920779000 +0000
-+++ b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2016-02-15 14:50:32.300779000 +0000
+--- a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2016-05-08 03:44:18.528995999 +0000
++++ b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2016-05-08 03:34:25.228995999 +0000
 @@ -26,14 +26,10 @@
      public static boolean mHaveGestureLib = false;
      static {
@@ -1922,8 +1924,8 @@ diff -ur a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin
      }
  
 diff -ur a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java
---- a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2016-02-15 14:14:51.000779000 +0000
-+++ b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2016-02-15 14:50:32.300779000 +0000
+--- a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2016-05-08 03:44:18.116995999 +0000
++++ b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2016-05-08 03:34:25.228995999 +0000
 @@ -22,5 +22,4 @@
      }
  
@@ -1931,9 +1933,9 @@ diff -ur a/packages/inputmethods/LatinIME/java-overridable/src/com/android/input
 -    public static final String JNI_LIB_NAME2 = "jni_latinimegoogle";
  }
 diff -ur a/packages/services/Telephony/res/values/strings.xml b/packages/services/Telephony/res/values/strings.xml
---- a/packages/services/Telephony/res/values/strings.xml	2016-02-15 14:14:45.276779000 +0000
-+++ b/packages/services/Telephony/res/values/strings.xml	2016-02-15 14:51:32.868779000 +0000
-@@ -632,12 +632,14 @@
+--- a/packages/services/Telephony/res/values/strings.xml	2016-05-08 03:44:19.608995999 +0000
++++ b/packages/services/Telephony/res/values/strings.xml	2016-05-08 03:34:25.232995999 +0000
+@@ -633,12 +633,14 @@
      </string-array>
  
      <string-array name="enabled_networks_except_lte_choices" translatable="false">
@@ -1952,9 +1954,9 @@ diff -ur a/packages/services/Telephony/res/values/strings.xml b/packages/service
  
      <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
 diff -ur a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java
---- a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2016-02-15 14:14:45.392779000 +0000
-+++ b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2016-02-15 14:51:32.868779000 +0000
-@@ -1200,7 +1200,7 @@
+--- a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2016-05-08 03:44:19.632995999 +0000
++++ b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2016-05-08 03:34:25.232995999 +0000
+@@ -1127,7 +1127,7 @@
              case Phone.NT_MODE_WCDMA_ONLY:
                  mButtonEnabledNetworks.setValue(
                          Integer.toString(Phone.NT_MODE_WCDMA_ONLY));
@@ -1963,7 +1965,7 @@ diff -ur a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettin
                  break;
              case Phone.NT_MODE_GSM_UMTS:
                  mButtonEnabledNetworks.setValue(
-@@ -1210,12 +1210,12 @@
+@@ -1137,12 +1137,12 @@
              case Phone.NT_MODE_WCDMA_PREF:
                  mButtonEnabledNetworks.setValue(
                          Integer.toString(Phone.NT_MODE_WCDMA_PREF));
@@ -1979,8 +1981,8 @@ diff -ur a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettin
              case Phone.NT_MODE_LTE_GSM_WCDMA:
                  if (isWorldMode()) {
 diff -ur a/system/core/include/utils/VectorImpl.h b/system/core/include/utils/VectorImpl.h
---- a/system/core/include/utils/VectorImpl.h	2016-02-15 14:15:25.848779000 +0000
-+++ b/system/core/include/utils/VectorImpl.h	2016-02-15 14:44:42.504779000 +0000
+--- a/system/core/include/utils/VectorImpl.h	2016-05-08 03:45:31.888995999 +0000
++++ b/system/core/include/utils/VectorImpl.h	2016-05-08 03:34:25.232995999 +0000
 @@ -105,7 +105,19 @@
      virtual void            do_splat(void* dest, const void* item, size_t num) const = 0;
      virtual void            do_move_forward(void* dest, const void* from, size_t num) const = 0;
@@ -2022,8 +2024,8 @@ diff -ur a/system/core/include/utils/VectorImpl.h b/system/core/include/utils/Ve
              ssize_t         _indexOrderOf(const void* item, size_t* order = 0) const;
  
 diff -ur a/system/core/init/init.cpp b/system/core/init/init.cpp
---- a/system/core/init/init.cpp	2016-02-15 14:15:25.860779000 +0000
-+++ b/system/core/init/init.cpp	2016-02-15 14:44:42.508779000 +0000
+--- a/system/core/init/init.cpp	2016-05-08 03:45:31.892995999 +0000
++++ b/system/core/init/init.cpp	2016-05-08 03:34:25.232995999 +0000
 @@ -75,6 +75,8 @@
  #define BOARD_CHARGING_CMDLINE_VALUE "true"
  #endif
@@ -2074,8 +2076,8 @@ diff -ur a/system/core/init/init.cpp b/system/core/init/init.cpp
  
  static void process_kernel_dt(void)
 diff -ur a/system/core/init/util.cpp b/system/core/init/util.cpp
---- a/system/core/init/util.cpp	2016-02-15 14:15:25.860779000 +0000
-+++ b/system/core/init/util.cpp	2016-02-15 14:44:42.508779000 +0000
+--- a/system/core/init/util.cpp	2016-05-08 03:45:31.892995999 +0000
++++ b/system/core/init/util.cpp	2016-05-08 03:34:25.232995999 +0000
 @@ -401,6 +401,34 @@
      }
  }
@@ -2112,8 +2114,8 @@ diff -ur a/system/core/init/util.cpp b/system/core/init/util.cpp
  {
      char cmdline[2048];
 diff -ur a/system/core/init/util.h b/system/core/init/util.h
---- a/system/core/init/util.h	2016-02-15 14:15:25.860779000 +0000
-+++ b/system/core/init/util.h	2016-02-15 14:44:42.508779000 +0000
+--- a/system/core/init/util.h	2016-05-08 03:45:31.892995999 +0000
++++ b/system/core/init/util.h	2016-05-08 03:34:25.232995999 +0000
 @@ -58,6 +58,7 @@
  void remove_link(const char *oldpath, const char *newpath);
  int wait_for_file(const char *filename, int timeout);
@@ -2123,8 +2125,8 @@ diff -ur a/system/core/init/util.h b/system/core/init/util.h
  int make_dir(const char *path, mode_t mode);
  int restorecon(const char *pathname);
 diff -ur a/system/core/libnetutils/ifc_utils.c b/system/core/libnetutils/ifc_utils.c
---- a/system/core/libnetutils/ifc_utils.c	2016-02-15 14:15:25.852779000 +0000
-+++ b/system/core/libnetutils/ifc_utils.c	2016-02-15 14:44:42.508779000 +0000
+--- a/system/core/libnetutils/ifc_utils.c	2016-05-08 03:45:31.912995999 +0000
++++ b/system/core/libnetutils/ifc_utils.c	2016-05-08 03:34:25.232995999 +0000
 @@ -703,3 +703,19 @@
  
      return 0;
@@ -2146,8 +2148,8 @@ diff -ur a/system/core/libnetutils/ifc_utils.c b/system/core/libnetutils/ifc_uti
 +    return ret;
 +}
 diff -ur a/system/core/libutils/RefBase.cpp b/system/core/libutils/RefBase.cpp
---- a/system/core/libutils/RefBase.cpp	2016-02-15 14:15:25.840779000 +0000
-+++ b/system/core/libutils/RefBase.cpp	2016-02-15 14:44:42.508779000 +0000
+--- a/system/core/libutils/RefBase.cpp	2016-05-08 03:45:31.932995999 +0000
++++ b/system/core/libutils/RefBase.cpp	2016-05-08 03:34:25.232995999 +0000
 @@ -630,6 +630,13 @@
  
  // ---------------------------------------------------------------------------
@@ -2163,8 +2165,8 @@ diff -ur a/system/core/libutils/RefBase.cpp b/system/core/libutils/RefBase.cpp
  void RefBase::renameRefs(size_t n, const ReferenceRenamer& renamer) {
      for (size_t i=0 ; i<n ; i++) {
 diff -ur a/system/core/libutils/VectorImpl.cpp b/system/core/libutils/VectorImpl.cpp
---- a/system/core/libutils/VectorImpl.cpp	2016-02-15 14:15:25.840779000 +0000
-+++ b/system/core/libutils/VectorImpl.cpp	2016-02-15 14:44:42.508779000 +0000
+--- a/system/core/libutils/VectorImpl.cpp	2016-05-08 03:45:31.936995999 +0000
++++ b/system/core/libutils/VectorImpl.cpp	2016-05-08 03:34:25.232995999 +0000
 @@ -552,6 +552,17 @@
      do_move_backward(dest, from, num);
  }
