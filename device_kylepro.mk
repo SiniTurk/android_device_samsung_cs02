@@ -63,6 +63,10 @@ PRODUCT_PACKAGES += \
     ebtables \
     ethertypes
 
+# Snap Camera
+PRODUCT_PACKAGES += \
+    Snap
+
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ksm.default=1
