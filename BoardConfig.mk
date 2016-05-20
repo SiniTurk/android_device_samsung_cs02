@@ -96,9 +96,6 @@ TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS       := true
 # External apps on SD
 TARGET_EXTERNAL_APPS                        := sdcard1
 
-# Include an expanded selection of fonts
-EXTENDED_FONT_FOOTPRINT                     := true
-
 # OpenGL
 BOARD_USES_HWCOMPOSER                       := true
 BOARD_USE_BGRA_8888                         := true
@@ -126,8 +123,6 @@ else
     TARGET_RECOVERY_FSTAB                   := device/samsung/kylepro/rootdir/fstab.hawaii_ss_kylepro
 endif
 TARGET_USE_CUSTOM_LUN_FILE_PATH             := /sys/class/android_usb/android0/f_mass_storage/lun/file
-BOARD_HAS_NO_SELECT_BUTTON                  := true
-BOARD_HAS_LARGE_FILESYSTEM                  := true
 TARGET_USERIMAGES_USE_EXT4                  := true
 TARGET_RECOVERY_PIXEL_FORMAT                := BGRA_8888
 BOARD_HAS_NO_MISC_PARTITION                 := true
