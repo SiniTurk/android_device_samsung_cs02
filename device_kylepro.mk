@@ -140,10 +140,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.media.use-awesome=true
 
-# Default USB mode
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
 # Dalvik heap config
 include frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk
 
