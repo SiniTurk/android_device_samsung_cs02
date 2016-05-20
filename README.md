@@ -74,6 +74,7 @@ mmcblk0p19: 0046c000 00000400 "userdata"
 ### Credits (Sort by alphabetical order):
   - Ishant Vivek
   - Pawitp
+  - TheComputerGuy96
   - The CyanogenMod Team
   - TheNikiz
   - Zim555
