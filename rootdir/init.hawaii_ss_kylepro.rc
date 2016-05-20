@@ -6,6 +6,8 @@ on early-init
     chown system system /sys/devices/platform/pwm-backlight.0/backlight/panel/brightness
 
 on init
+    write /sys/fs/selinux/enforce 0
+
     mkdir /tmp
     mount tmpfs tmpfs /tmp
     chmod 1775 /tmp
@@ -135,8 +137,6 @@ on boot
 # SISO-ANDR_PERF :: START Changing scheduler to noop during boot
     write /sys/block/mmcblk0/queue/scheduler noop
 # SISO-ANDR_PERF :: END
-
-    write /sys/fs/selinux/enforce 0
 
     setprop ro.build.product hawaii
     setprop ro.product.device hawaii
