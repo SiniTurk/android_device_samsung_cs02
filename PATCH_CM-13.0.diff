@@ -2155,3 +2155,33 @@ diff -ur a/system/core/libutils/VectorImpl.cpp b/system/core/libutils/VectorImpl
  /*****************************************************************************/
  
  }; // namespace android
+diff -ur a/external/tinyalsa/include/tinyalsa/asoundlib.h b/external/tinyalsa/include/tinyalsa/asoundlib.h
+--- a/external/tinyalsa/include/tinyalsa/asoundlib.h	2016-05-25 10:22:34.596000000 +0000
++++ b/external/tinyalsa/include/tinyalsa/asoundlib.h	2016-05-25 10:23:13.476000000 +0000
+@@ -243,6 +243,7 @@
+ int pcm_prepare(struct pcm *pcm);
+ /* Start and stop a PCM channel that doesn't transfer data */
+ int pcm_start(struct pcm *pcm);
++int pcm_drain(struct pcm *pcm);
+ int pcm_stop(struct pcm *pcm);
+ 
+ /* ioctl function for PCM driver */
+diff -ur a/external/tinyalsa/pcm.c b/external/tinyalsa/pcm.c
+--- a/external/tinyalsa/pcm.c	2016-05-25 10:22:34.596000000 +0000
++++ b/external/tinyalsa/pcm.c	2016-05-25 10:23:13.476000000 +0000
+@@ -1031,6 +1031,14 @@
+     return 0;
+ }
+ 
++int pcm_drain(struct pcm *pcm)
++{
++    if (ioctl(pcm->fd, SNDRV_PCM_IOCTL_DRAIN) < 0)
++        return oops(pcm, errno, "drain failed");
++
++    return 0;
++}
++
+ int pcm_stop(struct pcm *pcm)
+ {
+     if (ioctl(pcm->fd, SNDRV_PCM_IOCTL_DROP) < 0)
+
