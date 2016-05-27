@@ -2184,4 +2184,20 @@ diff -ur a/external/tinyalsa/pcm.c b/external/tinyalsa/pcm.c
  int pcm_stop(struct pcm *pcm)
  {
      if (ioctl(pcm->fd, SNDRV_PCM_IOCTL_DROP) < 0)
-
+diff -ur a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp
+--- a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp    2016-05-27 06:16:16.461305200 +0000
++++ b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp    2016-02-27 08:15:52.000000000 +0000
+@@ -55,6 +55,13 @@
+     mLastBuffer = buffer;
+ }
+ 
++#ifdef ADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
++extern "C" status_t _ZN7android16MediaBufferGroup14acquire_bufferEPPNS_11MediaBufferE(
++    MediaBufferGroup* group, MediaBuffer **out) {
++    return group->acquire_buffer(out, false);
++}
++#endif
++
+ status_t MediaBufferGroup::acquire_buffer(
+         MediaBuffer **out, bool nonBlocking) {
+     Mutex::Autolock autoLock(mLock);
