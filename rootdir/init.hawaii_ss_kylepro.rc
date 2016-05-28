@@ -2,12 +2,11 @@ import init.bcm2166x.usb.rc
 import init.log.rc
 
 on early-init
+    write /sys/fs/selinux/enforce 0
     mkdir /efs 0771 radio system
     chown system system /sys/devices/platform/pwm-backlight.0/backlight/panel/brightness
 
 on init
-    write /sys/fs/selinux/enforce 0
-
     mkdir /tmp
     mount tmpfs tmpfs /tmp
     chmod 1775 /tmp
