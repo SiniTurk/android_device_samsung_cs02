@@ -36,6 +36,10 @@ endif
 TARGET_KERNEL_SOURCE                        := kernel/samsung/kyleproxx
 TARGET_KERNEL_CUSTOM_TOOLCHAIN              := arm-eabi-4.6
 
+# Extended filesystem support
+TARGET_KERNEL_HAVE_EXFAT                    := true
+TARGET_KERNEL_HAVE_NTFS                     := true
+
 # Partition size
 BOARD_BOOTIMAGE_PARTITION_SIZE              := 8388608
 BOARD_RECOVERYIMAGE_PARTITION_SIZE          := 9191424
