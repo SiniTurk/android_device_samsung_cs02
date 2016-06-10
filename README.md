@@ -72,6 +72,7 @@ mmcblk0p19: 0046c000 00000400 "userdata"
 ```
 
 ### Credits (Sort by alphabetical order):
+  - ghsr
   - Ishant Vivek
   - Pawitp
   - TheComputerGuy96
