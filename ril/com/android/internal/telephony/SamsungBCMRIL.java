@@ -28,6 +28,7 @@ import android.telephony.Rlog;
 import com.android.internal.telephony.RILConstants;
 import java.util.Collections;
 import android.telephony.PhoneNumberUtils;
+import com.android.internal.telephony.uicc.IccUtils;
 
 import java.util.ArrayList;
 
