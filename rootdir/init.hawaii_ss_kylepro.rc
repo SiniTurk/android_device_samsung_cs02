@@ -528,6 +528,7 @@ on post-fs
         class main
         socket wpa_wlan0 dgram 660 wifi wifi
         disabled
+        group system wakelock
         oneshot
 
     service p2p_supplicant /system/bin/wpa_supplicant \
@@ -544,6 +545,7 @@ on post-fs
         class main
         socket wpa_wlan0 dgram 660 wifi wifi
         disabled
+        group system wakelock
         oneshot
 
     service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
@@ -609,7 +611,7 @@ on property:init.svc.macloader=stopped
         setenv LD_PRELOAD /system/lib/libglgps-compat.so
         class late_start
         user gps
-        group system root inet radio wifi sdcard_rw
+        group system wakelock root inet radio wifi sdcard_rw
 
 # Run bkmgrd automatically on startup
     service bkmgrd /system/bin/bkmgrd
