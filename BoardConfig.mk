@@ -31,3 +31,10 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 # Recovery
 TARGET_RECOVERY_FSTAB := device/samsung/cs02/ramdisk/fstab.hawaii_ss_cs02
 BOARD_HAS_NO_SELECT_BUTTON := true
+
+# SELinux
+BOARD_SEPOLICY_DIRS += \
+    device/samsung/cs02/sepolicy
+
+BOARD_SEPOLICY_UNION += \
+    file_contexts
