@@ -1,0 +1,42 @@
+#
+# system.prop for cs02
+#
+
+persist.brcm.log=none
+persist.brcm.cp_crash=none
+persist.brcm.ap_crash=none
+
+rild.libpath=/system/lib/libbrcm_ril.so
+#rild.libargs=-d /dev/ttyS0
+ro.ril.multi_rat_capable=false
+persist.radio.flexmap_type=nw_mode
+ro.sf.lcd_density=240
+ro.lcd_brightness=160
+ro.lcd_min_brightness=18
+
+# MultiTouch support
+ro.product.multi_touch_enabled=true
+ro.product.max_num_touch=2
+
+net.streaming.rtsp.uaprof=http://wap.samsungmobile.com/uaprof/
+
+ro.opengles.version=131072
+debug.hwui.render_dirty_regions=false
+brcm.graphics.async_errors=false
+brcm.hwc.no-hdmi-trans=1
+
+#adative video encoding
+video.enc.h264.adaptive_quality=1
+video.enc.h264.timing_window_sz=4
+video.enc.h264.timing_thr0=295
+video.enc.h264.timing_thr1=215
+video.enc.h264.timing_thr2=145
+
+ro.ril.hsxpa=1
+ro.ril.gprsclass=10
+ro.com.google.gmsversion=4.1_r4
+
+ro.config.max_starting_bg=8
+dalvik.vm.dex2oat-swap=false
+dalvik.vm.dex2oat-flags=--no-watch-dog
+ro.sys.fw.dex2oat_thread_count=4
