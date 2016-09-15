@@ -20,6 +20,10 @@ BOARD_KERNEL_PAGESIZE := 4096
 TARGET_PREBUILT_KERNEL := device/samsung/cs02/kernel
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_cs02_rev02_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/cs02/
+# Make sure you have the correct toolchain available
+TARGET_KERNEL_TOOLCHAIN_VERSION := 4.6
+KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/$(KERNEL_TOOLCHAIN_PREFIX)$(TARGET_KERNEL_TOOLCHAIN_VERSION)/bin
 
 # Partition sizes
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
