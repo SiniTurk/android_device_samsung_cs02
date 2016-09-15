@@ -5,6 +5,11 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
 $(call inherit-product-if-exists, vendor/samsung/cs02/cs02-vendor.mk)
 
+# Use high-density artwork where available
+PRODUCT_LOCALES += hdpi
+PRODUCT_AAPT_CONFIG := normal
+PRODUCT_AAPT_PREF_CONFIG := hdpi
+
 DEVICE_PACKAGE_OVERLAYS += device/samsung/cs02/overlay
 
 
