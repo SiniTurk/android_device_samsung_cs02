@@ -1,0 +1,73 @@
+
+/dev/pvrsrvkm             0666   system     system
+/dev/graphics/fb0         0666   system     graphics
+/dev/video0               0660   system     camera
+/dev/video1               0660   system     camera
+/dev/video2               0660   system     camera
+/dev/s3c-jpg              0660   system     camera
+/dev/s3c-mem              0660   system     system
+/dev/s3c-mfc              0660   system     graphics
+
+/dev/modem_ctl            0660   radio      radio
+/dev/modem_fmt            0660   radio      radio
+/dev/modem_rfs            0660   radio      radio
+/dev/s3c2410_serial3      0660   radio      radio
+/dev/block/mtdblock5      0660   radio      radio
+/dev/mtd/mtd5ro           0660   radio      radio
+
+# for GPS
+/dev/s3c2410_serial1      0600   gps        gps
+
+# for Camera
+/dev/bcm_unicam           0660   system     camera
+/dev/bcm_isp              0660   system     camera
+/dev/i2c-0                0660   system     camera
+/dev/i2c-1                0660   system     camera
+/dev/i2c-2                0660   system     camera
+
+# for MM memory
+/dev/ion                  0666   system     graphics
+
+#for V3D
+/dev/v3d                  0666   system     graphics
+/dev/pmem                 0660   system     graphics
+
+#for VCE
+/dev/vce                  0660   system     graphics
+
+# sensors
+/dev/mpu                  0666   system     system
+/dev/mpuirq               0666   system     system
+/dev/timerirq             0666   system     system
+/dev/ami_sensor           0666   system     system
+
+# for Hawaii
+/dev/mm_v3d               0666   system     graphics
+/dev/mm_isp               0660   system     camera
+/dev/bcm_isp2             0660   system     camera
+/dev/mm_isp2              0666   system     camera
+/dev/bcm_jpeg             0660   system     camera
+/dev/mm_interlock         0666   system     graphics
+/dev/mm_h264              0660   media      media
+
+# for h/w codec
+/dev/brcm_h264	          0660   media      media
+
+# Permission for NV partition 
+/dev/block/mmcblk0p1	  0770	 radio	    system
+
+# SYSTEM Status
+/dev/block/mmcblk0p11     0660   system     root 
+
+# for RIL to be able to open Kernel RPC drivers
+/dev/bcm_rpc		      0660	 radio	    radio
+/dev/bcm_irpc		      0660	 radio	    radio
+/dev/bcm_atc		      0660	 shell	    system
+
+# SEC User Dump
+# /dev/sec_user_dump      0660   system     shell  
+
+/dev/mem		  		  0660	 system     root
+
+/dev/ttyGS0		  		  0660	 system     system
+/dev/snd/controlC0	  	  0660	 system     audio

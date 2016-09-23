@@ -8,7 +8,4 @@
 /dev/mm_interlock         u:object_r:graphics_device:s0
 /dev/bcm_voip_chrdev      u:object_r:audio_device:s0
 /dev/bcm_security         u:object_r:radio_device:s0
-/dev/v3d                  u:object_r:powervr_device:s0
-/dev/pmem                 u:object_r:powervr_device:s0
-/dev/bralloc_mem          u:object_r:powervr_device:s0
 
