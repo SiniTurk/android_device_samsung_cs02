@@ -1,0 +1,51 @@
+/dev/bcm_isp              u:object_r:camera_device:s0
+/dev/mm_isp               u:object_r:camera_device:s0
+/dev/vce                  u:object_r:gpu_device:s0
+/dev/mm_h264              u:object_r:video_device:s0
+/dev/h264_ol              u:object_r:video_device:s0
+/dev/brcm_h264            u:object_r:video_device:s0
+/dev/mm_v3d               u:object_r:gpu_device:s0
+/dev/mm_interlock         u:object_r:gpu_device:s0
+/dev/bcm_voip_chrdev      u:object_r:audio_device:s0
+/dev/bcm_security         u:object_r:radio_device:s0
+/dev/v3d                  u:object_r:gpu_device:s0
+/dev/pmem                 u:object_r:gpu_device:s0
+/dev/bralloc_mem          u:object_r:gpu_device:s0
+/dev/graphics/fb0         u:object_r:gpu_device:s0
+/dev/modem_ctl  		  u:object_r:radio_device:s0          
+/dev/modem_fmt            u:object_r:radio_device:s0 
+/dev/modem_rfs            u:object_r:radio_device:s0 
+/dev/s3c2410_serial3      u:object_r:radio_device:s0 
+/dev/s3c2410_serial1      u:object_r:gps_device:s0  
+/dev/bcm_unicam           u:object_r:camera_device:s0 
+/dev/i2c-[0-9]            u:object_r:camera_device:s0            
+/dev/bcm_isp2             u:object_r:camera_device:s0
+/dev/mm_isp2              u:object_r:camera_device:s0 
+/dev/bcm_jpeg             u:object_r:camera_device:s0 
+/dev/bcm_rpc		  	  u:object_r:radio_device:s0
+/dev/bcm_irpc		      u:object_r:radio_device:s0
+
+/efs/bluetooth/bt_addr                              u:object_r:bluetooth_efs_file:s0
+/sys/devices/platform/bcmbt-rfkill.1/rfkill/rfkill0/state -- u:object_r:sysfs_bluetooth_writable:s0
+/sys/devices/platform/bcmbt-rfkill.1/rfkill/rfkill0/type -- u:object_r:sysfs_bluetooth_writable:s0
+
+/dev/ttyS0                                          u:object_r:hci_attach_dev:s0
+/dev/ttyS1											u:object_r:gps_device:s0
+#/dev/ttyS2                                          u:object_r:gps_device:s0
+/dev/bcm_gps                                        u:object_r:gps_device:s0
+
+/dev/bcm_log                                        u:object_r:radio_device:s0
+/dev/block/mmcblk0p1                                u:object_r:radio_device:s0
+
+/dev/socket/rild1                                   u:object_r:rild_socket:s0
+
+/sys/devices/platform/mdnie/mdnie/mdnie/cabc --     u:object_r:sysfs_writable:s0
+
+# /system files
+/system/bin/geomagneticd                            u:object_r:geomagneticd_exec:s0
+/system/bin/immvibed                                u:object_r:immvibed_exec:s0
+/system/bin/macloader                               u:object_r:macloader_exec:s0
+/system/bin/tvserver                                u:object_r:tvserver_exec:s0
+/system/bin/bkmgrd                                  u:object_r:bkmgrd_exec:s0
+/system/bin/vclmk                                   u:object_r:vclmk_exec:s0
+/system/bin/glgps                                   u:object_r:gpsd_exec:s0

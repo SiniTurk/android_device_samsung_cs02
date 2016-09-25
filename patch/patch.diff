@@ -1,0 +1,333 @@
+diff -ur CM12.1_laganxx/bootable/recovery/uncrypt/uncrypt.c CM12.1_laganxx_patched/bootable/recovery/uncrypt/uncrypt.c
+--- CM12.1_laganxx/bootable/recovery/uncrypt/uncrypt.c	2016-02-23 18:37:53.000000000 +0000
++++ CM12.1_laganxx_patched/bootable/recovery/uncrypt/uncrypt.c	2016-02-23 18:58:07.000000000 +0000
+@@ -423,7 +423,10 @@
+     // On /data we want to convert the file to a block map so that we
+     // can read the package without mounting the partition.  On /cache
+     // and /sdcard we leave the file alone.
+-    if (strncmp(path, "/data/", 6) != 0) {
++    //
++    // HACK: ignore above: block map is only used with encryption device
++    // for compatibility with older recoveries
++    if (!encrypted || strncmp(path, "/data/", 6) != 0) {
+         // path does not start with "/data/"; leave it alone.
+         unlink(RECOVERY_COMMAND_FILE_TMP);
+     } else {
+diff -ur CM12.1_laganxx/build/core/tasks/kernel.mk CM12.1_laganxx_patched/build/core/tasks/kernel.mk
+--- CM12.1_laganxx/build/core/tasks/kernel.mk	2016-02-23 18:37:53.000000000 +0000
++++ CM12.1_laganxx_patched/build/core/tasks/kernel.mk	2016-02-23 19:00:48.000000000 +0000
+@@ -202,7 +202,11 @@
+     ccache := $(strip $(wildcard $(ccache)))
+ endif
+ 
+-KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN_PATH)"
++ifneq ($(TARGET_KERNEL_CUSTOM_TOOLCHAIN),)     
++    KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/$(TARGET_KERNEL_CUSTOM_TOOLCHAIN)/bin/arm-eabi-"      
++else
++	KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN_PATH)"
++endif
+ ccache =
+ 
+ define mv-modules
+diff -ur CM12.1_laganxx/external/icu/icu4c/source/common/ucnv.c CM12.1_laganxx_patched/external/icu/icu4c/source/common/ucnv.c
+--- CM12.1_laganxx/external/icu/icu4c/source/common/ucnv.c	2016-02-23 18:39:27.000000000 +0000
++++ CM12.1_laganxx_patched/external/icu/icu4c/source/common/ucnv.c	2016-02-01 03:51:42.000000000 +0000
+@@ -2914,6 +2914,76 @@
+             return FALSE;
+     }
+ }
++
++U_CAPI void    U_EXPORT2 ucnv_setToUCallBack_48 (UConverter * converter,
++                            UConverterToUCallback newAction,
++                            const void* newContext,
++                            UConverterToUCallback *oldAction,
++                            const void** oldContext,
++                            UErrorCode * err) {
++  ucnv_setToUCallBack(converter, newAction, newContext,
++        oldAction, oldContext, err);
++}
++
++U_CAPI void  U_EXPORT2 ucnv_close_48 (UConverter * converter) {
++  ucnv_close (converter);
++}
++
++U_CAPI void  U_EXPORT2
++ucnv_setFromUCallBack_48 (UConverter * converter,
++                            UConverterFromUCallback newAction,
++                            const void* newContext,
++                            UConverterFromUCallback *oldAction,
++                            const void** oldContext,
++                            UErrorCode * err) {
++
++  ucnv_setFromUCallBack(converter, newAction, newContext, oldAction,
++        oldContext, err);
++}
++
++U_CAPI void U_EXPORT2
++ucnv_convertEx_48 (UConverter *targetCnv, UConverter *sourceCnv,
++               char **target, const char *targetLimit,
++               const char **source, const char *sourceLimit,
++               UChar *pivotStart, UChar **pivotSource,
++               UChar **pivotTarget, const UChar *pivotLimit,
++               UBool reset, UBool flush,
++               UErrorCode *pErrorCode) {
++  ucnv_convertEx(targetCnv, sourceCnv, target, targetLimit, source,
++        sourceLimit, pivotStart, pivotSource,
++        pivotTarget, pivotLimit, reset, flush,
++        pErrorCode);
++}
++
++U_CAPI UConverter* U_EXPORT2
++ucnv_open_48 (const char *name,
++                       UErrorCode * err) {
++  return ucnv_open(name, err);
++}
++
++U_STABLE void U_EXPORT2 UCNV_FROM_U_CALLBACK_STOP_48 (
++                  const void *context,
++                  UConverterFromUnicodeArgs *fromUArgs,
++                  const UChar* codeUnits,
++                  int32_t length,
++                  UChar32 codePoint,
++                  UConverterCallbackReason reason,
++                  UErrorCode * err) {
++  return UCNV_FROM_U_CALLBACK_STOP(context, fromUArgs, codeUnits,
++      length, codePoint, reason, err);
++}
++
++U_STABLE void U_EXPORT2 UCNV_TO_U_CALLBACK_STOP_48 (
++                  const void *context,
++                  UConverterToUnicodeArgs *toUArgs,
++                  const char* codeUnits,
++                  int32_t length,
++                  UConverterCallbackReason reason,
++                  UErrorCode * err) {
++  return UCNV_TO_U_CALLBACK_STOP(context, toUArgs, codeUnits, length,
++      reason, err);
++}
++
+ #endif
+ 
+ /*
+diff -ur CM12.1_laganxx/external/sepolicy/domain.te CM12.1_laganxx_patched/external/sepolicy/domain.te
+--- CM12.1_laganxx/external/sepolicy/domain.te	2016-02-23 18:40:02.000000000 +0000
++++ CM12.1_laganxx_patched/external/sepolicy/domain.te	2016-02-23 19:07:47.000000000 +0000
+@@ -220,11 +220,11 @@
+ # init starts in kernel domain and switches to init domain via setcon in
+ # the init.rc, so the setenforce occurs while still in kernel. After
+ # switching domains, there is never any need to setenforce again by init.
+-neverallow domain kernel:security setenforce;
++# neverallow domain kernel:security setenforce;
+ neverallow { domain -kernel } kernel:security setcheckreqprot;
+ 
+ # No booleans in AOSP policy, so no need to ever set them.
+-neverallow domain kernel:security setbool;
++# neverallow domain kernel:security setbool;
+ 
+ # Adjusting the AVC cache threshold.
+ # Not presently allowed to anything in policy, but possibly something
+diff -ur CM12.1_laganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp CM12.1_laganxx_patched/frameworks/av/media/libstagefright/MPEG4Writer.cpp
+--- CM12.1_laganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-02-23 18:40:16.000000000 +0000
++++ CM12.1_laganxx_patched/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-02-23 19:11:17.000000000 +0000
+@@ -2298,8 +2298,8 @@
+ 
+         timestampUs -= previousPausedDurationUs;
+         if (WARN_UNLESS(timestampUs >= 0ll, "for %s track", trackName)) {
+-            copy->release();
+-            return ERROR_MALFORMED;
++            //copy->release();
++            //return ERROR_MALFORMED;
+         }
+ 
+         if (!mIsAudio) {
+@@ -2314,8 +2314,8 @@
+             cttsOffsetTimeUs =
+                     timestampUs - decodingTimeUs;
+             if (WARN_UNLESS(kMaxCttsOffsetTimeUs >= decodingTimeUs - timestampUs, "for %s track", trackName)) {
+-                copy->release();
+-                return ERROR_MALFORMED;
++                //copy->release();
++                //return ERROR_MALFORMED;
+             }
+ 
+             timestampUs = decodingTimeUs;
+@@ -2326,8 +2326,8 @@
+             currCttsOffsetTimeTicks =
+                     (cttsOffsetTimeUs * mTimeScale + 500000LL) / 1000000LL;
+             if (WARN_UNLESS(currCttsOffsetTimeTicks <= 0x0FFFFFFFFLL, "for %s track", trackName)) {
+-                copy->release();
+-                return ERROR_MALFORMED;
++                //copy->release();
++                //return ERROR_MALFORMED;
+             }
+ 
+             if (mStszTableEntries->count() == 0) {
+@@ -2368,8 +2368,8 @@
+         }
+ 
+         if (WARN_UNLESS(timestampUs >= 0ll, "for %s track", trackName)) {
+-            copy->release();
+-            return ERROR_MALFORMED;
++            //copy->release();
++            //return ERROR_MALFORMED;
+         }
+ 
+         ALOGV("%s media time stamp: %" PRId64 " and previous paused duration %" PRId64,
+@@ -2389,12 +2389,12 @@
+         if (currDurationTicks < 0ll) {
+             ALOGE("timestampUs %" PRId64 " < lastTimestampUs %" PRId64 " for %s track",
+                 timestampUs, lastTimestampUs, trackName);
+-            copy->release();
+-            err = UNKNOWN_ERROR;
+-            mSource->notifyError(err);
+-            copy->release();
+-            copy = NULL;
+-            return err;
++            //copy->release();
++			//err = UNKNOWN_ERROR;
++			//mSource->notifyError(err);
++            //copy->release();
++            //copy = NULL;
++            //return err;
+         }
+ 
+         // if the duration is different for this sample, see if it is close enough to the previous
+@@ -2492,7 +2492,7 @@
+     }
+ 
+     if (isTrackMalFormed()) {
+-        err = ERROR_MALFORMED;
++        //err = ERROR_MALFORMED;
+     }
+ 
+     mOwner->trackProgressStatus(mTrackId, -1, err);
+diff -ur CM12.1_laganxx/frameworks/base/services/core/java/com/android/server/power/PowerManagerService.java CM12.1_laganxx_patched/frameworks/base/services/core/java/com/android/server/power/PowerManagerService.java
+--- CM12.1_laganxx/frameworks/base/services/core/java/com/android/server/power/PowerManagerService.java	2016-02-23 18:40:29.000000000 +0000
++++ CM12.1_laganxx_patched/frameworks/base/services/core/java/com/android/server/power/PowerManagerService.java	2016-02-23 19:13:47.000000000 +0000
+@@ -237,6 +237,7 @@
+     // Timestamp of the last call to user activity.
+     private long mLastUserActivityTime;
+     private long mLastUserActivityTimeNoChangeLights;
++	private long mLastButtonActivityTime;
+ 
+     // Timestamp of last interactive power hint.
+     private long mLastInteractivePowerHintTime;
+@@ -1155,6 +1156,10 @@
+                     return true;
+                 }
+             } else {
++				if (eventTime > mLastButtonActivityTime && (event & PowerManager.USER_ACTIVITY_EVENT_BUTTON) != 0) {
++                    mLastButtonActivityTime = eventTime;
++                    mDirty |= DIRTY_USER_ACTIVITY;
++                }
+                 if (eventTime > mLastUserActivityTime) {
+                     mLastUserActivityTime = eventTime;
+                     mDirty |= DIRTY_USER_ACTIVITY;
+@@ -1667,7 +1672,7 @@
+                             mKeyboardLight.setBrightness(mKeyboardVisible ?
+                                     keyboardBrightness : 0);
+                             if (mButtonTimeout != 0
+-                                    && now > mLastUserActivityTime + mButtonTimeout) {
++                                    && now > mLastButtonActivityTime + mButtonTimeout) {
+                                 mButtonsLight.setBrightness(0);
+                             } else {
+                                 if (!mProximityPositive) {
+diff -ur CM12.1_laganxx/frameworks/native/libs/gui/BufferQueueProducer.cpp CM12.1_laganxx_patched/frameworks/native/libs/gui/BufferQueueProducer.cpp
+--- CM12.1_laganxx/frameworks/native/libs/gui/BufferQueueProducer.cpp	2016-02-23 18:40:32.000000000 +0000
++++ CM12.1_laganxx_patched/frameworks/native/libs/gui/BufferQueueProducer.cpp	2016-02-01 03:51:42.000000000 +0000
+@@ -204,7 +204,12 @@
+             const int newUndequeuedCount =
+                 maxBufferCount - (dequeuedCount + 1);
+             const int minUndequeuedCount =
++#ifdef HAWAII_HWC
++                // HACK: for some reason, we need to reduce min undequeue for screen recording
++                mCore->getMinUndequeuedBufferCountLocked(false);
++#else			
+                 mCore->getMinUndequeuedBufferCountLocked(async);
++#endif			
+             if (newUndequeuedCount < minUndequeuedCount) {
+                 BQ_LOGE("%s: min undequeued buffer count (%d) exceeded "
+                         "(dequeued=%d undequeued=%d)",
+@@ -1032,4 +1037,4 @@
+     disconnect(api);
+ }
+ 
+-} // namespace android
++} // namespace android
+\ No newline at end of file
+diff -ur CM12.1_laganxx/frameworks/native/libs/gui/SensorEventQueue.cpp CM12.1_laganxx_patched/frameworks/native/libs/gui/SensorEventQueue.cpp
+--- CM12.1_laganxx/frameworks/native/libs/gui/SensorEventQueue.cpp	2016-02-23 18:40:32.000000000 +0000
++++ CM12.1_laganxx_patched/frameworks/native/libs/gui/SensorEventQueue.cpp	2016-02-23 19:18:33.000000000 +0000
+@@ -130,8 +130,12 @@
+ 
+ status_t SensorEventQueue::enableSensor(int32_t handle, int32_t samplingPeriodUs,
+                                         int maxBatchReportLatencyUs, int reservedFlags) const {
+-    return mSensorEventConnection->enableDisable(handle, true, us2ns(samplingPeriodUs),
+-                                                 us2ns(maxBatchReportLatencyUs), reservedFlags);
++    status_t err = mSensorEventConnection->enableDisable(handle, true, us2ns(samplingPeriodUs),
++                                                 us2ns(maxBatchReportLatencyUs), reservedFlags);											 
++	if (err == NO_ERROR) {
++        mSensorEventConnection->setEventRate(handle, us2ns(samplingPeriodUs));
++    }
++    return err;											 
+ }
+ 
+ status_t SensorEventQueue::flush() const {
+diff -ur CM12.1_laganxx/frameworks/native/libs/gui/SurfaceComposerClient.cpp CM12.1_laganxx_patched/frameworks/native/libs/gui/SurfaceComposerClient.cpp
+--- CM12.1_laganxx/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-02-23 18:40:32.000000000 +0000
++++ CM12.1_laganxx_patched/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-02-23 19:18:51.000000000 +0000
+@@ -838,7 +838,7 @@
+         uint32_t minLayerZ, uint32_t maxLayerZ, bool useIdentityTransform) {
+     sp<ISurfaceComposer> s(ComposerService::getComposerService());
+     if (s == NULL) return NO_INIT;
+-#ifdef USE_MHEAP_SCREENSHOT
++#if defined(USE_MHEAP_SCREENSHOT) && !defined(HAWAII_HWC)
+     int format = 0;
+     producer->query(NATIVE_WINDOW_FORMAT,&format);
+     if (format == PIXEL_FORMAT_RGBA_8888) {
+diff -ur CM12.1_laganxx/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp CM12.1_laganxx_patched/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+--- CM12.1_laganxx/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp	2016-02-23 18:40:32.000000000 +0000
++++ CM12.1_laganxx_patched/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp	2016-02-23 19:22:10.000000000 +0000
+@@ -1052,13 +1052,18 @@
+         //getLayer()->compositionType = HWC_FRAMEBUFFER;
+     }
+     virtual void setPlaneAlpha(uint8_t alpha) {
++// HAWAII_HWC does not respect planeAlpha despite being v1.2
++	#ifndef HAWAII_HWC		
+         if (hwcHasApiVersion(mHwc, HWC_DEVICE_API_VERSION_1_2)) {
+             getLayer()->planeAlpha = alpha;
+         } else {
++	#endif		
+             if (alpha < 0xFF) {
+                 getLayer()->flags |= HWC_SKIP_LAYER;
+             }
++	#ifndef HAWAII_HWC		
+         }
++	#endif	
+     }
+     virtual void setDefaultState() {
+         hwc_layer_1_t* const l = getLayer();
+diff -ur CM12.1_laganxx/system/core/libnetutils/ifc_utils.c CM12.1_laganxx_patched/system/core/libnetutils/ifc_utils.c
+--- CM12.1_laganxx/system/core/libnetutils/ifc_utils.c	2016-02-23 18:43:23.000000000 +0000
++++ CM12.1_laganxx_patched/system/core/libnetutils/ifc_utils.c	2016-02-01 03:51:42.000000000 +0000
+@@ -711,3 +711,19 @@
+ 
+     return 0;
+ }
++
++// Required for Broadcom RILD
++int ifc_set_mtu(const char *name, int mtuSz)
++{
++    struct ifreq ifr;
++    int ret;
++    ifc_init_ifr(name, &ifr);
++    ifr.ifr_mtu = mtuSz;
++
++    ret = ioctl(ifc_ctl_sock, SIOCSIFMTU, &ifr);
++    if (ret < 0) {
++        printerr("ifc_set_mtu: SIOCSIFMTU failed: %d\n", ret);
++    }
++
++    return ret;
++}
+\ No newline at end of file

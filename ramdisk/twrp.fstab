@@ -1,0 +1,10 @@
+# mount point                fstype                device                    device2                     flags
+/efs       		     ext4                 /dev/block/mmcblk0p15                                  flags=display="EFS";backup=1
+/boot                        emmc                 /dev/block/mmcblk0p5                                   flags=display="Boot";backup=1
+/recovery                    emmc                 /dev/block/mmcblk0p6
+/cache                       ext4                 /dev/block/mmcblk0p16                                  flags=display="Cache";backup=1;wipeingui;wipeduringfactoryreset
+/system                      ext4                 /dev/block/mmcblk0p17                                  flags=display="System";backup=1;wipeingui
+/data                        ext4                 /dev/block/mmcblk0p19                                  length=-16384 flags=backup=1;wipeingui
+/preload                     ext4                 /dev/block/mmcblk0p18                                  flags=display="Preload";backup=1
+/external_sd                 vfat                 /dev/block/mmcblk1p1       /dev/block/mmcblk1          flags=display="External Storage";removable;storage
+/modem                       emmc                 /dev/block/mmcblk0p7					 flags=display="Modem";backup=1

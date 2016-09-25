@@ -1,0 +1,119 @@
+diff -ur CM12.1_laganxx/external/icu/icu4c/source/common/ucnv.c CM12.1_laganxx_patched/external/icu/icu4c/source/common/ucnv.c
+--- CM12.1_laganxx/external/icu/icu4c/source/common/ucnv.c	2016-02-23 18:39:27.000000000 +0000
++++ CM12.1_laganxx_patched/external/icu/icu4c/source/common/ucnv.c	2016-02-01 03:51:42.000000000 +0000
+@@ -2914,6 +2914,76 @@
+             return FALSE;
+     }
+ }
++
++U_CAPI void    U_EXPORT2 ucnv_setToUCallBack_48 (UConverter * converter,
++                            UConverterToUCallback newAction,
++                            const void* newContext,
++                            UConverterToUCallback *oldAction,
++                            const void** oldContext,
++                            UErrorCode * err) {
++  ucnv_setToUCallBack(converter, newAction, newContext,
++        oldAction, oldContext, err);
++}
++
++U_CAPI void  U_EXPORT2 ucnv_close_48 (UConverter * converter) {
++  ucnv_close (converter);
++}
++
++U_CAPI void  U_EXPORT2
++ucnv_setFromUCallBack_48 (UConverter * converter,
++                            UConverterFromUCallback newAction,
++                            const void* newContext,
++                            UConverterFromUCallback *oldAction,
++                            const void** oldContext,
++                            UErrorCode * err) {
++
++  ucnv_setFromUCallBack(converter, newAction, newContext, oldAction,
++        oldContext, err);
++}
++
++U_CAPI void U_EXPORT2
++ucnv_convertEx_48 (UConverter *targetCnv, UConverter *sourceCnv,
++               char **target, const char *targetLimit,
++               const char **source, const char *sourceLimit,
++               UChar *pivotStart, UChar **pivotSource,
++               UChar **pivotTarget, const UChar *pivotLimit,
++               UBool reset, UBool flush,
++               UErrorCode *pErrorCode) {
++  ucnv_convertEx(targetCnv, sourceCnv, target, targetLimit, source,
++        sourceLimit, pivotStart, pivotSource,
++        pivotTarget, pivotLimit, reset, flush,
++        pErrorCode);
++}
++
++U_CAPI UConverter* U_EXPORT2
++ucnv_open_48 (const char *name,
++                       UErrorCode * err) {
++  return ucnv_open(name, err);
++}
++
++U_STABLE void U_EXPORT2 UCNV_FROM_U_CALLBACK_STOP_48 (
++                  const void *context,
++                  UConverterFromUnicodeArgs *fromUArgs,
++                  const UChar* codeUnits,
++                  int32_t length,
++                  UChar32 codePoint,
++                  UConverterCallbackReason reason,
++                  UErrorCode * err) {
++  return UCNV_FROM_U_CALLBACK_STOP(context, fromUArgs, codeUnits,
++      length, codePoint, reason, err);
++}
++
++U_STABLE void U_EXPORT2 UCNV_TO_U_CALLBACK_STOP_48 (
++                  const void *context,
++                  UConverterToUnicodeArgs *toUArgs,
++                  const char* codeUnits,
++                  int32_t length,
++                  UConverterCallbackReason reason,
++                  UErrorCode * err) {
++  return UCNV_TO_U_CALLBACK_STOP(context, toUArgs, codeUnits, length,
++      reason, err);
++}
++
+ #endif
+ 
+ /*
+diff -ur CM12.1_laganxx/external/sepolicy/domain.te CM12.1_laganxx_patched/external/sepolicy/domain.te
+--- CM12.1_laganxx/external/sepolicy/domain.te	2016-02-23 18:40:02.000000000 +0000
++++ CM12.1_laganxx_patched/external/sepolicy/domain.te	2016-02-23 19:07:47.000000000 +0000
+@@ -220,11 +220,11 @@
+ # init starts in kernel domain and switches to init domain via setcon in
+ # the init.rc, so the setenforce occurs while still in kernel. After
+ # switching domains, there is never any need to setenforce again by init.
+-neverallow domain kernel:security setenforce;
++# neverallow domain kernel:security setenforce;
+ neverallow { domain -kernel } kernel:security setcheckreqprot;
+ 
+ # No booleans in AOSP policy, so no need to ever set them.
+-neverallow domain kernel:security setbool;
++# neverallow domain kernel:security setbool;
+ 
+ # Adjusting the AVC cache threshold.
+ # Not presently allowed to anything in policy, but possibly something
+diff -ur CM12.1_laganxx/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp CM12.1_laganxx_patched/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+--- CM12.1_laganxx/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp	2016-02-23 18:40:32.000000000 +0000
++++ CM12.1_laganxx_patched/frameworks/native/services/surfaceflinger/DisplayHardware/HWComposer.cpp	2016-02-23 19:22:10.000000000 +0000
+@@ -1052,13 +1052,18 @@
+         //getLayer()->compositionType = HWC_FRAMEBUFFER;
+     }
+     virtual void setPlaneAlpha(uint8_t alpha) {
++// HAWAII_HWC does not respect planeAlpha despite being v1.2
++	#ifndef HAWAII_HWC		
+         if (hwcHasApiVersion(mHwc, HWC_DEVICE_API_VERSION_1_2)) {
+             getLayer()->planeAlpha = alpha;
+         } else {
++	#endif		
+             if (alpha < 0xFF) {
+                 getLayer()->flags |= HWC_SKIP_LAYER;
+             }
++	#ifndef HAWAII_HWC		
+         }
++	#endif	
+     }
+     virtual void setDefaultState() {
+         hwc_layer_1_t* const l = getLayer();
