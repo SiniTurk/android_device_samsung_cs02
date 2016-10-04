@@ -43,7 +43,4 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.hawaii_ss_cs02.rc:root/init.hawaii_ss_cs02.rc \
     $(LOCAL_PATH)/ramdisk/init.log.rc:root/init.log.rc \
-    $(LOCAL_PATH)/ramdisk/init.recovery.hawaii_ss_cs02.rc:root/init.recovery.hawaii_ss_cs02.rc \
-    $(LOCAL_PATH)/ramdisk/lpm.rc:root/lpm.rc \
-    $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.hawaii_ss_cs02.rc:root/ueventd.hawaii_ss_cs02.rc

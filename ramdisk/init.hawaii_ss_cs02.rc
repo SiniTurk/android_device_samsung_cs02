@@ -2,44 +2,16 @@ import init.bcm2166x.usb.rc
 import init.log.rc
 
 on early-init
-	loglevel 7
     mkdir /efs 0771 radio system
 
 on init
-# See storage config details at http://source.android.com/tech/storage/
-	mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage/emulated 0555 root root
-	export EXTERNAL_STORAGE /storage/emulated/legacy
-	export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
-    export EMULATED_STORAGE_TARGET /storage/emulated
-	# Support legacy paths
-    symlink /storage/emulated/legacy /sdcard
-    symlink /storage/emulated/legacy /mnt/sdcard
-	symlink /storage/emulated/legacy /storage/sdcard0
-	symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+    
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
 
-	mkdir /storage/sdcard1 0775 system system
-	export SECONDARY_STORAGE /storage/sdcard1
-	mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-	mkdir /storage/sdcard1 0700 root root
-	
-	#mkdir /storage/usbdisk 0775 system system
-	#export SECONDARY_STORAGE /storage/usbdisk0
-	#mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
-	#mkdir /storage/usbdisk0 0700 root root
-	
-	# for backwards compatibility
-    #symlink /storage/sdcard1 /external_sd
-    #symlink /storage/sdcard1 /mnt/external_sd
-    #symlink /storage/usbdisk /usbdisk
-    #symlink /storage/usbdisk /mnt/usbdisk
+    symlink /efs /factory
+    symlink /dev/block/mmcblk0p11 /dev/block/param
 
-# To store widevine keybox
-    symlink /data/app /factory
-	symlink /efs /factory
-	symlink /dev/block/mmcblk0p11 /dev/block/param
-
-	#mkdir /preload 0771 system system 	
 
 on post-fs-data
 # we will remap this as /storage/sdcard with the sdcard fuse tool
@@ -52,8 +24,8 @@ on post-fs-data
 	
     setprop vold.post_fs_data_done 1
 
-    chmod 0775 /data/log
-    chmod 0775 /data/anr
+    chmod 0777 /data/log
+    chmod 0777 /data/anr
 
  #for wifi
     mkdir /efs/wifi 0775 radio system
@@ -87,6 +59,7 @@ on post-fs-data
 
     chown system system /sys/class/backlight/keypad-led/brightness
     chmod 0660 /sys/class/backlight/keypad-led/brightness
+    chown system system /sys/devices/platform/panel/backlight/panel/brightness
 
     chown system system /sys/class/backlight/touchkey-led/brightness
     chmod 0660 /sys/class/backlight/touchkey-led/brightness
@@ -153,19 +126,14 @@ on post-fs-data
     chmod 0660 /sys/class/input/input2/rept_z  
     chmod 0660 /sys/class/input/input2/odr
 
-# for adb
-    chmod 0775 /system/etc/usbdev.sh
-    chmod 0775 /system/etc/startadb.sh
-
 on boot
 # SISO-ANDR_PERF :: START Changing scheduler to noop during boot
-    write /sys/block/mmcblk0/queue/scheduler noop
+	setprop sys.io.scheduler noop
 # SISO-ANDR_PERF :: END
 
     setprop ro.build.product hawaii
     setprop ro.product.device hawaii
-    
-    chown system system /sys/devices/platform/panel/backlight/panel/brightness
+
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
 # WIFI
@@ -173,7 +141,7 @@ on boot
 
     symlink /dev/block/mmcblk0p11 /dev/block/param
 
-# <Sensors & NFC>
+# <Sensors>
 # Accelerometer_sensor
     chown system radio /dev/accelerometer
     chown system radio /sys/class/sensors/accelerometer_sensor
@@ -201,17 +169,6 @@ on boot
     chown system radio /sys/class/sensors/magnetic_sensor/chip_id
     chmod 0660 /sys/class/sensors/magnetic_sensor/selftest
     chmod 0660 /sys/class/sensors/magnetic_sensor/op_mode
-
-# permissions for NFC - BRCM
-    setprop ro.nfc.port "I2C"
-    chmod 0600 /dev/bcm2079x
-    chown nfc nfc /dev/bcm2079x
-    mkdir /data/bcmnfc
-    mkdir /data/bcmnfc/param
-    chmod 0755 /data/bcmnfc
-    chmod 0755 /data/bcmnfc/param
-    chown nfc nfc /data/bcmnfc
-    chown nfc nfc /data/bcmnfc/param
 	
 # required so RIL can open kernel RPC drivers
     chmod 0660 /dev/bcm_rpc
@@ -230,11 +187,10 @@ on boot
     chmod 0660 /dev/bcm_audio_log
     chown system system /dev/ttyGS0
     chown system system /dev/ttyGS2
-    #chown system system /dev/ttyS0
-    chown gps system /dev/ttyS2
+    chown system system /dev/ttyS2
     chmod 0770 /dev/ttyS2
 	
-	chmod 0644 /proc/cmdline
+    chmod 0644 /proc/cmdline
 
 # GPS UART
     chown gps system /dev/ttyS1
@@ -265,9 +221,6 @@ on boot
 # BCMPMU drivers
     chown -R system system /sys/devices/platform/bcmpmu*/*
 # */
-# change owner of mtest system to allow atx/atxd to write this file:
-    chown system system /sys/kernel/sysrpc/mtest
-
 # fake some battery state
     setprop status.battery.state Slow
     setprop status.battery.level 10
@@ -282,7 +235,7 @@ on boot
     setprop ro.telephony.call_ring.multiple 0
 	
 # Enable dithering algorithm
-    setprop fb.force.dithering 1	
+    setprop fb.force.dithering 1
 
 # permissions for gps.
 	mkdir /data/gps 0770 gps system
@@ -307,16 +260,7 @@ on boot
 
     chmod 0660 /dev/bcm_gps
     chown radio radio /dev/bcm_gps
-
-#for bluetooth. permission for host interface
-    #chown root bluetooth /dev/ttyS0
-    #chmod 0777 /dev/ttyS0
-    
-#for fm radio    
-    copy /system/etc/local.prop /data/local.prop
-    chown system bluetooth /data/local.prop
-    chmod 0660 /data/local.prop
-
+   
 # SEC_PRODUCT_FEATURE_COMMON_USE_MULTISIM
     setprop ro.multisim.simslotcount 1
 	
@@ -383,6 +327,7 @@ on boot
    chown gps radio /sys/class/power_supply/battery/gps
    chown system radio /sys/class/power_supply/battery/wifi
    chown system radio /sys/class/power_supply/battery/lte
+   chown system radio /sys/class/power_supply/battery/lcd
 
 # Thermistor node
     chown radio system /sys/devices/platform/sec-thermistor/temp_adc
@@ -451,9 +396,22 @@ on boot
 # serial_no permission change
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
-    
+	
+	swapon_all fstab.hawaii_ss_cs02
+    write /proc/sys/vm/page-cluster 0
+    write /proc/sys/vm/swappiness 100
+		
+on charger
+# Set cpu governor to powersave while in charging mode
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor powersave
+ 
+# EHCI runtime enable for LPA
+    write /sys/devices/platform/s5p-ehci/power/control auto
+			  
 on fs
     mount_all /fstab.hawaii_ss_cs02
+	
     setprop ro.crypto.fuse_sdcard true
 
     # don't require sim
@@ -463,7 +421,7 @@ on fs
 	chown radio system /dev/block/mmcblk0p1    
 	chmod 0770 /dev/block/mmcblk0p1
 
-	chmod 6755 /system/xbin/su
+	#chmod 6755 /system/xbin/su
 
 #for ASE application
     mkdir /data/brcm
@@ -493,9 +451,6 @@ on fs
 #   Logging required to save file in /data/brcm for configuration
     mkdir /data/brcm
     chmod 0775 /data/brcm
-
-# Permissions for System Server and daemons.
-    chown system system /sys/devices/platform/panel/backlight/panel/brightness
 
     #for touch fw
     chown system system /sys/class/sec/tsp/cmd
@@ -530,50 +485,16 @@ on fs
 	mkdir /efs/imei 0775 radio system 
 
 on post-fs
+    restorecon_recursive /efs
     chown radio system /efs
     chmod 0771 /efs
-	
-#on property:persist.sys.storage_preload=1
-#    mount ext4 /dev/block/mmcblk0p18 /preload nosuid nodev noatime wait ro
-#    setprop storage.preload.complete 1
-
-#on property:persist.sys.storage_preload=0
-#    exec /system/bin/umount /preload 	
-
-on property:ro.debuggable=1
-    start console
-	
-# create virtual SD card at /mnt/sdcard, based on the /data/media directory
-# daemon will drop to user/group system/media_rw after initializing
-# underlying files in /data/media will be created with user and group media_rw (1023)
-	service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
-		class late_start	
-
-# fusewrapped external sdcard daemon running as media_rw (1023)
-	service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-		class late_start
-		disabled
-
-#  usbdisk0 sdcard daemon running as media_rw (1023)	
-	#service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
-	#	class late_start
-	#	disabled	
-
-# create filesystem if necessary
-	service setup_fs /system/bin/setup_fs \
-				/dev/block/mmcblk0p15 \
-				/dev/block/mmcblk0p11
-		class core
-		user root
-		group root
-		oneshot
 
 #bosch sensor deamon
 	service sensord /system/bin/sensord
 		class main
 		user system
 		group system
-
+				
 # RILD
 	service ril-daemon /system/bin/rild
 		class main
@@ -583,7 +504,7 @@ on property:ro.debuggable=1
 		user root
 		group radio cache inet misc audio system sdcard_rw log sdcard_r
 
-	service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+	service wpa_supplicant /system/bin/wpa_supplicant \
 		-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
 		-I/system/etc/wifi/wpa_supplicant_overlay.conf \
 		-e/data/misc/wifi/entropy.bin \
@@ -597,14 +518,14 @@ on property:ro.debuggable=1
 		disabled
 		oneshot
 	
-	service p2p_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+	service p2p_supplicant /system/bin/wpa_supplicant \
 		-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
 		-I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
 		-ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
 		-I/system/etc/wifi/p2p_supplicant_overlay.conf \
 		-e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1 \
 		-O/data/misc/wifi/sockets -g@android:wpa_wlan0
-	#   we will start as root and wpa_supplicant will switch to user wifi
+	#   We will start as root and wpa_supplicant will switch to user wifi
 	#   after setting up the capabilities required for WEXT
 	#   user wifi
 	#   group wifi inet keystore
@@ -669,14 +590,11 @@ on property:init.svc.macloader=stopped
 # end of wifi
 
 	service gpsd /system/bin/glgps -c /system/etc/gps/glconfig.xml
+		setenv LD_PRELOAD /system/lib/libglgps-compat.so
 		class late_start
 		user gps
 		group system root inet radio wifi sdcard_rw
-
-# Kexec enable
-	service kexec /system/kexec/kexec.sh
-		oneshot
-
+		
 # Run bkmgrd automatically on startup
 	service bkmgrd /system/bin/bkmgrd
 		class main
@@ -684,6 +602,12 @@ on property:init.svc.macloader=stopped
 		user root
 		#group radio system log
 		group radio system log root
+
+# Run usb_portd to automatically launch atx when USB configuration changes.
+    service usb_portd /system/bin/usb_portd
+        class main
+        user system
+        group input vpn net_admin net_raw radio system sdcard_rw log mount
 
 #Indicate boot complete to PM to complete PM initialization
 on property:dev.bootcomplete=1
@@ -706,13 +630,31 @@ on property:dev.bootcomplete=1
 		write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 6000
 		write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 15000
 		write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 2000
+		
+# CyanogenMod Performance Profiles (note: changing one governor will change for all CPUs)
+# Powersave
+on property:sys.perf.profile=0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "powersave"
+	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "800000"
+
+# Balanced
+on property:sys.perf.profile=1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "1000000"
+
+# Performance
+on property:sys.perf.profile=2
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "performance"
+	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq "1100000"		
 
 # adb
 	service startadb /system/etc/startadb.sh
 		oneshot
-
+		
+	service battery_charger /charger
+		class charger
+		critical
+				
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
-		
-service battery_charger /charger
-    class charger		
+	
