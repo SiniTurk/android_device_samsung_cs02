@@ -11,5 +11,6 @@ $(call inherit-product, device/samsung/cs02/device_cs02.mk)
 PRODUCT_DEVICE := cs02
 PRODUCT_NAME := cm_cs02
 PRODUCT_BRAND := samsung
-PRODUCT_MODEL := cs02
 PRODUCT_MANUFACTURER := samsung
+PRODUCT_MODEL := SM-G350
+PRODUCT_CHARACTERISTICS := phone
