@@ -2,3 +2,8 @@
 # system.prop for cs02
 #
 ro.sf.lcd_density=240
+rild.libpath=/system/lib/libbrcm_ril.so
+ro.ril.hsxpa=1
+ro.ril.gprsclass=10
+ro.ril.multi_rat_capable=false
+persist.radio.flexmap_type=nw_mode
