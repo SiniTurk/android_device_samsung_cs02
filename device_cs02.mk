@@ -40,6 +40,14 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.log.rc:root/init.log.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.hawaii_ss_cs02.rc:root/ueventd.hawaii_ss_cs02.rc
 
+PRODUCT_COPY_FILES += \
+	device/samsung/cs02/configs/media_profiles.xml:system/etc/media_profiles.xml \
+	device/samsung/cs02/configs/audio_policy.conf:system/etc/audio_policy.conf \
+	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
+ 	device/samsung/cs02/configs/media_codecs.xml:system/etc/media_codecs.xml 
+
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayouts/bcm_headset.kl:system/usr/keylayout/bcm_headset.kl \

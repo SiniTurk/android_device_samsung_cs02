@@ -13,6 +13,11 @@ TARGET_CPU_VARIANT := cortex-a9
 TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_BOOTLOADER_BOARD_NAME := hawaii
+TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
+
+# Assert
+TARGET_OTA_ASSERT_DEVICE := cs02,G350,SM-G350,hawaii
 
 # Kernel
 BOARD_KERNEL_BASE := 0x82000000
@@ -21,15 +26,15 @@ TARGET_PREBUILT_KERNEL := device/samsung/cs02/kernel
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_cs02_rev02_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/cs02/
 # Make sure you have the correct toolchain available
-TARGET_KERNEL_TOOLCHAIN_VERSION := 4.6
-KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/$(KERNEL_TOOLCHAIN_PREFIX)$(TARGET_KERNEL_TOOLCHAIN_VERSION)/bin
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
 # Partition sizes
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608 # mmcblk0p5, 8192 blocks
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8388608 # mmcblk0p6, 8192 blocks
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1210769408 # mmcblk0p17, 1182392 blocks
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2373976064 # mmcblk0p19, 2318336 blocks
+BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 1024
 
 # Recovery
@@ -72,4 +77,10 @@ BOARD_RIL_CLASS := ../../../device/samsung/cs02/ril/
 # CMHW
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/cs02/cmhw/
 
+# Resolution
+TARGET_SCREEN_HEIGHT := 800
+TARGET_SCREEN_WIDTH := 480
+DEVICE_RESOLUTION := 480x800
 
+# Enable WEBGL in WebKit
+ENABLE_WEBGL                := true
