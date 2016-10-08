@@ -1,5 +1,5 @@
 # Release name
-PRODUCT_RELEASE_NAME := cs02
+PRODUCT_RELEASE_NAME := SM-G350
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
