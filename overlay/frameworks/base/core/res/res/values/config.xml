@@ -167,8 +167,6 @@
          kill the foreground app. -->
     <integer name="config_backKillTimeout">1700</integer>
 
-    <!-- Boolean to enable stk functionality on Samsung phones -->
-    <bool name="config_samsung_stk">true</bool>
 
     <!-- Hardware 'face' keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
@@ -220,8 +218,6 @@
          (range of 18 - 21 kHz). -->
     <bool name="config_supportSpeakerNearUltrasound">false</bool>
 
-    <!-- Boolean indicating autojoin will prefer 5GHz and choose 5GHz BSSIDs -->
-    <bool translatable="true" name="config_wifi_enable_5GHz_preference">false</bool>
 
     <!-- Flag specifying whether VoLTE TTY is supported -->
     <bool name="config_carrier_volte_tty_supported">false</bool>
