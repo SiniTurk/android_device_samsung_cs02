@@ -34,7 +34,10 @@ else
     TARGET_KERNEL_CONFIG                    := bcm21664_hawaii_ss_kylepro_rev00_cyanogenmod_defconfig
 endif
 TARGET_KERNEL_SOURCE                        := kernel/samsung/kyleproxx
-TARGET_KERNEL_CUSTOM_TOOLCHAIN              := arm-eabi-4.7
+
+# Kernel toolchain
+KERNEL_TOOLCHAIN                            := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
+KERNEL_TOOLCHAIN_PREFIX                     := arm-eabi-
 
 # Extended filesystem support
 TARGET_KERNEL_HAVE_EXFAT                    := true
@@ -54,7 +57,7 @@ BOARD_FLASH_BLOCK_SIZE                      := 262144
 BOARD_HAVE_BLUETOOTH                        := true
 BOARD_HAVE_BLUETOOTH_BCM                    := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/kylepro/bluetooth
-BOARD_BLUEDROID_VENDOR_CONF                 := device/samsung/kylepro/bluetooth/libbt_vndcfg.txt
+BOARD_CUSTOM_BT_CONFIG                      := device/samsung/kylepro/bluetooth/libbt_vndcfg.txt
 
 # Connectivity - Wi-Fi
 BOARD_HAVE_SAMSUNG_WIFI                     := true
@@ -88,12 +91,12 @@ TARGET_SCREEN_HEIGHT                        := 800
 TARGET_SCREEN_WIDTH                         := 480
 
 # Hardware rendering
-USE_OPENGL_RENDERER                         := true
-BOARD_USE_MHEAP_SCREENSHOT                  := true
+#USE_OPENGL_RENDERER                        := true
+#BOARD_USE_MHEAP_SCREENSHOT                 := true
 BOARD_EGL_WORKAROUND_BUG_10194508           := true
 TARGET_USES_ION                             := true
-HWUI_COMPILE_FOR_PERF                       := true
-COMMON_GLOBAL_CFLAGS                        += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
+#HWUI_COMPILE_FOR_PERF                      := true
+BOARD_GLOBAL_CFLAGS                         += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK       := true
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS       := true
 
@@ -117,7 +120,10 @@ BOARD_HAL_STATIC_LIBRARIES                  := libhealthd.hawaii
 
 # RIL
 BOARD_RIL_CLASS                             := ../../../device/samsung/kylepro/ril/
-COMMON_GLOBAL_CFLAGS                        += -DDISABLE_ASHMEM_TRACKING
+BOARD_GLOBAL_CFLAGS                         += -DDISABLE_ASHMEM_TRACKING
+
+# Some of our vendor libs have text relocations
+TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS      := true
 
 # Recovery
 # Compile with BUILD_TWRP=true when build TWRP recovery
