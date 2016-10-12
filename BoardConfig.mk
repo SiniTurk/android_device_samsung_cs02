@@ -25,7 +25,7 @@ BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
 #TARGET_PREBUILT_KERNEL := device/samsung/cs02/kernel
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_cs02_rev02_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/cs02/
+TARGET_KERNEL_SOURCE := kernel/samsung/cs02
 # Make sure you have the correct toolchain available
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
