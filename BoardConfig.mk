@@ -136,6 +136,7 @@ else
 endif
 TARGET_USE_CUSTOM_LUN_FILE_PATH             := /sys/class/android_usb/android0/f_mass_storage/lun/file
 TARGET_USERIMAGES_USE_EXT4                  := true
+TARGET_USERIMAGES_USE_F2FS                  := true
 TARGET_RECOVERY_PIXEL_FORMAT                := BGRA_8888
 BOARD_HAS_NO_MISC_PARTITION                 := true
 BOARD_RECOVERY_HANDLES_MOUNT                := true

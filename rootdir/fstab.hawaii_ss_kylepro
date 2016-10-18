@@ -5,12 +5,14 @@
 # <src>                                             <mnt_point>         <type>  <mnt_flags and options>                                                         <fs_mgr_flags>
 /dev/block/platform/sdhci.1/by-name/system          /system             ext4    ro,noatime,noauto_da_alloc                                                      wait
 /dev/block/platform/sdhci.1/by-name/efs             /efs                ext4    noatime,nosuid,nodev,journal_async_commit,errors=panic                          wait,check
+/dev/block/platform/sdhci.1/by-name/CSC             /cache              f2fs    rw,nosuid,nodev,noatime,nodiratime,inline_xattr                                 wait,check,formattable
 /dev/block/platform/sdhci.1/by-name/CSC             /cache              ext4    noatime,nosuid,nodev,discard,journal_async_commit,errors=panic                  wait,check
 /dev/block/platform/sdhci.1/by-name/KERNEL          /boot               emmc    defaults                                                                        defaults
 /dev/block/platform/sdhci.1/by-name/RECOVERY        /recovery           emmc    defaults                                                                        defaults
 /dev/block/platform/sdhci.1/by-name/modem           /modem              emmc    defaults                                                                        defaults
 
 # /data partition must be located at the bottom for supporting device encryption
+/dev/block/platform/sdhci.1/by-name/userdata        /data               f2fs    rw,nosuid,nodev,noatime,nodiratime,inline_data,inline_xattr                     wait,check,formattable,encryptable=footer,length=-16384
 /dev/block/platform/sdhci.1/by-name/userdata        /data               ext4    noatime,nosuid,nodev,discard,noauto_da_alloc,journal_async_commit,errors=panic  wait,check,encryptable=footer,length=-16384
 
 # Vold-managed volumes ("block device" is actually a sysfs devpath)
