@@ -12,6 +12,7 @@ CyanogenMod 13.0 device tree for Samsung Galaxy Core Plus (SM-G350)
 <li>Audio</li>
 <li>Microphone</li>
 <li>MTP</li>
+<li>Camera</li>
 
 ####What does not work:
 <li>Internet (Mobile/WiFi/Bluetooth)</li>
