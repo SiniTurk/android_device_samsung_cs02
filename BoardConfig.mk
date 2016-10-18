@@ -27,7 +27,7 @@ BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_cs02_rev02_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/cs02
 # Make sure you have the correct toolchain available
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.7
 
 # Partition sizes
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608 # mmcblk0p5, 8192 blocks
