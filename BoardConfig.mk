@@ -152,6 +152,7 @@ TW_CUSTOM_BATTERY_PATH                      := /sys/class/power_supply/battery
 TW_BRIGHTNESS_PATH                          := /sys/class/backlight/panel/brightness
 RECOVERY_SDCARD_ON_DATA                     := true
 TW_NO_REBOOT_BOOTLOADER                     := true
+TW_INCLUDE_CRYPTO                           := true
 RECOVERY_GRAPHICS_USE_LINELENGTH            := true
 TW_INTERNAL_STORAGE_PATH                    := /data/media
 TW_INTERNAL_STORAGE_MOUNT_POINT             := sdcard
