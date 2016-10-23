@@ -599,12 +599,20 @@ on property:dev.bootcomplete=1
     chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
     chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/target_loads
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boost
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chmod 660 /sys/devices/system/cpu/cpufreq/interactive/target_loads
     write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 666666
     write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 70
     write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 6000
