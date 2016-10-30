@@ -25,11 +25,11 @@
 /dev/bcm_isp                0660    system  camera
 /dev/mm_isp                 0666    system  camera
 /dev/mm_interlock           0666    system  graphics
-/dev/mm_h264                0660    media   media
-/dev/h264_ol                0660    media   media
+/dev/mm_h264                0666    media   media
+/dev/h264_ol                0666    media   media
 
 # For h/w codec
-/dev/brcm_h264              0660    media   media
+/dev/brcm_h264              0666    media   media
 
 # Permission for NV partition 
 /dev/block/mmcblk0p1        0770    radio   system
