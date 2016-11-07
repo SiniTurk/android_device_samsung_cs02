@@ -63,7 +63,6 @@ PRODUCT_PACKAGES += \
 
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
-    media.stagefright.codecremote=false \
     media.stagefright.legacyencoder=true \
     media.stagefright.less-secure=true
 
