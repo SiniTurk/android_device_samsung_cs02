@@ -13,5 +13,5 @@
 #/dev/block/mmcblk0p18     /preload          ext4    defaults                                                    recoveryonly
 
 # vold-managed volumes ("block device" is actually a sysfs devpath)
-/devices/platform/sdhci.0/mmc_host/mmc2 auto auto   defaults                                                    voldmanaged=sdcard1:auto,noemulatedsd
-#/devices/platform/dwc_otg/usb1 auto        auto    defaults                                                    voldmanaged=usbdisk:auto
+/devices/platform/sdhci.0/mmc_host/mmc2 auto auto   defaults                                                    voldmanaged=sdcard1:auto,encryptable=userdata
+#/devices/platform/dwc_otg/usb1 auto        auto    defaults                                                    voldmanaged=usb:auto
