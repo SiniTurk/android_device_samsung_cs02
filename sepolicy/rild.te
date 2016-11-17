@@ -15,3 +15,5 @@ allow rild self:packet_socket { create ioctl };
 
 # /proc/bcm_fuse_net_config
 allow rild proc:file write;
+
+allow rild toolbox_exec:file { execute execute_no_trans getattr open read };
