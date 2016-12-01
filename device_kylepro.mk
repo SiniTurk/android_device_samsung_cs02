@@ -79,6 +79,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Gello
 
+# Widevine
+PRODUCT_PACKAGES += \
+    libshim_wvm
+    
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ksm.default=1

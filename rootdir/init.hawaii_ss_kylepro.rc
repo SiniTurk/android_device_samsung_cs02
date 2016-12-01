@@ -8,6 +8,7 @@ on early-init
     chown system system /sys/devices/platform/pwm-backlight.0/backlight/panel/brightness
 
 on init
+    export LD_SHIM_LIBS "/system/lib/libwvm.so|libshim_wvm.so"
     mkdir /tmp
     mount tmpfs tmpfs /tmp
     chmod 1775 /tmp
