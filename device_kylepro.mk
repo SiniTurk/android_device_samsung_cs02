@@ -156,7 +156,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.media.use-awesome=true
 
 # Dalvik heap config
-include frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk
+include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
 # Texture config.
 include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk
