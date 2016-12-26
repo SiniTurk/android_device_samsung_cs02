@@ -1,0 +1,5 @@
+# lpm service
+type lpm, domain;
+type lpm_exec, file_type, exec_type;
+
+init_daemon_domain(lpm)

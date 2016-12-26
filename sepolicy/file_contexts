@@ -42,6 +42,8 @@
 /system/bin/glgps                               u:object_r:gpsd_exec:s0
 /system/bin/immvibed                            u:object_r:immvibed_exec:s0
 /system/bin/macloader                           u:object_r:macloader_exec:s0
+/system/bin/sensord                             u:object_r:sensord_exec:s0
+/system/bin/lpm                                 u:object_r:lpm_exec:s0
 ###################################
 # Data files
 #
