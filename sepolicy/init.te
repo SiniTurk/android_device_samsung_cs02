@@ -8,6 +8,9 @@ allow init root_block_device:blk_file setattr;
 allow init sysfs:lnk_file setattr;
 allow init tmpfs:lnk_file create;
 
+# lpm service
+allow init lpm_exec:file { execute };
+
 # insmod
 allow init self:capability sys_module; # TODO: want sys_ptrace too
 
