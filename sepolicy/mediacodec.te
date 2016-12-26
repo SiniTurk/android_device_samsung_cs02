@@ -1,1 +1,2 @@
 allow mediacodec system_file:dir { open read };
+allow mediacodec system_file:lnk_file { getattr };

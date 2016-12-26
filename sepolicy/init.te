@@ -1,4 +1,4 @@
-# chmod in init.capri_ss_baffin.rc (for bkmgrd)
+# chmod in init.{$ro.hardware}.rc (for bkmgrd)
 allow init block_device:blk_file setattr;
 allow init radio_device:blk_file setattr;
 
@@ -10,6 +10,12 @@ allow init tmpfs:lnk_file create;
 
 # lpm service
 allow init lpm_exec:file { execute };
+
+# setup_fs service
+allow init setup_fs_exec:file { execute };
+
+# bluetooth
+allow init hci_attach_dev:chr_file { write };
 
 # insmod
 allow init self:capability sys_module; # TODO: want sys_ptrace too

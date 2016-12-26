@@ -7,5 +7,6 @@ allow bkmgrd self:capability setuid;
 allow bkmgrd radio_device:chr_file rw_file_perms;
 allow bkmgrd radio_data_file:dir rw_dir_perms;
 allow bkmgrd radio_data_file:file create_file_perms;
+allow bkmgrd system_file:lnk_file { getattr };
 
 file_type_auto_trans(bkmgrd, system_data_file, radio_data_file);

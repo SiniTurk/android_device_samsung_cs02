@@ -1,6 +1,7 @@
 allow gpsd gps_data_file:dir rw_dir_perms;
 allow gpsd gps_data_file:file create_file_perms;
 allow gpsd gps_data_file:fifo_file create_file_perms;
+allow gpsd system_file:lnk_file { getattr };
 
 allow gpsd system_data_file:dir rw_dir_perms;
 

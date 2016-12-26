@@ -1,3 +1,4 @@
 net.tcp.buffersize.           u:object_r:net_radio_prop:s0
 persist.sys.pdpcontext.       u:object_r:radio_prop:s0
 service.brcm.bt.mac           u:object_r:radio_prop:s0
+debug.brcm.fbdump             u:object_r:debug_prop:s0

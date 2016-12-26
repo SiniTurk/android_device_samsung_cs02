@@ -4,6 +4,14 @@ allow kernel self:capability mknod;
 
 allow kernel device:dir { write add_name };
 
+# Access /data/.psm.info
+type_transition kernel system_data_file:file wifi_data_file ".psm.info";
+allow kernel wifi_data_file:file rw_file_perms;
+
+# Access /efs/wifi/.mac.info
+allow kernel efs_file:dir search;
+allow kernel efs_file:file { read open };
+
 # kcamfwcheck drivers/char/broadcom/vc_cam/vc_cam.c
 allow kernel block_device:dir search;
 allow kernel cam_block_device:blk_file rw_file_perms;

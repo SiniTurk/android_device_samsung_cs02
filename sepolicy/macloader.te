@@ -6,4 +6,8 @@ init_daemon_domain(macloader)
 # Read EFS
 allow macloader efs_file:dir rw_dir_perms;
 allow macloader efs_file:file rw_file_perms;
-allow macloader self:capability dac_override;
+allow macloader self:capability { dac_override sys_module net_raw net_admin };
+allow macloader self:udp_socket { create ioctl };
+
+# allow getattr of link files in vendor for bt
+allow macloader system_file:lnk_file { getattr };
