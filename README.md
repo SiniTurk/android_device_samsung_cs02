@@ -1,4 +1,4 @@
-# CM-13.0 Device tree for Samsung GT-S7580 (kylepro)
+# LineageOS 14.1  Device tree for Samsung GT-S7580 (kylepro)
 
 ### Specs (Physically inspected):
   - CPU: Cortex-A9 (Little endian, Dual Core)
@@ -19,11 +19,11 @@
   - WIFI/Bluetooth/FM-Radio: BCM4330
 
 ### Notice:
-  - Apply patch *PATCH_CM-13.0.diff* to root directory of CM-13.0 source code before build
+  - Apply patch *PATCH_CM-14.1.diff* to root directory of LOS-14.1 source code before build
 
 ### Other resource:
-  - Kernel source: https://github.com/SandPox/android_kernel_samsung_kyleproxx
-  - Vendor blobs: https://github.com/SandPox/android_vendor_samsung_kyleproxx
+  - Kernel source: https://github.com/ishantvivek/android_kernel_samsung_kyleproxx
+  - Vendor blobs: https://github.com/ishantvivek/android_vendor_samsung_kyleproxx
 
 ### More Information:
 ```sh
@@ -75,6 +75,7 @@ mmcblk0p19: 0046c000 00000400 "userdata"
   - ghsr
   - Ishant Vivek
   - Pawitp
+  - Sandpox
   - TheComputerGuy96
   - The CyanogenMod Team
   - TheNikiz
