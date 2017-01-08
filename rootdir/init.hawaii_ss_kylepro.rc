@@ -393,7 +393,7 @@ on boot
     write /proc/sys/vm/page-cluster 0
 
 # Swap tweaks
-    write /proc/sys/vm/swappiness 70
+    write /proc/sys/vm/swappiness 50
     write /proc/sys/vm/dirty_background_ratio 5
     write /proc/sys/vm/dirty_expire_centisecs 200
     write /proc/sys/vm/min_free_order_shift 4
@@ -613,10 +613,12 @@ on property:dev.bootcomplete=1
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
     chmod 660 /sys/devices/system/cpu/cpufreq/interactive/target_loads
-    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 666666
-    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 70
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1300000
+    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 800000
+    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 50
     write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 6000
-    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 15000
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 20000
     write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 2000
 
 # Change dirty_bytes and dirty_background_bytes for 4GB TLC memory

@@ -19,7 +19,7 @@
 /devices/platform/sdhci.0/mmc_host/mmc2*            auto                vfat    defaults                                                                        voldmanaged=sdcard1:auto,encryptable=userdata
 
 # ZRAM
-/dev/block/zram0                                    none                swap    defaults                                                                        zramsize=268435456
+/dev/block/zram0                                    none                swap    defaults                                                                        zramsize=134217728
 
 # SWAP
 /dev/block/platform/sdhci.1/by-name/HIDDEN          none                swap    defaults                                                                        defaults
