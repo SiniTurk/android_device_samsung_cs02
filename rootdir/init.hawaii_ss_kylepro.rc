@@ -393,7 +393,7 @@ on boot
     write /proc/sys/vm/page-cluster 0
 
 # Swap tweaks
-    write /proc/sys/vm/swappiness 50
+    write /proc/sys/vm/swappiness 65
     write /proc/sys/vm/dirty_background_ratio 5
     write /proc/sys/vm/dirty_expire_centisecs 200
     write /proc/sys/vm/min_free_order_shift 4
