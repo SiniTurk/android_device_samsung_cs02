@@ -34,3 +34,6 @@ sf.metadata_use_plat_sw_codecs=1
 
 ro.ril.hsxpa=1
 ro.ril.gprsclass=10
+
+# BG Tuning
+ro.sys.fw.bg_apps_limit=8
