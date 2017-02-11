@@ -79,6 +79,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Gello
 
+# Recorder
+PRODUCT_PACKAGES += \
+    Recorder
+
 # Widevine
 PRODUCT_PACKAGES += \
     libshim_wvm
