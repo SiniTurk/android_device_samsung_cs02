@@ -1,7 +1,7 @@
 diff -ur a/build/core/tasks/kernel.mk b/build/core/tasks/kernel.mk
---- a/build/core/tasks/kernel.mk	2016-10-15 14:58:46.284802517 +0200
-+++ b/build/core/tasks/kernel.mk	2016-10-15 15:01:21.321597604 +0200
-@@ -230,7 +230,11 @@
+--- a/build/core/tasks/kernel.mk	2017-02-27 09:30:14.149758353 +0100
++++ b/build/core/tasks/kernel.mk	2017-02-27 09:46:25.292552258 +0100
+@@ -236,7 +236,11 @@
      ccache := $(strip $(wildcard $(ccache)))
  endif
  
@@ -15,8 +15,8 @@ diff -ur a/build/core/tasks/kernel.mk b/build/core/tasks/kernel.mk
  
  define mv-modules
 diff -ur a/external/icu/icu4c/source/common/ucnv.c b/external/icu/icu4c/source/common/ucnv.c
---- a/external/icu/icu4c/source/common/ucnv.c	2016-10-15 14:58:46.284802517 +0200
-+++ b/external/icu/icu4c/source/common/ucnv.c	2016-10-15 15:01:21.325597728 +0200
+--- a/external/icu/icu4c/source/common/ucnv.c	2017-02-27 09:30:14.149758353 +0100
++++ b/external/icu/icu4c/source/common/ucnv.c	2017-02-27 09:46:25.292552258 +0100
 @@ -2914,6 +2914,76 @@
              return FALSE;
      }
@@ -95,8 +95,8 @@ diff -ur a/external/icu/icu4c/source/common/ucnv.c b/external/icu/icu4c/source/c
  
  /*
 diff -ur a/external/sepolicy/domain.te b/external/sepolicy/domain.te
---- a/external/sepolicy/domain.te	2016-10-15 14:58:46.284802517 +0200
-+++ b/external/sepolicy/domain.te	2016-10-15 15:01:21.325597728 +0200
+--- a/external/sepolicy/domain.te	2017-02-27 09:30:14.149758353 +0100
++++ b/external/sepolicy/domain.te	2017-02-27 09:46:25.292552258 +0100
 @@ -237,11 +237,11 @@
  # init starts in kernel domain and switches to init domain via setcon in
  # the init.rc, so the setenforce occurs while still in kernel. After
@@ -113,8 +113,8 @@ diff -ur a/external/sepolicy/domain.te b/external/sepolicy/domain.te
  # Adjusting the AVC cache threshold.
  # Not presently allowed to anything in policy, but possibly something
 diff -ur a/frameworks/av/include/media/stagefright/ColorConverter.h b/frameworks/av/include/media/stagefright/ColorConverter.h
---- a/frameworks/av/include/media/stagefright/ColorConverter.h	2016-10-15 14:58:46.284802517 +0200
-+++ b/frameworks/av/include/media/stagefright/ColorConverter.h	2016-10-15 15:01:21.325597728 +0200
+--- a/frameworks/av/include/media/stagefright/ColorConverter.h	2017-02-27 09:30:14.149758353 +0100
++++ b/frameworks/av/include/media/stagefright/ColorConverter.h	2017-02-27 09:46:25.292552258 +0100
 @@ -66,6 +66,9 @@
  
      status_t convertCbYCrY(
@@ -126,8 +126,8 @@ diff -ur a/frameworks/av/include/media/stagefright/ColorConverter.h b/frameworks
      status_t convertYUV420Planar(
              const BitmapParams &src, const BitmapParams &dst);
 diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/libstagefright/ACodec.cpp
---- a/frameworks/av/media/libstagefright/ACodec.cpp	2016-10-15 14:58:46.284802517 +0200
-+++ b/frameworks/av/media/libstagefright/ACodec.cpp	2016-10-15 15:01:21.325597728 +0200
+--- a/frameworks/av/media/libstagefright/ACodec.cpp	2017-02-27 09:30:14.149758353 +0100
++++ b/frameworks/av/media/libstagefright/ACodec.cpp	2017-02-27 09:46:25.292552258 +0100
 @@ -785,11 +785,11 @@
  
      status_t err;
@@ -179,7 +179,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
  #endif
              mRotationDegrees,
              usage);
-@@ -1754,13 +1773,13 @@
+@@ -1757,13 +1776,13 @@
              mInputMetadataType = kMetadataBufferTypeCameraSource;
          }
  
@@ -200,7 +200,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      }
  
      int32_t prependSPSPPS = 0;
-@@ -2268,20 +2287,20 @@
+@@ -2271,20 +2290,20 @@
          err = setMinBufferSize(kPortIndexInput, 8192);  // XXX
      }
  
@@ -235,7 +235,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
  
      mBaseOutputFormat = outputFormat;
  
-@@ -3970,6 +3989,20 @@
+@@ -3973,6 +3992,20 @@
      image.mNumPlanes = 0;
  
      const OMX_COLOR_FORMATTYPE fmt = params.eColorFormat;
@@ -256,7 +256,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      image.mWidth = params.nFrameWidth;
      image.mHeight = params.nFrameHeight;
  
-@@ -4149,6 +4182,16 @@
+@@ -4152,6 +4185,16 @@
          return BAD_VALUE;
      }
  
@@ -273,7 +273,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      switch (def.eDomain) {
          case OMX_PortDomainVideo:
          {
-@@ -6596,14 +6639,14 @@
+@@ -6599,14 +6642,14 @@
          }
      }
  
@@ -297,8 +297,8 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      return OK;
  }
 diff -ur a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp b/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp
---- a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2016-10-15 15:01:21.325597728 +0200
+--- a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp	2017-02-27 09:46:25.296552298 +0100
 @@ -44,6 +44,7 @@
      switch (mSrcFormat) {
          case OMX_COLOR_FormatYUV420Planar:
@@ -391,8 +391,8 @@ diff -ur a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp
              signed v_r = v * 409;
  
 diff -ur a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp
---- a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp	2016-10-15 15:01:21.325597728 +0200
+--- a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp	2017-02-27 09:46:25.296552298 +0100
 @@ -55,6 +55,13 @@
      mLastBuffer = buffer;
  }
@@ -408,8 +408,8 @@ diff -ur a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp b/frameworks/
          MediaBuffer **out, bool nonBlocking) {
      Mutex::Autolock autoLock(mLock);
 diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/media/libstagefright/MPEG4Writer.cpp
---- a/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-10-15 15:01:21.325597728 +0200
+--- a/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2017-02-27 09:46:25.296552298 +0100
 @@ -2370,8 +2370,8 @@
  
          timestampUs -= previousPausedDurationUs;
@@ -479,8 +479,8 @@ diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/me
  
      mOwner->trackProgressStatus(mTrackId, -1, err);
 diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media/libstagefright/OMXCodec.cpp
---- a/frameworks/av/media/libstagefright/OMXCodec.cpp	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/av/media/libstagefright/OMXCodec.cpp	2016-10-15 15:01:21.329597851 +0200
+--- a/frameworks/av/media/libstagefright/OMXCodec.cpp	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/av/media/libstagefright/OMXCodec.cpp	2017-02-27 09:46:25.296552298 +0100
 @@ -1297,6 +1297,12 @@
          CHECK_EQ((int)format.eCompressionFormat, (int)OMX_VIDEO_CodingUnused);
  
@@ -561,8 +561,8 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
      }
  
 diff -ur a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java
---- a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2016-10-15 15:01:21.329597851 +0200
+--- a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2017-02-27 09:46:25.296552298 +0100
 @@ -3385,49 +3385,20 @@
       * @hide
       */
@@ -651,8 +651,8 @@ diff -ur a/frameworks/base/telephony/java/android/telephony/TelephonyManager.jav
  
      /** @hide */
 diff -ur a/frameworks/native/libs/binder/Parcel.cpp b/frameworks/native/libs/binder/Parcel.cpp
---- a/frameworks/native/libs/binder/Parcel.cpp	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/native/libs/binder/Parcel.cpp	2016-10-15 15:01:21.333597975 +0200
+--- a/frameworks/native/libs/binder/Parcel.cpp	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/native/libs/binder/Parcel.cpp	2017-02-27 09:46:25.296552298 +0100
 @@ -895,6 +895,12 @@
      return writeString16(str.string(), str.size());
  }
@@ -667,8 +667,8 @@ diff -ur a/frameworks/native/libs/binder/Parcel.cpp b/frameworks/native/libs/bin
  {
      if (str == NULL) return writeInt32(-1);
 diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java
---- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2016-10-15 15:01:21.333597975 +0200
+--- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2017-02-27 09:46:25.296552298 +0100
 @@ -239,6 +239,7 @@
      boolean mDnsCheckDisabled;
      public DcTrackerBase mDcTracker;
@@ -717,8 +717,8 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/Phon
          pw.println(" mCallRingDelay=" + mCallRingDelay);
          pw.println(" mIsTheCurrentActivePhone=" + mIsTheCurrentActivePhone);
 diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java
---- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2016-10-15 14:58:46.288802640 +0200
-+++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2016-10-15 15:01:21.333597975 +0200
+--- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2017-02-27 09:46:25.296552298 +0100
 @@ -303,7 +303,7 @@
      static final int RESPONSE_SOLICITED = 0;
      static final int RESPONSE_UNSOLICITED = 1;
@@ -729,8 +729,8 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.
      static final int SOCKET_OPEN_RETRY_MILLIS = 4 * 1000;
  
 diff -ur a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java
---- a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2016-10-15 14:58:46.292802764 +0200
-+++ b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2016-10-15 15:01:21.333597975 +0200
+--- a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2017-02-27 09:46:25.296552298 +0100
 @@ -26,14 +26,10 @@
      public static boolean mHaveGestureLib = false;
      static {
@@ -750,8 +750,8 @@ diff -ur a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin
      }
  
 diff -ur a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java
---- a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2016-10-15 14:58:46.292802764 +0200
-+++ b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2016-10-15 15:01:21.333597975 +0200
+--- a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2017-02-27 09:46:25.296552298 +0100
 @@ -22,5 +22,4 @@
      }
  
@@ -761,8 +761,8 @@ diff -ur a/packages/inputmethods/LatinIME/java-overridable/src/com/android/input
 +}
 \ Kein Zeilenumbruch am Dateiende.
 diff -ur a/packages/services/Telephony/res/values/strings.xml b/packages/services/Telephony/res/values/strings.xml
---- a/packages/services/Telephony/res/values/strings.xml	2016-10-15 14:58:46.292802764 +0200
-+++ b/packages/services/Telephony/res/values/strings.xml	2016-10-15 15:01:21.333597975 +0200
+--- a/packages/services/Telephony/res/values/strings.xml	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/services/Telephony/res/values/strings.xml	2017-02-27 09:46:25.300552337 +0100
 @@ -631,12 +631,14 @@
      </string-array>
  
@@ -782,9 +782,9 @@ diff -ur a/packages/services/Telephony/res/values/strings.xml b/packages/service
  
      <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
 diff -ur a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java
---- a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2016-10-15 14:58:46.292802764 +0200
-+++ b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2016-10-15 15:01:21.333597975 +0200
-@@ -1128,7 +1128,7 @@
+--- a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2017-02-27 09:46:25.300552337 +0100
+@@ -1134,7 +1134,7 @@
              case Phone.NT_MODE_WCDMA_ONLY:
                  mButtonEnabledNetworks.setValue(
                          Integer.toString(Phone.NT_MODE_WCDMA_ONLY));
@@ -793,7 +793,7 @@ diff -ur a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettin
                  break;
              case Phone.NT_MODE_GSM_UMTS:
                  mButtonEnabledNetworks.setValue(
-@@ -1138,12 +1138,12 @@
+@@ -1144,12 +1144,12 @@
              case Phone.NT_MODE_WCDMA_PREF:
                  mButtonEnabledNetworks.setValue(
                          Integer.toString(Phone.NT_MODE_WCDMA_PREF));
@@ -809,8 +809,8 @@ diff -ur a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettin
              case Phone.NT_MODE_LTE_GSM_WCDMA:
                  if (isWorldMode()) {
 diff -ur a/system/core/include/utils/RefBase.h b/system/core/include/utils/RefBase.h
---- a/system/core/include/utils/RefBase.h	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/include/utils/RefBase.h	2016-10-15 15:01:21.333597975 +0200
+--- a/system/core/include/utils/RefBase.h	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/include/utils/RefBase.h	2017-02-27 09:46:25.300552337 +0100
 @@ -53,6 +53,15 @@
  
  // ---------------------------------------------------------------------------
@@ -828,8 +828,8 @@ diff -ur a/system/core/include/utils/RefBase.h b/system/core/include/utils/RefBa
  protected:
      // destructor is purposedly not virtual so we avoid code overhead from
 diff -ur a/system/core/include/utils/VectorImpl.h b/system/core/include/utils/VectorImpl.h
---- a/system/core/include/utils/VectorImpl.h	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/include/utils/VectorImpl.h	2016-10-15 15:01:21.333597975 +0200
+--- a/system/core/include/utils/VectorImpl.h	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/include/utils/VectorImpl.h	2017-02-27 09:46:25.300552337 +0100
 @@ -105,6 +105,18 @@
      virtual void            do_splat(void* dest, const void* item, size_t num) const = 0;
      virtual void            do_move_forward(void* dest, const void* from, size_t num) const = 0;
@@ -869,8 +869,8 @@ diff -ur a/system/core/include/utils/VectorImpl.h b/system/core/include/utils/Ve
  private:
              ssize_t         _indexOrderOf(const void* item, size_t* order = 0) const;
 diff -ur a/system/core/init/init.cpp b/system/core/init/init.cpp
---- a/system/core/init/init.cpp	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/init/init.cpp	2016-10-15 15:01:21.333597975 +0200
+--- a/system/core/init/init.cpp	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/init/init.cpp	2017-02-27 09:46:25.300552337 +0100
 @@ -75,6 +75,9 @@
  #define BOARD_CHARGING_CMDLINE_VALUE "true"
  #endif
@@ -930,8 +930,8 @@ diff -ur a/system/core/init/init.cpp b/system/core/init/init.cpp
  
  static void process_kernel_dt(void)
 diff -ur a/system/core/init/util.cpp b/system/core/init/util.cpp
---- a/system/core/init/util.cpp	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/init/util.cpp	2016-10-15 15:01:21.333597975 +0200
+--- a/system/core/init/util.cpp	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/init/util.cpp	2017-02-27 09:46:25.300552337 +0100
 @@ -401,6 +401,34 @@
      }
  }
@@ -968,8 +968,8 @@ diff -ur a/system/core/init/util.cpp b/system/core/init/util.cpp
  {
      char cmdline[2048];
 diff -ur a/system/core/init/util.h b/system/core/init/util.h
---- a/system/core/init/util.h	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/init/util.h	2016-10-15 15:01:21.333597975 +0200
+--- a/system/core/init/util.h	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/init/util.h	2017-02-27 09:46:25.300552337 +0100
 @@ -58,6 +58,7 @@
  void remove_link(const char *oldpath, const char *newpath);
  int wait_for_file(const char *filename, int timeout);
@@ -979,8 +979,8 @@ diff -ur a/system/core/init/util.h b/system/core/init/util.h
  int make_dir(const char *path, mode_t mode);
  int restorecon(const char *pathname);
 diff -ur a/system/core/libnetutils/ifc_utils.c b/system/core/libnetutils/ifc_utils.c
---- a/system/core/libnetutils/ifc_utils.c	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/libnetutils/ifc_utils.c	2016-10-15 15:01:21.333597975 +0200
+--- a/system/core/libnetutils/ifc_utils.c	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/libnetutils/ifc_utils.c	2017-02-27 09:46:25.300552337 +0100
 @@ -710,3 +710,19 @@
  
      return 0;
@@ -1002,8 +1002,8 @@ diff -ur a/system/core/libnetutils/ifc_utils.c b/system/core/libnetutils/ifc_uti
 +    return ret;
 +}
 diff -ur a/system/core/libutils/RefBase.cpp b/system/core/libutils/RefBase.cpp
---- a/system/core/libutils/RefBase.cpp	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/libutils/RefBase.cpp	2016-10-15 15:01:21.337598099 +0200
+--- a/system/core/libutils/RefBase.cpp	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/libutils/RefBase.cpp	2017-02-27 09:46:25.300552337 +0100
 @@ -630,6 +630,13 @@
  
  // ---------------------------------------------------------------------------
@@ -1019,8 +1019,8 @@ diff -ur a/system/core/libutils/RefBase.cpp b/system/core/libutils/RefBase.cpp
  void RefBase::renameRefs(size_t n, const ReferenceRenamer& renamer) {
      for (size_t i=0 ; i<n ; i++) {
 diff -ur a/system/core/libutils/VectorImpl.cpp b/system/core/libutils/VectorImpl.cpp
---- a/system/core/libutils/VectorImpl.cpp	2016-10-15 14:58:46.292802764 +0200
-+++ b/system/core/libutils/VectorImpl.cpp	2016-10-15 15:01:21.337598099 +0200
+--- a/system/core/libutils/VectorImpl.cpp	2017-02-27 09:30:14.181759845 +0100
++++ b/system/core/libutils/VectorImpl.cpp	2017-02-27 09:46:25.300552337 +0100
 @@ -552,6 +552,17 @@
      do_move_backward(dest, from, num);
  }
@@ -1058,8 +1058,8 @@ diff -ur a/system/core/libutils/VectorImpl.cpp b/system/core/libutils/VectorImpl
  
  }; // namespace android
 diff -ur a/frameworks/native/include/gui/ISurfaceComposer.h b/frameworks/native/include/gui/ISurfaceComposer.h
---- a/frameworks/native/include/gui/ISurfaceComposer.h	2016-10-15 14:58:46.292802764 +0200
-+++ b/frameworks/native/include/gui/ISurfaceComposer.h	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/include/gui/ISurfaceComposer.h	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/include/gui/ISurfaceComposer.h	2017-02-27 09:46:25.300552337 +0100
 @@ -150,6 +150,18 @@
              Rotation rotation = eRotateNone,
              bool isCpuConsumer = false) = 0;
@@ -1090,8 +1090,8 @@ diff -ur a/frameworks/native/include/gui/ISurfaceComposer.h b/frameworks/native/
          GET_ACTIVE_CONFIG,
          SET_ACTIVE_CONFIG,
 diff -ur a/frameworks/native/include/gui/SurfaceComposerClient.h b/frameworks/native/include/gui/SurfaceComposerClient.h
---- a/frameworks/native/include/gui/SurfaceComposerClient.h	2016-10-15 14:58:46.292802764 +0200
-+++ b/frameworks/native/include/gui/SurfaceComposerClient.h	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/include/gui/SurfaceComposerClient.h	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/include/gui/SurfaceComposerClient.h	2017-02-27 09:46:25.300552337 +0100
 @@ -40,6 +40,9 @@
  
  class DisplayInfo;
@@ -1113,8 +1113,8 @@ diff -ur a/frameworks/native/include/gui/SurfaceComposerClient.h b/frameworks/na
      mutable sp<IGraphicBufferProducer> mProducer;
      CpuConsumer::LockedBuffer mBuffer;
 diff -ur a/frameworks/native/libs/gui/Android.mk b/frameworks/native/libs/gui/Android.mk
---- a/frameworks/native/libs/gui/Android.mk	2016-10-15 14:58:46.292802764 +0200
-+++ b/frameworks/native/libs/gui/Android.mk	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/libs/gui/Android.mk	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/libs/gui/Android.mk	2017-02-27 09:46:25.300552337 +0100
 @@ -82,6 +82,10 @@
  	liblog
  
@@ -1127,8 +1127,8 @@ diff -ur a/frameworks/native/libs/gui/Android.mk b/frameworks/native/libs/gui/An
  
  ifeq ($(TARGET_BOARD_PLATFORM), tegra)
 diff -ur a/frameworks/native/libs/gui/ISurfaceComposer.cpp b/frameworks/native/libs/gui/ISurfaceComposer.cpp
---- a/frameworks/native/libs/gui/ISurfaceComposer.cpp	2016-10-15 14:58:46.292802764 +0200
-+++ b/frameworks/native/libs/gui/ISurfaceComposer.cpp	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/libs/gui/ISurfaceComposer.cpp	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/libs/gui/ISurfaceComposer.cpp	2017-02-27 09:46:25.300552337 +0100
 @@ -98,6 +98,33 @@
          remote()->transact(BnSurfaceComposer::BOOT_FINISHED, data, &reply);
      }
@@ -1196,8 +1196,8 @@ diff -ur a/frameworks/native/libs/gui/ISurfaceComposer.cpp b/frameworks/native/l
              CHECK_INTERFACE(ISurfaceComposer, data, reply);
              sp<IBinder> display = data.readStrongBinder();
 diff -ur a/frameworks/native/libs/gui/SurfaceComposerClient.cpp b/frameworks/native/libs/gui/SurfaceComposerClient.cpp
---- a/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-10-15 14:58:46.292802764 +0200
-+++ b/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/libs/gui/SurfaceComposerClient.cpp	2017-02-27 09:46:25.300552337 +0100
 @@ -764,6 +764,14 @@
          uint32_t minLayerZ, uint32_t maxLayerZ, bool useIdentityTransform) {
      sp<ISurfaceComposer> s(ComposerService::getComposerService());
@@ -1259,8 +1259,8 @@ diff -ur a/frameworks/native/libs/gui/SurfaceComposerClient.cpp b/frameworks/nat
  
  void const* ScreenshotClient::getPixels() const {
 diff -ur a/frameworks/native/services/surfaceflinger/Android.mk b/frameworks/native/services/surfaceflinger/Android.mk
---- a/frameworks/native/services/surfaceflinger/Android.mk	2016-10-15 14:58:46.292802764 +0200
-+++ b/frameworks/native/services/surfaceflinger/Android.mk	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/services/surfaceflinger/Android.mk	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/services/surfaceflinger/Android.mk	2017-02-27 09:46:25.300552337 +0100
 @@ -69,6 +69,10 @@
      LOCAL_CFLAGS += -DRUNNING_WITHOUT_SYNC_FRAMEWORK
  endif
@@ -1273,8 +1273,8 @@ diff -ur a/frameworks/native/services/surfaceflinger/Android.mk b/frameworks/nat
  ifneq ($(VSYNC_EVENT_PHASE_OFFSET_NS),)
      LOCAL_CFLAGS += -DVSYNC_EVENT_PHASE_OFFSET_NS=$(VSYNC_EVENT_PHASE_OFFSET_NS)
 diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp
---- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2016-10-15 14:58:46.292802764 +0200
-+++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp	2017-02-27 09:46:25.300552337 +0100
 @@ -26,6 +26,9 @@
  #include <stdatomic.h>
  
@@ -1492,8 +1492,8 @@ diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp b/framew
  #endif
 +#endif
 diff -ur a/frameworks/native/services/surfaceflinger/SurfaceFlinger.h b/frameworks/native/services/surfaceflinger/SurfaceFlinger.h
---- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2016-10-15 14:58:46.296802888 +0200
-+++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2016-10-15 15:01:21.337598099 +0200
+--- a/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2017-02-27 09:30:14.181759845 +0100
++++ b/frameworks/native/services/surfaceflinger/SurfaceFlinger.h	2017-02-27 09:46:25.300552337 +0100
 @@ -221,6 +221,13 @@
              uint32_t minLayerZ, uint32_t maxLayerZ,
              bool useIdentityTransform, ISurfaceComposer::Rotation rotation,
