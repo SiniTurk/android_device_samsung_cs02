@@ -16,6 +16,7 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_BOOTLOADER_BOARD_NAME := hawaii
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
+BOARD_VENDOR := samsung
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := cs02,G350,SM-G350,hawaii
@@ -141,8 +142,8 @@ TARGET_SPECIFIC_HEADER_PATH := device/samsung/cs02/include
 # MTP
 BOARD_MTP_DEVICE := /dev/mtp_usb
 
-# Enable WEBGL in WebKit
-ENABLE_WEBGL                := true
+# jemalloc causes a lot of random crash on free()
+MALLOC_IMPL := dlmalloc
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
