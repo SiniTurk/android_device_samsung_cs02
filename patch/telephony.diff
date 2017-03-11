@@ -1,0 +1,201 @@
+diff -ur a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java
+--- a/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/base/telephony/java/android/telephony/TelephonyManager.java	2017-02-27 09:46:25.296552298 +0100
+@@ -3385,49 +3385,20 @@
+      * @hide
+      */
+     public static void setTelephonyProperty(int phoneId, String property, String value) {
+-        String propVal = "";
+-        String p[] = null;
+-        String prop = SystemProperties.get(property);
+-
+-        if (value == null) {
+-            value = "";
+-        }
+-
+-        if (prop != null) {
+-            p = prop.split(",");
+-        }
+-
++        
+         if (!SubscriptionManager.isValidPhoneId(phoneId)) {
+             Rlog.d(TAG, "setTelephonyProperty: invalid phoneId=" + phoneId +
+-                    " property=" + property + " value: " + value + " prop=" + prop);
++                    " property=" + property + " value: " + value);
+             return;
+         }
+ 
+-        for (int i = 0; i < phoneId; i++) {
+-            String str = "";
+-            if ((p != null) && (i < p.length)) {
+-                str = p[i];
+-            }
+-            propVal = propVal + str + ",";
+-        }
+-
+-        propVal = propVal + value;
+-        if (p != null) {
+-            for (int i = phoneId + 1; i < p.length; i++) {
+-                propVal = propVal + "," + p[i];
+-            }
+-        }
+-
+-        if (property.length() > SystemProperties.PROP_NAME_MAX
+-                || propVal.length() > SystemProperties.PROP_VALUE_MAX) {
+-            Rlog.d(TAG, "setTelephonyProperty: property to long phoneId=" + phoneId +
+-                    " property=" + property + " value: " + value + " propVal=" + propVal);
+-            return;
++        if (phoneId > 0) {
++            property += "_" + phoneId;
+         }
+ 
+         Rlog.d(TAG, "setTelephonyProperty: success phoneId=" + phoneId +
+-                " property=" + property + " value: " + value + " propVal=" + propVal);
+-        SystemProperties.set(property, propVal);
++                 " property=" + property + " value: " + value);
++        SystemProperties.set(property, value);
+     }
+ 
+     /**
+@@ -3524,15 +3495,22 @@
+      * @hide
+      */
+     public static String getTelephonyProperty(int phoneId, String property, String defaultVal) {
+-        String propVal = null;
+-        String prop = SystemProperties.get(property);
+-        if ((prop != null) && (prop.length() > 0)) {
+-            String values[] = prop.split(",");
+-            if ((phoneId >= 0) && (phoneId < values.length) && (values[phoneId] != null)) {
+-                propVal = values[phoneId];
+-            }
++        if (!SubscriptionManager.isValidPhoneId(phoneId)) {
++            Rlog.d(TAG, "getTelephonyProperty: invalid phoneId=" + phoneId +
++                    " property=" + property);
++            return defaultVal;
+         }
+-        return propVal == null ? defaultVal : propVal;
++       
++	    if (phoneId > 0) {
++            property += "_" + phoneId;
++        }
++
++        String propVal = SystemProperties.get(property);
++
++        Rlog.d(TAG, "getTelephonyProperty: return propVal='" + propVal + "' phoneId=" + phoneId
++                + " property='" + property + "' defaultVal='" + defaultVal);
++
++        return propVal.isEmpty() ? defaultVal : propVal;
+     }
+ 
+     /** @hide */
+diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java
+--- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/PhoneBase.java	2017-02-27 09:46:25.296552298 +0100
+@@ -239,6 +239,7 @@
+     boolean mDnsCheckDisabled;
+     public DcTrackerBase mDcTracker;
+     boolean mDoesRilSendMultipleCallRing;
++	boolean mDoesRilSendCallRing;
+     int mCallRingContinueToken;
+     int mCallRingDelay;
+     public boolean mIsTheCurrentActivePhone = true;
+@@ -471,6 +472,11 @@
+         mDoesRilSendMultipleCallRing = SystemProperties.getBoolean(
+                 TelephonyProperties.PROPERTY_RIL_SENDS_MULTIPLE_CALL_RING, true);
+         Rlog.d(LOG_TAG, "mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
++		
++		// Some RIL do not even send a single RIL_UNSOL_CALL_RING
++        mDoesRilSendCallRing = SystemProperties.getBoolean(
++                "ro.telephony.call_ring", true);
++        Rlog.d(LOG_TAG, "mDoesRilSendCallRing=" + mDoesRilSendCallRing);
+ 
+         mCallRingDelay = SystemProperties.getInt(
+                 TelephonyProperties.PROPERTY_CALL_RING_DELAY, 3000);
+@@ -2256,6 +2262,18 @@
+     public void notifyNewRingingConnectionP(Connection cn) {
+         if (!mIsVoiceCapable)
+             return;
++		
++		// Fake RIL_UNSOL_CALL_RING if the RIL doesn't send it.
++        // Note that we need the delay to prevent the request from
++        // being sent after CallTracker detects "RINGING" state, but
++        // before the correct contact-specific ringtone is queried.
++        // Otherwise, the incorrect ringtone will be used
++        if (!mDoesRilSendCallRing) {
++            int token = ++mCallRingContinueToken;
++            sendMessageDelayed(
++                    obtainMessage(EVENT_CALL_RING_CONTINUE, token, 0), mCallRingDelay);
++        }
++		
+         AsyncResult ar = new AsyncResult(null, cn, null);
+         mNewRingingConnectionRegistrants.notifyRegistrants(ar);
+     }
+@@ -2884,6 +2902,7 @@
+         pw.println(" mDnsCheckDisabled=" + mDnsCheckDisabled);
+         pw.println(" mDcTracker=" + mDcTracker);
+         pw.println(" mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
++		pw.println(" mDoesRilSendCallRing=" + mDoesRilSendCallRing);
+         pw.println(" mCallRingContinueToken=" + mCallRingContinueToken);
+         pw.println(" mCallRingDelay=" + mCallRingDelay);
+         pw.println(" mIsTheCurrentActivePhone=" + mIsTheCurrentActivePhone);
+diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java
+--- a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2017-02-27 09:30:14.153758539 +0100
++++ b/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.java	2017-02-27 09:46:25.296552298 +0100
+@@ -303,7 +303,7 @@
+     static final int RESPONSE_SOLICITED = 0;
+     static final int RESPONSE_UNSOLICITED = 1;
+ 
+-    static final String[] SOCKET_NAME_RIL = {"rild", "rild2", "rild3"};
++    static final String[] SOCKET_NAME_RIL = {"rild", "rild1", "rild2"};
+ 
+     static final int SOCKET_OPEN_RETRY_MILLIS = 4 * 1000;
+ 
+diff -ur a/packages/services/Telephony/res/values/strings.xml b/packages/services/Telephony/res/values/strings.xml
+--- a/packages/services/Telephony/res/values/strings.xml	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/services/Telephony/res/values/strings.xml	2017-02-27 09:46:25.300552337 +0100
+@@ -631,12 +631,14 @@
+     </string-array>
+ 
+     <string-array name="enabled_networks_except_lte_choices" translatable="false">
+-        <item>@string/network_3G</item>
+-        <item>@string/network_2G</item>
++        <item>@string/preferred_network_mode_wcdma_only_choice</item>
++        <item>@string/preferred_network_mode_gsm_only_choice</item>
++        <item>@string/preferred_network_mode_gsm_wcdma_preferred_choice</item>
+     </string-array>
+     <string-array name="enabled_networks_except_lte_values" translatable="false">
+-        <item>"0"</item>
++        <item>"2"</item>
+         <item>"1"</item>
++        <item>"0"</item>
+     </string-array>
+ 
+     <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
+diff -ur a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java
+--- a/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/services/Telephony/src/com/android/phone/MobileNetworkSettings.java	2017-02-27 09:46:25.300552337 +0100
+@@ -1134,7 +1134,7 @@
+             case Phone.NT_MODE_WCDMA_ONLY:
+                 mButtonEnabledNetworks.setValue(
+                         Integer.toString(Phone.NT_MODE_WCDMA_ONLY));
+-                mButtonEnabledNetworks.setSummary(R.string.network_wcdma_only);
++                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_wcdma_only_choice);
+                 break;
+             case Phone.NT_MODE_GSM_UMTS:
+                 mButtonEnabledNetworks.setValue(
+@@ -1144,12 +1144,12 @@
+             case Phone.NT_MODE_WCDMA_PREF:
+                 mButtonEnabledNetworks.setValue(
+                         Integer.toString(Phone.NT_MODE_WCDMA_PREF));
+-                mButtonEnabledNetworks.setSummary(R.string.network_wcdma_pref);
++                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_wcdma_preferred_choice);
+                 break;
+             case Phone.NT_MODE_GSM_ONLY:
+                 mButtonEnabledNetworks.setValue(
+                         Integer.toString(Phone.NT_MODE_GSM_ONLY));
+-                mButtonEnabledNetworks.setSummary(R.string.network_gsm_only);
++                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_only_choice);
+                 break;
+             case Phone.NT_MODE_LTE_GSM_WCDMA:
+                 if (isWorldMode()) {
+

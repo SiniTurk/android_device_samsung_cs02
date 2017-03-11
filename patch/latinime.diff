@@ -1,0 +1,32 @@
+diff -ur a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java
+--- a/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/inputmethods/LatinIME/java/src/com/android/inputmethod/latin/utils/JniUtils.java	2017-02-27 09:46:25.296552298 +0100
+@@ -26,14 +26,10 @@
+     public static boolean mHaveGestureLib = false;
+     static {
+         try {
+-            System.loadLibrary(JniLibName.JNI_LIB_NAME2);
++            System.loadLibrary(JniLibName.JNI_LIB_NAME);
+             mHaveGestureLib = true;
+-        } catch (UnsatisfiedLinkError ue) {
+-            try {
+-                System.loadLibrary(JniLibName.JNI_LIB_NAME);
+-            } catch (UnsatisfiedLinkError ule) {
+-                Log.e(TAG, "Could not load native library " + JniLibName.JNI_LIB_NAME, ule);
+-            }
++		} catch (UnsatisfiedLinkError ule) {
++            Log.e(TAG, "Could not load native library " + JniLibName.JNI_LIB_NAME, ule);
+         }
+     }
+ 
+diff -ur a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java
+--- a/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2017-02-27 09:30:14.157758726 +0100
++++ b/packages/inputmethods/LatinIME/java-overridable/src/com/android/inputmethod/latin/define/JniLibName.java	2017-02-27 09:46:25.296552298 +0100
+@@ -22,5 +22,4 @@
+     }
+ 
+     public static final String JNI_LIB_NAME = "jni_latinime";
+-    public static final String JNI_LIB_NAME2 = "jni_latinimegoogle";
+-}
++}
+\ Kein Zeilenumbruch am Dateiende.
