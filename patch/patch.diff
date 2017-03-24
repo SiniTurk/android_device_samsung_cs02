@@ -1,0 +1,121 @@
+diff --git a/packages/apps/Settings/res/xml/multi_sim_settings.xml b/packages/apps/Settings/res/xml/multi_sim_settings.xml
+index 9a7a258..2c49b99 100644
+--- a/packages/apps/Settings/res/xml/multi_sim_settings.xml
++++ b/packages/apps/Settings/res/xml/multi_sim_settings.xml
+@@ -31,16 +31,6 @@
+ <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
+ 
+-    <PreferenceScreen
+-        android:key="config_sub"
+-        android:title="@string/sel_sub_title"
+-        android:summary="@string/sel_sub_summary"
+-        android:persistent="false">
+-        <intent android:action="android.intent.action.MAIN"
+-                android:targetPackage="com.android.phone"
+-                android:targetClass="com.android.phone.SetSubscription" />
+-    </PreferenceScreen>
+-
+     <CheckBoxPreference
+         android:key="tune_away"
+         android:title="@string/tune_away_title"
+@@ -71,4 +61,4 @@
+ 
+     </PreferenceCategory>
+ 
+-</PreferenceScreen>
++</PreferenceScreen>
+\ No newline at end of file
+diff --git a/packages/apps/Settings/src/com/android/settings/MultiSimSettings.java b/packages/apps/Settings/src/com/android/settings/MultiSimSettings.java
+index 9acf29a..6d0e85f 100644
+--- a/packages/apps/Settings/src/com/android/settings/MultiSimSettings.java
++++ b/packages/apps/Settings/src/com/android/settings/MultiSimSettings.java
+@@ -101,7 +101,6 @@ public class MultiSimSettings extends PreferenceActivity implements DialogInterf
+     private ListPreference mVoice;
+     private ListPreference mData;
+     private ListPreference mSms;
+-    private PreferenceScreen mConfigSub;
+     private CharSequence[] entries; // Used for entries like Subscription1, Subscription2 ...
+     private CharSequence[] entryValues; // Used for entryValues like 0, 1 ,2 ...
+     private CharSequence[] summaries; // Used for Summaries like Aubscription1, Subscription2....
+@@ -142,8 +141,6 @@ public class MultiSimSettings extends PreferenceActivity implements DialogInterf
+         mData.setOnPreferenceChangeListener(this);
+         mSms = (ListPreference) findPreference(KEY_SMS);
+         mSms.setOnPreferenceChangeListener(this);
+-        mConfigSub = (PreferenceScreen) findPreference(KEY_CONFIG_SUB);
+-        mConfigSub.getIntent().putExtra(CONFIG_SUB, true);
+         mTuneAway = (CheckBoxPreference) findPreference(TUNE_AWAY);
+         mTuneAway.setOnPreferenceChangeListener(this);
+         mPrioritySub = (ListPreference) findPreference(PRIORITY_SUB);
+@@ -230,14 +227,9 @@ public class MultiSimSettings extends PreferenceActivity implements DialogInterf
+         Log.d(TAG, "mIccCardCount = " + mIccCardCount);
+ 
+         if (mIccCardCount == 0) {
+-             mConfigSub.setEnabled(false);
+-             mConfigSub.setSelectable(false);
+              displayAlertDialog(getResources().getString(R.string.no_sim_info));
+              configureMSimMenu(false);
+         } else if (mIccCardCount == 1) {
+-             //1 SIM card is present. Config sub must be accessible
+-             mConfigSub.setEnabled(true);
+-             mConfigSub.setSelectable(true);
+              configureMSimMenu(false);
+         } else if ( (mIccCardCount > 1) && (mIccCardCount <= MAX_SUBSCRIPTIONS) )  {
+             configureMSimMenu(true);
+@@ -591,11 +583,6 @@ public class MultiSimSettings extends PreferenceActivity implements DialogInterf
+                     }
+ 
+                     break;
+-                case EVENT_SUBSCRIPTION_ACTIVATED:
+-                case EVENT_SUBSCRIPTION_DEACTIVATED:
+-                    updateMultiSimEntriesForVoice();
+-                    updateMultiSimEntriesForSms();
+-                    break;
+ 
+                 case EVENT_SET_VOICE_SUBSCRIPTION:
+                     if (!mHasTuneAway) {
+@@ -699,4 +686,4 @@ public class MultiSimSettings extends PreferenceActivity implements DialogInterf
+         return Settings.Global.getInt(getApplicationContext().getContentResolver(),
+                 Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
+     }
+-}
++}
+\ No newline at end of file
+diff --git a/packages/services/Telephony/src/com/android/phone/CallFeaturesSetting.java b/packages/services/Telephony/src/com/android/phone/CallFeaturesSetting.java
+index c6c3406..c43649a 100644
+--- a/packages/services/Telephony/src/com/android/phone/CallFeaturesSetting.java
++++ b/packages/services/Telephony/src/com/android/phone/CallFeaturesSetting.java
+@@ -60,6 +60,7 @@ import android.preference.PreferenceScreen;
+ import android.provider.ContactsContract.CommonDataKinds;
+ import android.provider.MediaStore;
+ import android.provider.Settings;
++import android.telephony.MSimTelephonyManager;
+ import android.telephony.PhoneNumberUtils;
+ import android.text.TextUtils;
+ import android.util.Log;
+@@ -2693,14 +2694,19 @@ public class CallFeaturesSetting extends PreferenceActivity
+      * This is useful for implementing "HomeAsUp" capability for second-level Settings.
+      */
+     public static void goUpToTopLevelSetting(Activity activity) {
+-        Intent intent = new Intent(activity, CallFeaturesSetting.class);
+-        intent.setAction(Intent.ACTION_MAIN);
+-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+-        activity.startActivity(intent);
++         if (!MSimTelephonyManager.getDefault().isMultiSimEnabled()) {
++            // HACK: This doesn't work on multi-SIM (and we have multiple)
++            //       hierachy (MSimCallFeaturesSetting and MSimCallFeatureSubSetting)
++            //       so let just allow this to act like "back" button
++            Intent intent = new Intent(activity, CallFeaturesSetting.class);
++            intent.setAction(Intent.ACTION_MAIN);
++            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
++            activity.startActivity(intent);
++        }
+         activity.finish();
+     }
+ 
+     private static void log(String msg) {
+         if (DBG)  Log.d(LOG_TAG, msg);
+     }
+-}
++}
+\ No newline at end of file
