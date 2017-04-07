@@ -1,4 +1,4 @@
-# chmod in init.hawaii_ss_loganxx.rc (for bkmgrd)
+# chmod in init.hawaii_ss_cs02.rc (for bkmgrd)
 allow init block_device:blk_file setattr;
 allow init radio_device:blk_file setattr;
 
@@ -10,4 +10,4 @@ allow init tmpfs:lnk_file create;
 
 # insmod
 allow init self:capability sys_module; # TODO: want sys_ptrace too
-allow init kernel:security setenforce;
+#allow init kernel:security setenforce;

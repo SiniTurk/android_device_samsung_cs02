@@ -28,17 +28,17 @@
 ###################################
 # Dev block nodes
 #
-/dev/block/mmcblk0                              u:object_r:root_block_device:s0
-/dev/block/mmcblk0p17                           u:object_r:system_block_device:s0
-/dev/block/mmcblk0p19                           u:object_r:userdata_block_device:s0
-#/dev/block/mmcblk0p1                            u:object_r:radio_block_device:s0
-#/dev/block/mmcblk0p5                            u:object_r:boot_block_device:s0
-#/dev/block/mmcblk0p6                            u:object_r:recovery_block_device:s0
-#/dev/block/mmcblk0p15                           u:object_r:cam_block_device:s0
-#/dev/block/mmcblk0p17                           u:object_r:efs_block_device:s0
-#/dev/block/mmcblk0p18                           u:object_r:cache_block_device:s0
-#/dev/block/mmcblk0p19                           u:object_r:system_block_device:s0
-#/dev/block/mmcblk0p21                           u:object_r:userdata_block_device:s0
+/dev/block/mmcblk0				u:object_r:root_block_device:s0
+/dev/block/mmcblk0p1				u:object_r:radio_block_device:s0
+/dev/block/mmcblk0p15				u:object_r:efs_block_device:s0
+/dev/block/mmcblk0p16				u:object_r:cache_block_device:s0
+/dev/block/mmcblk0p17				u:object_r:system_block_device:s0
+/dev/block/mmcblk0p19				u:object_r:userdata_block_device:s0
+#/dev/block/mmcblk0p5				u:object_r:boot_block_device:s0
+#/dev/block/mmcblk0p6				u:object_r:recovery_block_device:s0
+#/dev/block/mmcblk0p18				u:object_r:cache_block_device:s0
+#/dev/block/mmcblk0p21				u:object_r:userdata_block_device:s0
+
 
 ###################################
 # System files
