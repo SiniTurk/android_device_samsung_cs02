@@ -1,6 +1,9 @@
 # [WIP] LineageOS 14.1 Device tree for Samsung SM-G350 (cs02)
 based on Samsung-KYLEPROXX repository
 
+This branch is intentionally named incorrectly,
+but will be correctly named later! (to cm-14.1)
+
 ### Specs (Physically inspected):
   - CPU: Cortex-A9 (Little endian, Dual Core)
   - Codename: CS02
