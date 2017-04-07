@@ -768,29 +768,6 @@ diff -ur a/frameworks/opt/telephony/src/java/com/android/internal/telephony/RIL.
      static final int SOCKET_OPEN_RETRY_MILLIS = 4 * 1000;
  
 Only in b/frameworks/opt/telephony/src/java/com/android/internal/telephony: RIL.java.orig
-diff -ur a/hardware/broadcom/libbt/src/userial_vendor.c b/hardware/broadcom/libbt/src/userial_vendor.c
---- a/hardware/broadcom/libbt/src/userial_vendor.c	2017-01-02 17:09:43.844000000 +0000
-+++ b/hardware/broadcom/libbt/src/userial_vendor.c	2017-01-02 18:08:47.524000000 +0000
-@@ -196,6 +196,9 @@
-     uint8_t data_bits;
-     uint16_t parity;
-     uint8_t stop_bits;
-+#if (BT_WAKE_VIA_USERIAL_IOCTL==TRUE)
-+    int ldisc;
-+#endif
- 
-     vnd_userial.fd = -1;
- 
-@@ -266,6 +269,9 @@
-     tcsetattr(vnd_userial.fd, TCSANOW, &vnd_userial.termios);
- 
- #if (BT_WAKE_VIA_USERIAL_IOCTL==TRUE)
-+    ldisc = 25; // N_BRCM_HCI
-+    ioctl(vnd_userial.fd, TIOCSETD, &ldisc);
-+
-     userial_ioctl_init_bt_wake(vnd_userial.fd);
- #endif
- 
 diff -ur a/packages/apps/CMParts/src/org/cyanogenmod/cmparts/input/ButtonSettings.java b/packages/apps/CMParts/src/org/cyanogenmod/cmparts/input/ButtonSettings.java
 --- a/packages/apps/CMParts/src/org/cyanogenmod/cmparts/input/ButtonSettings.java	2017-01-02 17:10:05.676000000 +0000
 +++ b/packages/apps/CMParts/src/org/cyanogenmod/cmparts/input/ButtonSettings.java	2017-01-02 18:08:47.580000000 +0000

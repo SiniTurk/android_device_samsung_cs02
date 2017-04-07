@@ -200,6 +200,17 @@ on boot
     chmod 0770 /dev/ttyS2
     chmod 0644 /proc/cmdline
 
+# NFC
+    setprop ro.nfc.port "I2C"
+    chmod 0600 /dev/bcm2079x
+    chown nfc nfc /dev/bcm2079x
+    mkdir /data/bcmnfc
+    mkdir /data/bcmnfc/param
+    chmod 0755 /data/bcmnfc
+    chmod 0755 /data/bcmnfc/param
+    chown nfc nfc /data/bcmnfc
+    chown nfc nfc /data/bcmnfc/param
+
 # GPS UART
     chown gps system /dev/ttyS1
     chmod 0770 /dev/ttyS1
@@ -413,8 +424,8 @@ on charger
     class_start sec-charger
 
 on fs
-    mount_all /fstab.hawaii_ss_kylepro
-    swapon_all fstab.hawaii_ss_kylepro
+    mount_all /fstab.hawaii_ss_cs02
+    swapon_all fstab.hawaii_ss_cs02
 
     setprop ro.crypto.fuse_sdcard true
 

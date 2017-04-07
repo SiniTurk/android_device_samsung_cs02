@@ -1,5 +1,5 @@
 # Inherit from the proprietary version
--include vendor/samsung/kyleproxx/BoardConfigVendor.mk
+-include vendor/samsung/cs02xx/BoardConfigVendor.mk
 
 # Platform
 TARGET_ARCH                                 := arm
@@ -19,7 +19,7 @@ TARGET_GLOBAL_CFLAGS                        += -mtune=cortex-a9 -mfpu=neon -mflo
 TARGET_GLOBAL_CPPFLAGS                      += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -funsafe-math-optimizations
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE                    := kylepro,S7580,GT-S7580,hawaii
+TARGET_OTA_ASSERT_DEVICE                    := cs02,G350,SM-G350,hawaii
 
 # Kernel
 BOARD_MKBOOTIMG_ARGS                        := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
@@ -28,13 +28,13 @@ BOARD_KERNEL_PAGESIZE                       := 4096
 BOARD_KERNEL_OFFSET                         := 0x00008000
 BOARD_RAMDISK_OFFSET                        := 0x01000000
 BOARD_KERNEL_TAGS_OFFSET                    := 0x00000100
+# TODO: Check defconfig differences and apply if needed.
 ifeq ($(BUILD_TWRP),true)
-    TARGET_KERNEL_CONFIG                    := bcm21664_hawaii_ss_kyleproxx_rev00_recovery_defconfig
+    TARGET_KERNEL_CONFIG                    := bcm21664_hawaii_ss_cs02_rev02_defconfig
 else
-
-    TARGET_KERNEL_CONFIG                    := bcm21664_hawaii_ss_kylepro_rev00_lineage_defconfig
+    TARGET_KERNEL_CONFIG                    := bcm21664_hawaii_ss_cs02_rev02_defconfig
 endif
-TARGET_KERNEL_SOURCE                        := kernel/samsung/kyleproxx
+TARGET_KERNEL_SOURCE                        := kernel/samsung/cs02
 
 # Kernel toolchain
 KERNEL_TOOLCHAIN                            := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
@@ -59,8 +59,8 @@ BOARD_FLASH_BLOCK_SIZE                      := 262144
 # Bluetooth
 BOARD_HAVE_BLUETOOTH                        := true
 BOARD_HAVE_BLUETOOTH_BCM                    := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/kylepro/bluetooth
-BOARD_CUSTOM_BT_CONFIG                      := device/samsung/kylepro/bluetooth/libbt_vndcfg.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/cs02/bluetooth
+BOARD_CUSTOM_BT_CONFIG                      := device/samsung/cs02/bluetooth/libbt_vndcfg.txt
 
 # Connectivity - Wi-Fi
 BOARD_HAVE_SAMSUNG_WIFI                     := true
@@ -116,7 +116,7 @@ BOARD_CHARGER_ENABLE_SUSPEND                := true
 BOARD_HAL_STATIC_LIBRARIES                  := libhealthd.hawaii
 
 # RIL
-BOARD_RIL_CLASS                             := ../../../device/samsung/kylepro/ril/
+BOARD_RIL_CLASS                             := ../../../device/samsung/cs02/ril/
 BOARD_GLOBAL_CFLAGS                         += -DDISABLE_ASHMEM_TRACKING
 
 # Camera
@@ -131,9 +131,9 @@ MALLOC_SVELTE                               := true
 # Recovery
 # Compile with BUILD_TWRP=true when build TWRP recovery
 ifeq ($(BUILD_TWRP),true)
-    TARGET_RECOVERY_FSTAB                   := device/samsung/kylepro/rootdir/twrp.fstab.hawaii_ss_kylepro
+    TARGET_RECOVERY_FSTAB                   := device/samsung/cs02/rootdir/twrp.fstab.hawaii_ss_cs02
 else
-    TARGET_RECOVERY_FSTAB                   := device/samsung/kylepro/rootdir/fstab.hawaii_ss_kylepro
+    TARGET_RECOVERY_FSTAB                   := device/samsung/cs02/rootdir/fstab.hawaii_ss_cs02
 endif
 TARGET_USE_CUSTOM_LUN_FILE_PATH             := /sys/class/android_usb/android0/f_mass_storage/lun/file
 TARGET_USERIMAGES_USE_EXT4                  := true
@@ -178,8 +178,8 @@ BOARD_MTP_DEVICE                            := /dev/mtp_usb
 BOARD_HARDWARE_CLASS                        := hardware/samsung/cmhw/
 
 # GPS
-TARGET_SPECIFIC_HEADER_PATH                 := device/samsung/kylepro/include
+TARGET_SPECIFIC_HEADER_PATH                 := device/samsung/cs02/include
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
-    device/samsung/kylepro/sepolicy
+    device/samsung/cs02/sepolicy
