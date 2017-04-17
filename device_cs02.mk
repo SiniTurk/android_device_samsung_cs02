@@ -134,6 +134,6 @@ $(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-PRODUCT_NAME := cm_cs02
+PRODUCT_NAME := lineage_cs02
 PRODUCT_DEVICE := cs02
 PRODUCT_MODEL := SM-G350
