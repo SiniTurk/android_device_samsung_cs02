@@ -173,10 +173,6 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 $(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-ifeq ($(TARGET_BUILD_VARIANT),user)      
-else      
-endif
-
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_cs02
 PRODUCT_DEVICE := cs02
