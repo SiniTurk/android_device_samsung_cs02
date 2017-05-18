@@ -21,8 +21,8 @@ TARGET_OTA_ASSERT_DEVICE := cs02,G350,SM-G350,hawaii,hawaii_ss_cs02
 # Kernel
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_KERNEL_CONFIG := cs02_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/cs02/
+TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_cs02_rev02_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/cs02
 # Make sure you have the toolchain available!
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
