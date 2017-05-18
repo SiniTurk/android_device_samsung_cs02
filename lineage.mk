@@ -9,7 +9,7 @@ $(call inherit-product, device/samsung/cs02/device_cs02.mk)
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := cs02
-PRODUCT_NAME := cm_cs02
+PRODUCT_NAME := lineage_cs02
 PRODUCT_BRAND := samsung
 PRODUCT_MANUFACTURER := samsung
 PRODUCT_MODEL := SM-G350
