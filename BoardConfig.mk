@@ -28,17 +28,9 @@ BOARD_KERNEL_PAGESIZE                       := 4096
 BOARD_KERNEL_OFFSET                         := 0x00008000
 BOARD_RAMDISK_OFFSET                        := 0x01000000
 BOARD_KERNEL_TAGS_OFFSET                    := 0x00000100
-# TODO: Check defconfig differences and apply if needed.
-ifeq ($(BUILD_TWRP),true)
-    TARGET_KERNEL_CONFIG                    := bcm21664_hawaii_ss_cs02_rev02_defconfig
-else
-    TARGET_KERNEL_CONFIG                    := bcm21664_hawaii_ss_cs02_rev02_defconfig
-endif
-TARGET_KERNEL_SOURCE                        := kernel/samsung/cs02
 
-# Kernel toolchain
-KERNEL_TOOLCHAIN                            := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
-KERNEL_TOOLCHAIN_PREFIX                     := arm-eabi-
+TARGET_KERNEL_CONFIG                        := bcm21664_hawaii_ss_cs02_rev02_defconfig
+TARGET_KERNEL_SOURCE                        := kernel/samsung/cs02
 
 # Extended filesystem support
 TARGET_KERNEL_HAVE_EXFAT                    := true
