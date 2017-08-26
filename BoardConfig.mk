@@ -1,5 +1,5 @@
 # Inherit from the proprietary version
--include vendor/samsung/cs02xx/BoardConfigVendor.mk
+-include vendor/samsung/cs02/BoardConfigVendor.mk
 
 # Platform
 TARGET_ARCH                                 := arm
@@ -121,12 +121,7 @@ TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS      := true
 MALLOC_SVELTE                               := true
 
 # Recovery
-# Compile with BUILD_TWRP=true when build TWRP recovery
-ifeq ($(BUILD_TWRP),true)
-    TARGET_RECOVERY_FSTAB                   := device/samsung/cs02/rootdir/twrp.fstab.hawaii_ss_cs02
-else
-    TARGET_RECOVERY_FSTAB                   := device/samsung/cs02/rootdir/fstab.hawaii_ss_cs02
-endif
+TARGET_RECOVERY_FSTAB                       := device/samsung/cs02/rootdir/fstab.hawaii_ss_cs02
 TARGET_USE_CUSTOM_LUN_FILE_PATH             := /sys/class/android_usb/android0/f_mass_storage/lun/file
 TARGET_USERIMAGES_USE_EXT4                  := true
 TARGET_USERIMAGES_USE_F2FS                  := true
