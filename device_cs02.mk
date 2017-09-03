@@ -44,7 +44,7 @@ PRODUCT_PACKAGES += \
 # GPS/RIL
 PRODUCT_PACKAGES += \
     libstlport \
-    libglgps-compat
+    libshim_glgps
 
 # USB accessory
 PRODUCT_PACKAGES += \
