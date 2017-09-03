@@ -10,11 +10,13 @@ DEVICE_PACKAGE_OVERLAYS += device/samsung/cs02/overlay
 
 # Init files
 PRODUCT_COPY_FILES += \
-    device/samsung/cs02/rootdir/fstab.hawaii_ss_cs02:root/fstab.hawaii_ss_cs02 \
-    device/samsung/cs02/rootdir/init.hawaii_ss_cs02.rc:root/init.hawaii_ss_cs02.rc \
-    device/samsung/cs02/rootdir/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
-    device/samsung/cs02/rootdir/init.log.rc:root/init.log.rc \
-    device/samsung/cs02/rootdir/ueventd.hawaii_ss_cs02.rc:root/ueventd.hawaii_ss_cs02.rc
+    device/samsung/cs02/ramdisk/fstab.hawaii_ss_cs02:root/fstab.hawaii_ss_cs02 \
+    device/samsung/cs02/ramdisk/init:root/init \
+    device/samsung/cs02/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
+    device/samsung/cs02/ramdisk/init.hawaii_ss_cs02.rc:root/init.hawaii_ss_cs02.rc \
+    device/samsung/cs02/ramdisk/init.log.rc:root/init.log.rc \
+    device/samsung/cs02/ramdisk/init.rc:root/init.rc \
+    device/samsung/cs02/ramdisk/ueventd.hawaii_ss_cs02.rc:root/ueventd.hawaii_ss_cs02.rc
 
 # Google's Software Decoder.
 PRODUCT_COPY_FILES += \
@@ -30,7 +32,8 @@ PRODUCT_COPY_FILES += \
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.secure=0 \
     ro.adb.secure=0 \
-    persist.service.adb.enable=1
+    persist.service.adb.enable=1 \
+    persist.sys.usb.config=mtp,adb
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \

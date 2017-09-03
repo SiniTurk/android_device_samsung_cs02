@@ -121,7 +121,7 @@ TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS      := true
 MALLOC_SVELTE                               := true
 
 # Recovery
-TARGET_RECOVERY_FSTAB                       := device/samsung/cs02/rootdir/fstab.hawaii_ss_cs02
+TARGET_RECOVERY_FSTAB                       := device/samsung/cs02/ramdisk/fstab.hawaii_ss_cs02
 TARGET_USE_CUSTOM_LUN_FILE_PATH             := /sys/class/android_usb/android0/f_mass_storage/lun/file
 TARGET_USERIMAGES_USE_EXT4                  := true
 TARGET_USERIMAGES_USE_F2FS                  := true
