@@ -16,6 +16,8 @@ PRODUCT_COPY_FILES += \
     device/samsung/cs02/ramdisk/init.hawaii_ss_cs02.rc:root/init.hawaii_ss_cs02.rc \
     device/samsung/cs02/ramdisk/init.log.rc:root/init.log.rc \
     device/samsung/cs02/ramdisk/init.rc:root/init.rc \
+    device/samsung/cs02/ramdisk/sbin/ueventd:root/sbin/ueventd \
+    device/samsung/cs02/ramdisk/sbin/watchdogd:root/sbin/watchdogd \
     device/samsung/cs02/ramdisk/ueventd.hawaii_ss_cs02.rc:root/ueventd.hawaii_ss_cs02.rc
 
 # Google's Software Decoder.
