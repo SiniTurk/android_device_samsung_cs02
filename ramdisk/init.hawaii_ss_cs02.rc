@@ -3,6 +3,7 @@ import init.log.rc
 
 on early-init
     mkdir /efs 0771 radio system
+    export LD_SHIM_LIBS "/system/bin/glgps|libshim_glgps.so"
 
 on init
     
@@ -590,7 +591,6 @@ on property:init.svc.macloader=stopped
 # end of wifi
 
 	service gpsd /system/bin/glgps -c /system/etc/gps/glconfig.xml
-		setenv LD_PRELOAD /system/lib/libglgps-compat.so
 		class late_start
 		user gps
 		group system root inet radio wifi sdcard_rw

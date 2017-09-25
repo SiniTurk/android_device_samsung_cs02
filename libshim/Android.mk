@@ -15,13 +15,15 @@
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := glgps-compat.cpp
-LOCAL_MODULE := libglgps-compat
+
+LOCAL_SRC_FILES := libshim_glgps.cpp
+LOCAL_MODULE := libshim_glgps
 LOCAL_MODULE_TAGS := optional
 LOCAL_SHARED_LIBRARIES := \
-	libgui \
-	libutils
+    libgui \
+    libutils
 LOCAL_C_INCLUDES += \
-	frameworks/native/include/
+    frameworks/native/include/
+
 include $(BUILD_SHARED_LIBRARY)
 

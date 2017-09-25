@@ -83,8 +83,11 @@ PRODUCT_PACKAGES += \
 # GPS/RIL
 PRODUCT_PACKAGES += \
     libstlport \
-    libglgps-compat \
     libsecril-client
+
+# Shim libs
+PRODUCT_PACKAGES += \
+    libshim_glgps
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
