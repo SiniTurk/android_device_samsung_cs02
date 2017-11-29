@@ -164,7 +164,7 @@ BOARD_MTP_DEVICE                            := /dev/mtp_usb
 # CMHW
 BOARD_HARDWARE_CLASS                        := hardware/samsung/cmhw/
 
-# GPS
+# Includes
 TARGET_SPECIFIC_HEADER_PATH                 := device/samsung/cs02/include
 
 # SELinux
