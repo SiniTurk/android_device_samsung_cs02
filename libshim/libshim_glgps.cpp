@@ -18,33 +18,32 @@
 #include <gui/SensorManager.h>
 
 namespace android {
-extern "C" {
+    extern "C" {
+        void *CRYPTO_malloc(int num, const char *file, int line) {
+            (void)file;
+            (void)line;
+            return malloc(num);
+        }
 
-	void *CRYPTO_malloc(int num, const char *file, int line) {
-	    (void)file;
-	    (void)line;
-	    return malloc(num);
-	}
+        SensorManager* _ZN7android9SingletonINS_13SensorManagerEE9sInstanceE = NULL;
 
-	SensorManager* _ZN7android9SingletonINS_13SensorManagerEE9sInstanceE = NULL;
+        Mutex _ZN7android9SingletonINS_13SensorManagerEE5sLockE(Mutex::PRIVATE);
 
-	Mutex _ZN7android9SingletonINS_13SensorManagerEE5sLockE(Mutex::PRIVATE);
+        void* _ZN7android13SensorManagerC1ERKNS_8String16E(void* obj, const String16& opPackageName);
+        void* _ZN7android13SensorManagerC1Ev(void* obj) {
+            return _ZN7android13SensorManagerC1ERKNS_8String16E(obj, String16());
+        }
 
-	void* _ZN7android13SensorManagerC1ERKNS_8String16E(void* obj, const String16& opPackageName);
-	void* _ZN7android13SensorManagerC1Ev(void* obj) {
-	    return _ZN7android13SensorManagerC1ERKNS_8String16E(obj, String16());
-	}
+        void* _ZN7android13SensorManager16createEventQueueENS_7String8Ei(void* obj, String8 packageName, int mode);
+        void* _ZN7android13SensorManager16createEventQueueEv(void* obj) {
+            return _ZN7android13SensorManager16createEventQueueENS_7String8Ei(obj, String8(""), 0);
+        }
 
-	void* _ZN7android13SensorManager16createEventQueueENS_7String8Ei(void* obj, String8 packageName, int mode);
-	void* _ZN7android13SensorManager16createEventQueueEv(void* obj) {
-	    return _ZN7android13SensorManager16createEventQueueENS_7String8Ei(obj, String8(""), 0);
-	}
+        ssize_t _ZN7android13SensorManager13getSensorListEPPKPKNS_6SensorE(void* obj, Sensor const* const** list);
+        ssize_t _ZNK7android13SensorManager13getSensorListEPPKPKNS_6SensorE(void* obj, Sensor const* const** list) {
+            return _ZN7android13SensorManager13getSensorListEPPKPKNS_6SensorE(obj, list);
+        }
 
-	ssize_t _ZN7android13SensorManager13getSensorListEPPKPKNS_6SensorE(void* obj, Sensor const* const** list);
-	ssize_t _ZNK7android13SensorManager13getSensorListEPPKPKNS_6SensorE(void* obj, Sensor const* const** list) {
-	    return _ZN7android13SensorManager13getSensorListEPPKPKNS_6SensorE(obj, list);
-	}
-
-}
+    }
 }
 

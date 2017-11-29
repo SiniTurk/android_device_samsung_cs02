@@ -48,8 +48,7 @@ PRODUCT_PACKAGES += \
 
 # GPS/RIL
 PRODUCT_PACKAGES += \
-    libstlport \
-    libshim_glgps
+    libstlport
 
 # USB accessory
 PRODUCT_PACKAGES += \
@@ -87,11 +86,7 @@ PRODUCT_PACKAGES += \
 # Recorder
 PRODUCT_PACKAGES += \
     Recorder
-
-# Widevine
-PRODUCT_PACKAGES += \
-    libshim_wvm
-    
+ 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ksm.default=1
@@ -116,6 +111,12 @@ PRODUCT_PACKAGES += \
     NfcNci \
     Tag \
     com.android.nfc_extras
+
+# Shim libraries
+PRODUCT_PACKAGES += \
+    libshim_wvm \
+    libshim_glgps \
+    libshim_rild
 
 # NFCEE Access
 NFCEE_ACCESS_PATH := device/samsung/cs02/nfc/nfcee_access.xml
