@@ -1,0 +1,110 @@
+diff --git a/system/core/init/init.cpp b/system/core/init/init.cpp
+index 7a370596e..c92bace7d 100755
+--- a/system/core/init/init.cpp
++++ b/system/core/init/init.cpp
+@@ -78,6 +78,9 @@ static int property_triggers_enabled = 0;
+ #define BOARD_CHARGING_CMDLINE_VALUE "true"
+ #endif
+ 
++static char hardware[32];
++static unsigned revision = 0;
++
+ static char qemu[32];
+ static char battchg_pause[32];
+ 
+@@ -355,26 +358,37 @@ static void export_oem_lock_status() {
+ }
+ 
+ static void export_kernel_boot_props() {
++
++    char tmp[PROP_VALUE_MAX];
++    int ret;
++
+     struct {
+         const char *src_prop;
+         const char *dst_prop;
+         const char *default_value;
+     } prop_map[] = {
+-#ifndef IGNORE_RO_BOOT_SERIALNO
+-        { "ro.boot.serialno",   "ro.serialno",   "", },
+-#endif
+         { "ro.boot.mode",       "ro.bootmode",   "unknown", },
+         { "ro.boot.baseband",   "ro.baseband",   "unknown", },
+         { "ro.boot.bootloader", "ro.bootloader", "unknown", },
+-        { "ro.boot.hardware",   "ro.hardware",   "unknown", },
+-#ifndef IGNORE_RO_BOOT_REVISION
+-        { "ro.boot.revision",   "ro.revision",   "0", },
+-#endif
+     };
+     for (size_t i = 0; i < ARRAY_SIZE(prop_map); i++) {
+         std::string value = property_get(prop_map[i].src_prop);
+         property_set(prop_map[i].dst_prop, (!value.empty()) ? value.c_str() : prop_map[i].default_value);
+     }
++
++    get_hardware_name(hardware, &revision);
++
++   /* if this was given on kernel command line, override what we read
++    * before (e.g. from /proc/cpuinfo), if anything */
++    ret = __system_property_get("ro.boot.hardware", tmp);
++    if (ret)
++        strlcpy(hardware, tmp, sizeof(hardware));
++    property_set("ro.hardware", hardware);
++
++    ret = __system_property_get("ro.boot.revision", tmp);
++    if (!ret)
++        snprintf(tmp, PROP_VALUE_MAX, "%d", revision);
++    property_set("ro.revision", tmp);
+ }
+ 
+ static void process_kernel_dt() {
+diff --git a/system/core/init/util.cpp b/system/core/init/util.cpp
+index 193b78332..8aa5bb5da 100755
+--- a/system/core/init/util.cpp
++++ b/system/core/init/util.cpp
+@@ -440,6 +440,34 @@ void open_devnull_stdio(void)
+     }
+ }
+ 
++void get_hardware_name(char *hardware, unsigned int *revision) {
++  FILE* fp = fopen("/proc/cpuinfo", "re");
++  if (fp == NULL) {
++    return;
++  }
++  char buf[1024];
++  while (fgets(buf, sizeof(buf), fp) != NULL) {
++    if (strncmp(buf, "Hardware", 8) == 0) {
++      const char* hw = strstr(buf, ": ");
++      if (hw) {
++        hw += 2;
++        size_t n = 0;
++        while (*hw) {
++          if (!isspace(*hw)) {
++            hardware[n++] = tolower(*hw);
++          }
++          hw++;
++          if (n == 31) break;
++        }
++        hardware[n] = 0;
++      }
++    } else if (strncmp(buf, "Revision", 8) == 0) {
++      sscanf(buf, "Revision : %ux", revision);
++    }
++  }
++  fclose(fp);
++}
++
+ void import_kernel_cmdline(bool in_qemu,
+                            const std::function<void(const std::string&, const std::string&, bool)>& fn) {
+     std::string cmdline;
+diff --git a/system/core/init/util.h b/system/core/init/util.h
+index 695b94c9c..bdb7ed3b5 100755
+--- a/system/core/init/util.h
++++ b/system/core/init/util.h
+@@ -59,6 +59,7 @@ void make_link_init(const char *oldpath, const char *newpath);
+ void remove_link(const char *oldpath, const char *newpath);
+ int wait_for_file(const char *filename, int timeout);
+ void open_devnull_stdio(void);
++void get_hardware_name(char *hardware, unsigned int *revision);
+ void import_kernel_cmdline(bool in_qemu,
+                            const std::function<void(const std::string&, const std::string&, bool)>&);
+ int make_dir(const char *path, mode_t mode);
