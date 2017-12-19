@@ -108,13 +108,9 @@ PRODUCT_PACKAGES += \
     Tag \
     com.android.nfc_extras
 
-# Shim libraries
+# Shim library
 PRODUCT_PACKAGES += \
-    libshim_wvm \
-    libshim_glgps \
-    libshim_rild \
-    libshim_audio \
-    libshim_camera
+    libshim
 
 # NFCEE Access
 NFCEE_ACCESS_PATH := device/samsung/cs02/nfc/nfcee_access.xml

@@ -7,7 +7,7 @@ on early-init
     chown system system /sys/devices/platform/pwm-backlight.0/backlight/panel/brightness
 
 on init
-    export LD_SHIM_LIBS "/system/bin/rild|libshim_rild.so:/system/bin/glgps|libshim_glgps.so:/system/lib/hw/audio.primary.hawaii.so|libshim_audio.so:/system/lib/hw/camera.hawaii.so|libshim_camera.so:/system/lib/libwvm.so|libshim_wvm.so"
+    export LD_PRELOAD "/system/lib/libshim.so"
     mkdir /tmp
     mount tmpfs tmpfs /tmp
     chmod 1775 /tmp
