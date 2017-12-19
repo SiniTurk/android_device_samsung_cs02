@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
+#include <media/IMediaSource.h>
+#include <media/stagefright/MediaSource.h>
+
 /* MediaBufferGroup::MediaBufferGroup */
 extern "C" int _ZN7android16MediaBufferGroupC1Ej(unsigned int);
 extern "C" int _ZN7android16MediaBufferGroupC1Ev() {
     return _ZN7android16MediaBufferGroupC1Ej(0);
+}
+
+extern "C" void _ZNK7android11MediaSource11ReadOptions9getSeekToEPxPNS1_8SeekModeE(void * obj, int64_t time_us, android::MediaSource::ReadOptions::SeekMode mode) {
+    android::IMediaSource::ReadOptions *rop = static_cast<android::IMediaSource::ReadOptions *>(obj);
+    rop->setSeekTo(time_us, mode);
 }
