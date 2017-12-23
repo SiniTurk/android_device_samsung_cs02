@@ -12,7 +12,6 @@ DEVICE_PACKAGE_OVERLAYS += device/samsung/cs02/overlay
 # Base/Init Files
 PRODUCT_COPY_FILES += \
     device/samsung/cs02/ramdisk/fstab.hawaii_ss_cs02:root/fstab.hawaii_ss_cs02 \
-    device/samsung/cs02/ramdisk/init.rc:root/init.rc \
     device/samsung/cs02/ramdisk/init.hawaii_ss_cs02.rc:root/init.hawaii_ss_cs02.rc \
     device/samsung/cs02/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
     device/samsung/cs02/ramdisk/init.log.rc:root/init.log.rc \
