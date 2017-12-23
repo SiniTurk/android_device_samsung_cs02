@@ -1,73 +1,3 @@
-diff --git a/frameworks/av/media/libstagefright/Android.mk b/frameworks/av/media/libstagefright/Android.mk
-index 792c139ea..ed92008b4 100644
---- a/frameworks/av/media/libstagefright/Android.mk
-+++ b/frameworks/av/media/libstagefright/Android.mk
-@@ -212,6 +212,10 @@ LOCAL_C_INCLUDES += \
- 	$(TOP)/hardware/samsung/exynos4/include
- endif
- 
-+ifeq ($(TARGET_BOARD_PLATFORM),hawaii)
-+    LOCAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
-+endif
-+
- LOCAL_MODULE:= libstagefright
- 
- LOCAL_MODULE_TAGS := optional
-diff --git a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp
-index 6ac6d4aa4..9e8c953a3 100644
---- a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp
-+++ b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp
-@@ -55,6 +55,13 @@ void MediaBufferGroup::add_buffer(MediaBuffer *buffer) {
-     mLastBuffer = buffer;
- }
- 
-+#ifdef ADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
-+extern "C" status_t _ZN7android16MediaBufferGroup14acquire_bufferEPPNS_11MediaBufferE(
-+    MediaBufferGroup* group, MediaBuffer **out) {
-+    return group->acquire_buffer(out, false);
-+}
-+#endif
-+
- status_t MediaBufferGroup::acquire_buffer(
-         MediaBuffer **out, bool nonBlocking) {
-     Mutex::Autolock autoLock(mLock);
-diff --git a/frameworks/native/libs/binder/Parcel.cpp b/frameworks/native/libs/binder/Parcel.cpp
-index 4690a8233..edd2146bf 100644
---- a/frameworks/native/libs/binder/Parcel.cpp
-+++ b/frameworks/native/libs/binder/Parcel.cpp
-@@ -895,6 +895,12 @@ status_t Parcel::writeString16(const String16& str)
-     return writeString16(str.string(), str.size());
- }
- 
-+extern "C" status_t _ZN7android6Parcel13writeString16EPKDsj(void *parcel, const char16_t* str, size_t len);
-+
-+extern "C" status_t _ZN7android6Parcel13writeString16EPKtj(void *parcel, const char16_t* str, size_t len) {
-+    return _ZN7android6Parcel13writeString16EPKDsj(parcel, str, len);
-+}
-+
- status_t Parcel::writeString16(const char16_t* str, size_t len)
- {
-     if (str == NULL) return writeInt32(-1);
-diff --git a/system/core/include/utils/RefBase.h b/system/core/include/utils/RefBase.h
-index eac6a7840..b25bbce3d 100644
---- a/system/core/include/utils/RefBase.h
-+++ b/system/core/include/utils/RefBase.h
-@@ -53,6 +53,15 @@ inline bool operator _op_ (const U* o) const {                  \
- 
- // ---------------------------------------------------------------------------
- 
-+#ifdef REFBASE_JB_MR1_COMPAT_SYMBOLS
-+class ReferenceConverterBase {
-+public:
-+    virtual size_t getReferenceTypeSize() const = 0;
-+    virtual void* getReferenceBase(void const*) const = 0;
-+    inline virtual ~ReferenceConverterBase() { }
-+};
-+#endif
-+
- class ReferenceRenamer {
- protected:
-     // destructor is purposedly not virtual so we avoid code overhead from
 diff --git a/system/core/include/utils/VectorImpl.h b/system/core/include/utils/VectorImpl.h
 index 21ad71ce6..4defc35ea 100644
 --- a/system/core/include/utils/VectorImpl.h
@@ -119,29 +49,11 @@ index 23a5c598f..88348aced 100644
  include $(CLEAR_VARS)
  
 +ifeq ($(TARGET_BOARD_PLATFORM),hawaii)
-+    LOCAL_CFLAGS += -DREFBASE_JB_MR1_COMPAT_SYMBOLS -DNEEDS_VECTORIMPL_SYMBOLS
++    LOCAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 +endif
  
  # we have the common sources, plus some device-specific stuff
  LOCAL_SRC_FILES:= \
-diff --git a/system/core/libutils/RefBase.cpp b/system/core/libutils/RefBase.cpp
-index 02907ad67..b0ca12e4d 100644
---- a/system/core/libutils/RefBase.cpp
-+++ b/system/core/libutils/RefBase.cpp
-@@ -630,6 +630,13 @@ void RefBase::onLastWeakRef(const void* /*id*/)
- 
- // ---------------------------------------------------------------------------
- 
-+#ifdef REFBASE_JB_MR1_COMPAT_SYMBOLS
-+extern "C" void _ZN7android7RefBase14moveReferencesEPvPKvjRKNS_22ReferenceConverterBaseE(void* /*dst*/, void const* /*src*/, size_t /*n*/,
-+        const ReferenceConverterBase& /*caster*/)
-+{
-+}
-+#endif
-+
- #if DEBUG_REFS
- void RefBase::renameRefs(size_t n, const ReferenceRenamer& renamer) {
-     for (size_t i=0 ; i<n ; i++) {
 diff --git a/system/core/libutils/VectorImpl.cpp b/system/core/libutils/VectorImpl.cpp
 index de65a6cba..ffd552b21 100644
 --- a/system/core/libutils/VectorImpl.cpp

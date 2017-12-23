@@ -85,9 +85,9 @@ PRODUCT_PACKAGES += \
     libstlport \
     libsecril-client
 
-# Shim libs
+# Shim lib
 PRODUCT_PACKAGES += \
-    libshim_glgps
+    libshim
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \

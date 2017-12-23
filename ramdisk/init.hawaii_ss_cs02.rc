@@ -3,10 +3,10 @@ import init.log.rc
 
 on early-init
     mkdir /efs 0771 radio system
-    export LD_SHIM_LIBS "/system/bin/glgps|libshim_glgps.so"
 
 on init
-    
+    export LD_PRELOAD "/system/lib/libshim.so"
+
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
