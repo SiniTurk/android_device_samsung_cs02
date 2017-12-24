@@ -56,12 +56,16 @@ diff -ur a/frameworks/native/include/gui/SurfaceComposerClient.h b/frameworks/na
 diff -ur a/frameworks/native/libs/gui/Android.mk b/frameworks/native/libs/gui/Android.mk
 --- a/frameworks/native/libs/gui/Android.mk	2017-02-27 09:30:14.181759845 +0100
 +++ b/frameworks/native/libs/gui/Android.mk	2017-02-27 09:46:25.300552337 +0100
-@@ -82,6 +82,10 @@
+@@ -82,6 +82,14 @@
  	liblog
  
  
 +ifeq ($(BOARD_USE_MHEAP_SCREENSHOT),true)
 +    LOCAL_CFLAGS += -DUSE_MHEAP_SCREENSHOT
++endif
++
++ifeq ($(TARGET_BOARD_PLATFORM),hawaii)
++    LOCAL_CFLAGS += -DHAWAII_HWC
 +endif
 +
  LOCAL_MODULE := libgui
@@ -202,12 +206,16 @@ diff -ur a/frameworks/native/libs/gui/SurfaceComposerClient.cpp b/frameworks/nat
 diff -ur a/frameworks/native/services/surfaceflinger/Android.mk b/frameworks/native/services/surfaceflinger/Android.mk
 --- a/frameworks/native/services/surfaceflinger/Android.mk	2017-02-27 09:30:14.181759845 +0100
 +++ b/frameworks/native/services/surfaceflinger/Android.mk	2017-02-27 09:46:25.300552337 +0100
-@@ -69,6 +69,10 @@
+@@ -69,6 +69,14 @@
      LOCAL_CFLAGS += -DRUNNING_WITHOUT_SYNC_FRAMEWORK
  endif
  
 +ifeq ($(BOARD_USE_MHEAP_SCREENSHOT),true)
 +    LOCAL_CFLAGS += -DUSE_MHEAP_SCREENSHOT
++endif
++
++ifeq ($(TARGET_BOARD_PLATFORM),hawaii)
++    LOCAL_CFLAGS += -DHAWAII_HWC
 +endif
 +
  # See build/target/board/generic/BoardConfig.mk for a description of this setting.
