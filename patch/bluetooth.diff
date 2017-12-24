@@ -1,0 +1,24 @@
+diff -ur a/hardware/broadcom/libbt/src/userial_vendor.c b/hardware/broadcom/libbt/src/userial_vendor.c
+--- a/hardware/broadcom/libbt/src/userial_vendor.c	2017-08-26 09:07:20.969162046 +0200
++++ b/hardware/broadcom/libbt/src/userial_vendor.c	2017-08-26 10:05:35.713669453 +0200
+@@ -196,6 +196,9 @@
+     uint8_t data_bits;
+     uint16_t parity;
+     uint8_t stop_bits;
++#if (BT_WAKE_VIA_USERIAL_IOCTL==TRUE)
++    int ldisc;
++#endif
+ 
+     vnd_userial.fd = -1;
+ 
+@@ -266,6 +269,9 @@
+     tcsetattr(vnd_userial.fd, TCSANOW, &vnd_userial.termios);
+ 
+ #if (BT_WAKE_VIA_USERIAL_IOCTL==TRUE)
++    ldisc = 25; // N_BRCM_HCI
++    ioctl(vnd_userial.fd, TIOCSETD, &ldisc);
++
+     userial_ioctl_init_bt_wake(vnd_userial.fd);
+ #endif
+
+

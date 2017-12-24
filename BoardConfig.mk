@@ -85,7 +85,6 @@ TARGET_SCREEN_WIDTH                         := 480
 # Hardware rendering
 BOARD_EGL_WORKAROUND_BUG_10194508           := true
 TARGET_USES_ION                             := true
-BOARD_GLOBAL_CFLAGS                         += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK       := true
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS       := true
 
