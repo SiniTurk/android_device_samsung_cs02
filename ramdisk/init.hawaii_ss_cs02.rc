@@ -574,15 +574,6 @@ on property:ro.debuggable=1
 		user system
 		group system
 
-# RILD
-	service ril-daemon /system/bin/rild
-		class main
-		socket rild stream 660 root radio
-		socket rild1 stream 660 root radio
-		socket rild-debug stream 660 radio system
-		user root
-		group radio cache inet misc audio system sdcard_rw log sdcard_r
-
 	service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
 		-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
 		-I/system/etc/wifi/wpa_supplicant_overlay.conf \

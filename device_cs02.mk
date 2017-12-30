@@ -18,7 +18,6 @@ PRODUCT_COPY_FILES += device/samsung/cs02/ramdisk/twrp.fstab:recovery/root/etc/t
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/cs02/ramdisk/fstab.hawaii_ss_cs02:root/fstab.hawaii_ss_cs02 \
-	device/samsung/cs02/ramdisk/init.rc:root/init.rc \
 	device/samsung/cs02/ramdisk/init.hawaii_ss_cs02.rc:root/init.hawaii_ss_cs02.rc \
 	device/samsung/cs02/ramdisk/init.recovery.hawaii_ss_cs02.rc:root/init.recovery.hawaii_ss_cs02.rc \
 	device/samsung/cs02/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
