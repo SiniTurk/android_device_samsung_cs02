@@ -246,23 +246,6 @@ diff -ur a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp
              signed v_g = -v * 208;
              signed v_r = v * 409;
  
-diff -ur a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp
---- a/frameworks/av/media/libstagefright/MediaBufferGroup.cpp	2017-03-11 09:10:02.982901867 +0100
-+++ b/frameworks/av/media/libstagefright/MediaBufferGroup.cpp	2017-03-11 09:10:27.591209126 +0100
-@@ -55,6 +55,13 @@
-     mLastBuffer = buffer;
- }
- 
-+#ifdef ADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
-+extern "C" status_t _ZN7android16MediaBufferGroup14acquire_bufferEPPNS_11MediaBufferE(
-+    MediaBufferGroup* group, MediaBuffer **out) {
-+    return group->acquire_buffer(out, false);
-+}
-+#endif
-+
- status_t MediaBufferGroup::acquire_buffer(
-         MediaBuffer **out, bool nonBlocking) {
-     Mutex::Autolock autoLock(mLock);
 diff -ur a/frameworks/av/media/libstagefright/MPEG4Writer.cpp b/frameworks/av/media/libstagefright/MPEG4Writer.cpp
 --- a/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2017-03-11 09:10:02.982901867 +0100
 +++ b/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2017-03-11 09:10:27.591209126 +0100
