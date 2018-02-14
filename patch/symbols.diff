@@ -2,12 +2,11 @@ diff --git a/system/core/include/utils/VectorImpl.h b/system/core/include/utils/
 index 21ad71ce6..4defc35ea 100644
 --- a/system/core/include/utils/VectorImpl.h
 +++ b/system/core/include/utils/VectorImpl.h
-@@ -105,6 +105,18 @@ protected:
+@@ -105,6 +105,16 @@ protected:
      virtual void            do_splat(void* dest, const void* item, size_t num) const = 0;
      virtual void            do_move_forward(void* dest, const void* from, size_t num) const = 0;
      virtual void            do_move_backward(void* dest, const void* from, size_t num) const = 0;
-+	
-+#ifdef NEEDS_VECTORIMPL_SYMBOLS
++
 +    // take care of FBC...
 +    virtual void            reservedVectorImpl1();
 +    virtual void            reservedVectorImpl2();
@@ -17,16 +16,14 @@ index 21ad71ce6..4defc35ea 100644
 +    virtual void            reservedVectorImpl6();
 +    virtual void            reservedVectorImpl7();
 +    virtual void            reservedVectorImpl8();
-+#endif
      
  private:
          void* _grow(size_t where, size_t amount);
-@@ -155,6 +167,18 @@ public:
+@@ -155,6 +167,16 @@ public:
          
  protected:
      virtual int             do_compare(const void* lhs, const void* rhs) const = 0;
-+	
-+#ifdef NEEDS_VECTORIMPL_SYMBOLS
++
 +    // take care of FBC...
 +    virtual void            reservedSortedVectorImpl1();
 +    virtual void            reservedSortedVectorImpl2();
@@ -36,33 +33,17 @@ index 21ad71ce6..4defc35ea 100644
 +    virtual void            reservedSortedVectorImpl6();
 +    virtual void            reservedSortedVectorImpl7();
 +    virtual void            reservedSortedVectorImpl8();
-+#endif	
  
  private:
              ssize_t         _indexOrderOf(const void* item, size_t* order = 0) const;
-diff --git a/system/core/libutils/Android.mk b/system/core/libutils/Android.mk
-index 23a5c598f..88348aced 100644
---- a/system/core/libutils/Android.mk
-+++ b/system/core/libutils/Android.mk
-@@ -70,6 +70,9 @@ include $(BUILD_HOST_STATIC_LIBRARY)
- # =====================================================
- include $(CLEAR_VARS)
- 
-+ifeq ($(TARGET_BOARD_PLATFORM),hawaii)
-+    LOCAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
-+endif
- 
- # we have the common sources, plus some device-specific stuff
- LOCAL_SRC_FILES:= \
 diff --git a/system/core/libutils/VectorImpl.cpp b/system/core/libutils/VectorImpl.cpp
 index de65a6cba..ffd552b21 100644
 --- a/system/core/libutils/VectorImpl.cpp
 +++ b/system/core/libutils/VectorImpl.cpp
-@@ -552,6 +552,17 @@ void VectorImpl::_do_move_backward(void* dest, const void* from, size_t num) con
+@@ -552,6 +552,15 @@ void VectorImpl::_do_move_backward(void* dest, const void* from, size_t num) con
      do_move_backward(dest, from, num);
  }
  
-+#ifdef NEEDS_VECTORIMPL_SYMBOLS
 +void VectorImpl::reservedVectorImpl1() { }
 +void VectorImpl::reservedVectorImpl2() { }
 +void VectorImpl::reservedVectorImpl3() { }
@@ -71,16 +52,14 @@ index de65a6cba..ffd552b21 100644
 +void VectorImpl::reservedVectorImpl6() { }
 +void VectorImpl::reservedVectorImpl7() { }
 +void VectorImpl::reservedVectorImpl8() { }
-+#endif
 +
  /*****************************************************************************/
  
  SortedVectorImpl::SortedVectorImpl(size_t itemSize, uint32_t flags)
-@@ -667,6 +678,17 @@ ssize_t SortedVectorImpl::remove(const void* item)
+@@ -667,6 +678,15 @@ ssize_t SortedVectorImpl::remove(const void* item)
      return i;
  }
  
-+#ifdef NEEDS_VECTORIMPL_SYMBOLS
 +void SortedVectorImpl::reservedSortedVectorImpl1() { };
 +void SortedVectorImpl::reservedSortedVectorImpl2() { };
 +void SortedVectorImpl::reservedSortedVectorImpl3() { };
@@ -89,7 +68,6 @@ index de65a6cba..ffd552b21 100644
 +void SortedVectorImpl::reservedSortedVectorImpl6() { };
 +void SortedVectorImpl::reservedSortedVectorImpl7() { };
 +void SortedVectorImpl::reservedSortedVectorImpl8() { };
-+#endif
 +
  /*****************************************************************************/
  
