@@ -1,0 +1,10 @@
+type usb_portd, domain;
+type usb_portd_exec, file_type, exec_type;
+
+init_daemon_domain(usb_portd)
+net_domain(usb_portd)
+
+allow usb_portd self:netlink_kobject_uevent_socket { setopt create bind read };
+allow usb_portd self:capability { net_admin };
+allow usb_portd shell_exec:file { execute read open execute_no_trans };
+allow usb_portd sysfs:file { write };

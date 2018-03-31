@@ -1,0 +1,14 @@
+type sensord, domain;
+type sensord_exec, file_type, exec_type;
+
+init_daemon_domain(sensord)
+
+allow sensord sensord_data_file:dir { search getattr setattr write };
+allow sensord sensord_data_file:file { read write open append setattr };
+allow sensord sensord_data_file:fifo_file { read write };
+
+allow sensord { input_device efs_file }:dir search;
+
+allow sensord sysfs:file write;
+
+file_type_auto_trans(sensord, system_data_file, sensord_data_file);

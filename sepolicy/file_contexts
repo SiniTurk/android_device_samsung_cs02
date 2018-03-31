@@ -18,6 +18,7 @@
 #
 /dev/mpu6k                                      u:object_r:sensors_device:s0
 /dev/proximity                                  u:object_r:sensors_device:s0
+/dev/ttyGS1                                     u:object_r:serial_device:s0
 /dev/ttyS2                                      u:object_r:serial_device:s0
 /dev/ttyS0                                      u:object_r:hci_attach_dev:s0
 /dev/ttyS1                                      u:object_r:gps_device:s0
@@ -48,6 +49,8 @@
 /system/bin/glgps                               u:object_r:gpsd_exec:s0
 /system/bin/immvibed                            u:object_r:immvibed_exec:s0
 /system/bin/macloader                           u:object_r:macloader_exec:s0
+/system/bin/sensord                             u:object_r:sensord_exec:s0
+/system/bin/usb_portd                           u:object_r:usb_portd_exec:s0
 
 ###################################
 # Data files
@@ -65,6 +68,7 @@
 /data/ltoStatus.txt                             u:object_r:gps_data_file:s0
 /data/atx/bkmgrdlock                            u:object_r:radio_data_file:s0
 /data/ipccp.bin                                 u:object_r:radio_data_file:s0
+/data/misc/sensor(/.*)?                         u:object_r:sensord_data_file:s0
 
 ###################################
 # efs files

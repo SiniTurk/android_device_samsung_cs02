@@ -11,3 +11,9 @@ allow init tmpfs:lnk_file create;
 # insmod
 allow init self:capability sys_module; # TODO: want sys_ptrace too
 #allow init kernel:security setenforce;
+
+# Allow to mount debugfs
+allow init debugfs:dir mounton;
+
+# Allow noatsecure for LD_PRELOAD/LD_SHIM_LIBS
+allow init { domain -lmkd }:process noatsecure;

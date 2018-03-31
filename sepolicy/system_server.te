@@ -17,3 +17,10 @@ allow system_server self:capability sys_module;
 
 # Not sure why
 allow system_server efs_file:dir search;
+
+# For /data/misc/sensor
+allow system_server sensord_data_file:dir { getattr setattr search write };
+allow system_server sensord_data_file:fifo_file { read write open };
+
+# For text relocations in /system/lib/libbrcm*.so
+allow system_server system_file:file { execmod };

@@ -3,6 +3,7 @@ allow kernel device:blk_file { create setattr };
 allow kernel self:capability mknod;
 
 allow kernel device:dir { write add_name };
+allow kernel serial_device:chr_file { open write };
 
 # kcamfwcheck drivers/char/broadcom/vc_cam/vc_cam.c
 allow kernel block_device:dir search;
