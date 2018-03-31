@@ -5,9 +5,9 @@ diff -ur a/frameworks/av/include/media/stagefright/ColorConverter.h b/frameworks
  
      status_t convertCbYCrY(
              const BitmapParams &src, const BitmapParams &dst);
-+			
++
 +	status_t convertYCbYCr(
-+            const BitmapParams &src, const BitmapParams &dst);		
++            const BitmapParams &src, const BitmapParams &dst);
  
      status_t convertYUV420Planar(
              const BitmapParams &src, const BitmapParams &dst);
@@ -42,7 +42,7 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
 +			if (clp != OK) {
 +				ALOGE("ACodec:PATCH:setupNativeWindowSizeFormatAndUsage[%s] setParameter(OMX_IndexParamPortDefinition) ERROR", mComponentName.c_str());
 +			}
-+		}	
++		}
 +		break;
 +		default:
 +			ALOGE("ACodec:PATCH:setupNativeWindowSizeFormatAndUsage[%s] def.format.video.eColorFormat Default (%i) (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12", mComponentName.c_str(), (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12);
@@ -102,20 +102,20 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
      image.mNumPlanes = 0;
  
      const OMX_COLOR_FORMATTYPE fmt = params.eColorFormat;
-+	
-+	ALOGE("ACodec:PATCH:describeDefaultColorFormat eColorFormat = %i", params.eColorFormat);
-+	
-+	switch(params.eColorFormat){
-+		case OMX_COLOR_FormatYCbYCr:{
-+			ALOGE("ACodec:PATCH:describeDefaultColorFormat eColorFormat = %i SET to %i", params.eColorFormat, (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12);
-+			params.eColorFormat = (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12;
-+		}
-+		break;
-+		default:
-+			ALOGE("ACodec:PATCH:describeDefaultColorFormat default eColorFormat = %i", params.eColorFormat);
-+		break;
-+	}
-+	
++
++    ALOGE("ACodec:PATCH:describeDefaultColorFormat eColorFormat = %i", params.eColorFormat);
++
++    switch(params.eColorFormat){
++        case OMX_COLOR_FormatYCbYCr:{
++            ALOGE("ACodec:PATCH:describeDefaultColorFormat eColorFormat = %i SET to %i", params.eColorFormat, (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12);
++            params.eColorFormat = (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12;
++        }
++        break;
++        default:
++            ALOGE("ACodec:PATCH:describeDefaultColorFormat default eColorFormat = %i", params.eColorFormat);
++            break;
++    }
++
      image.mWidth = params.nFrameWidth;
      image.mHeight = params.nFrameHeight;
  
@@ -123,16 +123,16 @@ diff -ur a/frameworks/av/media/libstagefright/ACodec.cpp b/frameworks/av/media/l
          return BAD_VALUE;
      }
  
-+	ALOGE("ACodec:PATCH:getPortFormat[%s] getParameter(OMX_IndexParamPortDefinition) def.format.video.eColorFormat = %i", mComponentName.c_str(), def.format.video.eColorFormat);
-+	if(def.format.video.eColorFormat == OMX_COLOR_FormatYCbYCr){
-+		ALOGE("ACodec:PATCH:getPortFormat[%s] getParameter(OMX_IndexParamPortDefinition) def.format.video.eColorFormat = %i SET %i", mComponentName.c_str(), def.format.video.eColorFormat, OMX_COLOR_FormatYUV420Planar);
-+	    def.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
-+		status_t ert = mOMX->setParameter(mNode, OMX_IndexParamPortDefinition, &def, sizeof(def));
-+		if (ert != OK) {
-+			ALOGE("ACodec:PATCH:getPortFormat[%s] setParameter(OMX_IndexParamPortDefinition) ERROR", mComponentName.c_str());
-+		}
-+	}
-+	
++    ALOGE("ACodec:PATCH:getPortFormat[%s] getParameter(OMX_IndexParamPortDefinition) def.format.video.eColorFormat = %i", mComponentName.c_str(), def.format.video.eColorFormat);
++    if(def.format.video.eColorFormat == OMX_COLOR_FormatYCbYCr){
++        ALOGE("ACodec:PATCH:getPortFormat[%s] getParameter(OMX_IndexParamPortDefinition) def.format.video.eColorFormat = %i SET %i", mComponentName.c_str(), def.format.video.eColorFormat, OMX_COLOR_FormatYUV420Planar);
++        def.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
++        status_t ert = mOMX->setParameter(mNode, OMX_IndexParamPortDefinition, &def, sizeof(def));
++        if (ert != OK) {
++            ALOGE("ACodec:PATCH:getPortFormat[%s] setParameter(OMX_IndexParamPortDefinition) ERROR", mComponentName.c_str());
++        }
++    }
++
      switch (def.eDomain) {
          case OMX_PortDomainVideo:
          {
@@ -159,7 +159,7 @@ diff -ur a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp
      switch (mSrcFormat) {
          case OMX_COLOR_FormatYUV420Planar:
          case OMX_COLOR_FormatCbYCrY:
-+		 case OMX_COLOR_FormatYCbYCr:
++         case OMX_COLOR_FormatYCbYCr:
          case OMX_QCOM_COLOR_FormatYVU420SemiPlanar:
          case OMX_COLOR_FormatYUV420SemiPlanar:
          case OMX_TI_COLOR_FormatYUV420PackedSemiPlanar:
@@ -167,10 +167,10 @@ diff -ur a/frameworks/av/media/libstagefright/colorconversion/ColorConverter.cpp
          case OMX_COLOR_FormatCbYCrY:
              err = convertCbYCrY(src, dst);
              break;
-+			
-+		 case OMX_COLOR_FormatYCbYCr:
++
++        case OMX_COLOR_FormatYCbYCr:
 +            err = convertYCbYCr(src, dst);
-+            break;	
++            break;
  
          case OMX_QCOM_COLOR_FormatYVU420SemiPlanar:
              err = convertQCOMYUV420SemiPlanar(src, dst);
@@ -311,12 +311,12 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
          CHECK_EQ((int)format.eCompressionFormat, (int)OMX_VIDEO_CodingUnused);
  
          int32_t colorFormat;
-+		
-+		if (!strncmp("OMX.brcm.video.h264.hw.decoder", mComponentName, 30)) {
-+			ALOGE("PATCH:OMXCodec:setVideoOutputFormat[%s] colorFormat BRCM set 19", mComponentName);	
-+			format.eColorFormat = OMX_COLOR_FormatYUV420Planar;
-+		}
-+		
++
++        if (!strncmp("OMX.brcm.video.h264.hw.decoder", mComponentName, 30)) {
++            ALOGE("PATCH:OMXCodec:setVideoOutputFormat[%s] colorFormat BRCM set 19", mComponentName);
++            format.eColorFormat = OMX_COLOR_FormatYUV420Planar;
++        }
++
          if (meta->findInt32(kKeyColorFormat, &colorFormat)
                  && colorFormat != OMX_COLOR_FormatUnused
                  && colorFormat != format.eColorFormat) {
@@ -324,42 +324,38 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
                  if (format.eColorFormat == colorFormat) {
                      break;
                  }
-+				if((unsigned int)err == 0x80001005){
-+					ALOGE("PATCH:OMXCodec:setVideoOutputFormat[%s] getParameter(OMX_IndexParamVideoPortFormat) colorFormat(%i) != format.eColorFormat (%i) OMX_ErrorNoMore", mComponentName, colorFormat, format.eColorFormat);
-+					err = OMX_ErrorNoMore;
-+				}
++                if((unsigned int)err == 0x80001005){
++                    ALOGE("PATCH:OMXCodec:setVideoOutputFormat[%s] getParameter(OMX_IndexParamVideoPortFormat) colorFormat(%i) != format.eColorFormat (%i) OMX_ErrorNoMore", mComponentName, colorFormat, format.eColorFormat);
++                    err = OMX_ErrorNoMore;
++                }
              }
              if (format.eColorFormat != colorFormat) {
                  CODEC_LOGE("Color format %d is not supported", colorFormat);
-@@ -1798,12 +1808,37 @@
+@@ -1798,12 +1808,33 @@
              usage |= GRALLOC_USAGE_PRIVATE_NONSECURE;
  #endif
      }
-+	
-+	ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow def.format.video.eColorFormat = %i", def.format.video.eColorFormat);
 +
-+	OMX_COLOR_FORMATTYPE HalColorFormat;
-+	status_t errss;
-+	
-+	switch (def.format.video.eColorFormat) {
-+		case OMX_COLOR_FormatYCbYCr:
-+			ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow OMX_COLOR_FormatYCbYCr(%i) -> (%i)", OMX_COLOR_FormatYCbYCr, OMX_COLOR_FormatYUV420Planar);
-+			def.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
-+			//errss = mOMX->setParameter(mNode, OMX_IndexParamPortDefinition, &def, sizeof(def));
-+			//if (errss != OK){
-+			//	ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow setParameter failed: %d", errss);
-+			//}		
-+			HalColorFormat = (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12;
-+		break;
-+		case OMX_COLOR_FormatYUV420Planar:
-+			ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow OMX_COLOR_FormatYUV420Planar(%i) -> HAL_PIXEL_FORMAT_YV12(%i)", OMX_COLOR_FormatYUV420Planar, (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12);
-+			HalColorFormat = (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12;
-+		break;
-+		default:
-+			ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow default(%i) -> default(%i)", def.format.video.eColorFormat, def.format.video.eColorFormat);
-+			HalColorFormat = def.format.video.eColorFormat;
-+		break;
-+	}
++    ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow def.format.video.eColorFormat = %i", def.format.video.eColorFormat);
++
++    OMX_COLOR_FORMATTYPE HalColorFormat;
++    status_t errss;
++
++    switch (def.format.video.eColorFormat) {
++        case OMX_COLOR_FormatYCbYCr:
++            ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow OMX_COLOR_FormatYCbYCr(%i) -> (%i)", OMX_COLOR_FormatYCbYCr, OMX_COLOR_FormatYUV420Planar);
++            def.format.video.eColorFormat = OMX_COLOR_FormatYUV420Planar;
++            HalColorFormat = (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12;
++        break;
++        case OMX_COLOR_FormatYUV420Planar:
++            ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow OMX_COLOR_FormatYUV420Planar(%i) -> HAL_PIXEL_FORMAT_YV12(%i)", OMX_COLOR_FormatYUV420Planar, (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12);
++            HalColorFormat = (OMX_COLOR_FORMATTYPE)HAL_PIXEL_FORMAT_YV12;
++        break;
++        default:
++            ALOGE("PATCH:OMXCodec:allocateOutputBuffersFromNativeWindow default(%i) -> default(%i)", def.format.video.eColorFormat, def.format.video.eColorFormat);
++            HalColorFormat = def.format.video.eColorFormat;
++        break;
++    }
  
      err = setNativeWindowSizeFormatAndUsage(
              mNativeWindow.get(),
@@ -375,13 +371,13 @@ diff -ur a/frameworks/av/media/libstagefright/OMXCodec.cpp b/frameworks/av/media
                  }
              }
 -            caps->mColorFormats.push(portFormat.eColorFormat);
-+			 if(portFormat.eColorFormat == OMX_COLOR_FormatYCbYCr) {
-+				 ALOGE("PATCH:OMXCodec:QueryCodec:getParameter(IndexParamVideoPortFormat) portFormat.eColorFormat %i SET %i", portFormat.eColorFormat, OMX_COLOR_FormatYUV420Planar);
-+				 caps->mColorFormats.push(OMX_COLOR_FormatYUV420Planar);
-+			 }else{
-+				 ALOGE("PATCH:OMXCodec:QueryCodec:getParameter(IndexParamVideoPortFormat) DEFAULT portFormat.eColorFormat %i", portFormat.eColorFormat);
-+				 caps->mColorFormats.push(portFormat.eColorFormat);
-+			 }
++            if(portFormat.eColorFormat == OMX_COLOR_FormatYCbYCr) {
++                ALOGE("PATCH:OMXCodec:QueryCodec:getParameter(IndexParamVideoPortFormat) portFormat.eColorFormat %i SET %i", portFormat.eColorFormat, OMX_COLOR_FormatYUV420Planar);
++                caps->mColorFormats.push(OMX_COLOR_FormatYUV420Planar);
++            } else {
++                ALOGE("PATCH:OMXCodec:QueryCodec:getParameter(IndexParamVideoPortFormat) DEFAULT portFormat.eColorFormat %i", portFormat.eColorFormat);
++                caps->mColorFormats.push(portFormat.eColorFormat);
++            }
          }
      }
  
