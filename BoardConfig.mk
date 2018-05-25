@@ -110,6 +110,10 @@ BOARD_HAL_STATIC_LIBRARIES                  := libhealthd.hawaii
 BOARD_RIL_CLASS                             := ../../../device/samsung/cs02/ril/
 BOARD_GLOBAL_CFLAGS                         += -DDISABLE_ASHMEM_TRACKING
 
+# NFC
+BOARD_NFC_CHIPSET                           := bcm2079x
+BOARD_NFC_HAL_SUFFIX                        := default
+
 # Camera
 TARGET_HAS_LEGACY_CAMERA_HAL1               := true
 
