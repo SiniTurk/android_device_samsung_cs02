@@ -62,6 +62,10 @@ WIFI_DRIVER_MODULE_ARG                      := "firmware_path=/system/etc/wifi/b
 WIFI_DRIVER_MODULE_AP_ARG                   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_BAND                                   := 802_11_ABG
 
+# NFC
+BOARD_NFC_CHIPSET                           := bcm2079x
+BOARD_NFC_HAL_SUFFIX                        := default
+
 # Resolution
 TARGET_SCREEN_HEIGHT := 800
 TARGET_SCREEN_WIDTH := 480
@@ -142,3 +146,4 @@ BOARD_MTP_DEVICE := /dev/mtp_usb
 # SELinux
 BOARD_SEPOLICY_DIRS += \
     device/samsung/cs02/sepolicy
+

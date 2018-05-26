@@ -84,6 +84,21 @@ PRODUCT_PACKAGES += \
     libstlport \
     libsecril-client
 
+# NFC packages
+PRODUCT_PACKAGES += \
+    libnfc-nci \
+    libnfc_nci_jni \
+    nfc_nci.bcm2079x.default \
+    NfcNci \
+    Tag \
+    com.android.nfc_extras
+
+# NFC config
+PRODUCT_COPY_FILES += \
+    device/samsung/cs02/nfc/nfcee_access.xml:system/etc/nfcee_access.xml \
+    device/samsung/cs02/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
+    device/samsung/cs02/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
+
 # Shim lib
 PRODUCT_PACKAGES += \
     libshim
@@ -109,6 +124,9 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
+    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to

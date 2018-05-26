@@ -24,6 +24,7 @@
 /dev/ttyS1                                      u:object_r:gps_device:s0
 /dev/bcm_gps                                    u:object_r:gps_device:s0
 /dev/bcm_log                                    u:object_r:radio_device:s0
+/dev/bcm2079x                                   u:object_r:nfc_device:s0
 /dev/socket/rild1                               u:object_r:rild_socket:s0
 
 ###################################
@@ -69,6 +70,7 @@
 /data/atx/bkmgrdlock                            u:object_r:radio_data_file:s0
 /data/ipccp.bin                                 u:object_r:radio_data_file:s0
 /data/misc/sensor(/.*)?                         u:object_r:sensord_data_file:s0
+/data/bcmnfc(/.*)?                              u:object_r:nfc_data_file:s0
 
 ###################################
 # efs files
