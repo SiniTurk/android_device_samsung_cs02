@@ -18,9 +18,6 @@ TARGET_BOOTLOADER_BOARD_NAME                := hawaii
 TARGET_GLOBAL_CFLAGS                        += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -funsafe-math-optimizations
 TARGET_GLOBAL_CPPFLAGS                      += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -funsafe-math-optimizations
 
-# Assert
-TARGET_OTA_ASSERT_DEVICE                    := cs02,G350,SM-G350,hawaii
-
 # Kernel
 BOARD_MKBOOTIMG_ARGS                        := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 BOARD_KERNEL_BASE                           := 0x82000000
