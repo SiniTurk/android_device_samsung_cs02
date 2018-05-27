@@ -29,6 +29,9 @@ BOARD_KERNEL_TAGS_OFFSET                    := 0x00000100
 TARGET_KERNEL_CONFIG                        := bcm21664_hawaii_ss_cs02_rev02_defconfig
 TARGET_KERNEL_SOURCE                        := kernel/samsung/cs02
 
+# Our kernel does not have finit_module support
+KERNEL_HAS_FINIT_MODULE                     := false
+
 # Extended filesystem support
 TARGET_KERNEL_HAVE_EXFAT                    := true
 TARGET_KERNEL_HAVE_NTFS                     := true
