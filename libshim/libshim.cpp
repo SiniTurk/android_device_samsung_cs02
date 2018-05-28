@@ -55,6 +55,7 @@ namespace android {
             rop->setSeekTo(time_us, mode);
         }
 
+        /*
         void _ZN7android10VectorImpl19reservedVectorImpl1Ev() {}
         void _ZN7android10VectorImpl19reservedVectorImpl2Ev() {}
         void _ZN7android10VectorImpl19reservedVectorImpl3Ev() {}
@@ -72,5 +73,6 @@ namespace android {
         void _ZN7android16SortedVectorImpl25reservedSortedVectorImpl6Ev() {}
         void _ZN7android16SortedVectorImpl25reservedSortedVectorImpl7Ev() {}
         void _ZN7android16SortedVectorImpl25reservedSortedVectorImpl8Ev() {}
+        */
     }
 }
