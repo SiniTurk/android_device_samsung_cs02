@@ -90,10 +90,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ksm.default=1
 
-# Disable sending usage data
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.nocheckin=1
-
 # Wi-Fi
 PRODUCT_PACKAGES += \
     macloader \
