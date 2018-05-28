@@ -115,12 +115,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libshim
 
-# NFCEE Access
-NFCEE_ACCESS_PATH := device/samsung/cs02/nfc/nfcee_access.xml
-
 # NFC
 PRODUCT_COPY_FILES += \
-    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
+    device/samsung/cs02/nfc/nfcee_access.xml:system/etc/nfcee_access.xml \
     device/samsung/cs02/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
     device/samsung/cs02/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
 
