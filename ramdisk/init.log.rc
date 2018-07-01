@@ -1,5 +1,5 @@
 on boot
-# Setup permissions for logging
+    # Setup permissions for logging
     chown system system /sys/class/bcm_log/bcm_log/log
     chown system system /sys/class/bcm_log/bcm_log/log_lock
     chown system system /sys/class/bcm_log/bcm_log/cp_crash
@@ -21,22 +21,27 @@ on boot
 # Setup Logging persistent data
 on property:persist.brcm.log=auto
     write /sys/class/bcm_log/bcm_log/log_lock 0
+
 on property:persist.brcm.log=sdcard
     write /sys/class/bcm_log/bcm_log/log_lock 0
     write /sys/class/bcm_log/bcm_log/log sdcard
     write /sys/class/bcm_log/bcm_log/log_lock 1
+
 on property:persist.brcm.log=uart
     write /sys/class/bcm_log/bcm_log/log_lock 0
     write /sys/class/bcm_log/bcm_log/log uart
     write /sys/class/bcm_log/bcm_log/log_lock 1
+
 on property:persist.brcm.log=stm
     write /sys/class/bcm_log/bcm_log/log_lock 0
     write /sys/class/bcm_log/bcm_log/log stm
     write /sys/class/bcm_log/bcm_log/log_lock 1
+
 on property:persist.brcm.log=rndis
     write /sys/class/bcm_log/bcm_log/log_lock 0
     write /sys/class/bcm_log/bcm_log/log rndis
     write /sys/class/bcm_log/bcm_log/log_lock 1
+
 on property:persist.brcm.log=acm
     write /sys/class/bcm_log/bcm_log/log_lock 0
     write /sys/class/bcm_log/bcm_log/log acm
@@ -44,26 +49,32 @@ on property:persist.brcm.log=acm
 
 on property:persist.brcm.cp_crash=auto
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 0
+
 on property:persist.brcm.cp_crash=sdcard
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 0
     write /sys/class/bcm_log/bcm_log/cp_crash sdcard
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 1
+
 on property:persist.brcm.cp_crash=uart
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 0
     write /sys/class/bcm_log/bcm_log/cp_crash uart
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 1
+
 on property:persist.brcm.cp_crash=stm
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 0
     write /sys/class/bcm_log/bcm_log/cp_crash stm
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 1
+
 on property:persist.brcm.cp_crash=rndis
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 0
     write /sys/class/bcm_log/bcm_log/cp_crash rndis
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 1
+
 on property:persist.brcm.cp_crash=acm
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 0
     write /sys/class/bcm_log/bcm_log/cp_crash acm
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 1
+
 on property:persist.brcm.cp_crash=panic
     write /sys/class/bcm_log/bcm_log/cp_crash_lock 0
     write /sys/class/bcm_log/bcm_log/cp_crash panic
@@ -71,14 +82,17 @@ on property:persist.brcm.cp_crash=panic
 
 on property:persist.brcm.ap_crash=auto
     write /sys/class/bcm_log/bcm_log/ap_crash_lock 0
+
 on property:persist.brcm.ap_crash=stm
     write /sys/class/bcm_log/bcm_log/ap_crash_lock 0
     write /sys/class/bcm_log/bcm_log/ap_crash stm
     write /sys/class/bcm_log/bcm_log/ap_crash_lock 1
+
 on property:persist.brcm.ap_crash=panic
     write /sys/class/bcm_log/bcm_log/ap_crash_lock 0
     write /sys/class/bcm_log/bcm_log/ap_crash panic
     write /sys/class/bcm_log/bcm_log/ap_crash_lock 1
+
 on property:persist.brcm.ap_crash=sdcard
     write /sys/class/bcm_log/bcm_log/ap_crash_lock 0
     write /sys/class/bcm_log/bcm_log/ap_crash sdcard

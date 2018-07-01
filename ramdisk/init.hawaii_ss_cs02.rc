@@ -18,11 +18,11 @@ on init
     symlink /dev/block/mmcblk0p11 /dev/block/param
 
 on post-fs-data
-# We will remap this as /storage/sdcard with the sdcard fuse tool
+    # We will remap this as /storage/sdcard with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
     chown media_rw media_rw /data/media
 
-# SA, System SW, SAMSUNG create log directory
+    # SA, System SW, SAMSUNG create log directory
     mkdir /data/log 0775 system log
     chown system log /data/log
     setprop vold.post_fs_data_done 1
@@ -30,7 +30,7 @@ on post-fs-data
     chmod 0777 /data/log
     chmod 0777 /data/anr
 
-# For WIFI
+    # For WIFI
     mkdir /efs/wifi 0775 radio system
     mkdir /efs/bluetooth 0775 radio system
     mkdir /efs/imei 0775 radio system
@@ -43,7 +43,7 @@ on post-fs-data
     chown system system /efs/imei/.nvmac.info
     chmod 0664 /efs/imei/.nvmac.info
 
-# Permissions for bluetooth.
+    # Permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
     chown bluetooth net_bt_stack /dev/ttyS0
@@ -52,7 +52,7 @@ on post-fs-data
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
 
-# For TRP/TIS
+    # For TRP/TIS
     write /data/.psm.info 1
     chown system root /data/.psm.info
     chmod 0660 /data/.psm.info
@@ -63,7 +63,7 @@ on post-fs-data
     chown system system /sys/class/backlight/touchkey-led/brightness
     chmod 0660 /sys/class/backlight/touchkey-led/brightness
 
-# Permissions for sensors (accelerometer & magnetic & proximity)
+    # Permissions for sensors (accelerometer & magnetic & proximity)
     chown system system /sys/class/input/input0/enable
     chown system system /sys/class/input/input0/poll_delay
     chmod 0660 /sys/class/input/input0/enable
@@ -126,28 +126,24 @@ on post-fs-data
     chmod 0660 /sys/class/input/input2/odr
 
 on boot
-
-# Bring CPUs online
+    # Bring CPUs online
     write /sys/devices/system/cpu/cpu1/online 1
 
-# RTCC Interval
+    # RTCC Interval
     write /sys/module/lowmemorykiller/parameters/min_interval 500
 
-# SISO-ANDR_PERF :: START Changing scheduler to noop during boot
+    # SISO-ANDR_PERF :: START Changing scheduler to noop during boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
     write /sys/block/mmcblk0/queue/scheduler noop
-# SISO-ANDR_PERF :: END
+    # SISO-ANDR_PERF :: END
 
-    setprop ro.build.product hawaii
-    setprop ro.product.device hawaii
-
-# WIFI
+    # WIFI
     setprop wifi.interface wlan0
 
     symlink /dev/block/mmcblk0p11 /dev/block/param
 
-# <Sensors>
-# Accelerometer_sensor
+    # <Sensors>
+    # Accelerometer_sensor
     chown system radio /dev/accelerometer
     chown system radio /sys/class/sensors/accelerometer_sensor
     chown system radio /sys/class/sensors/accelerometer_sensor/raw_data
@@ -157,7 +153,7 @@ on boot
     chown system radio /sys/class/sensors/accelerometer_sensor/name
     chown system radio /sys/class/sensors/accelerometer_sensor/selftest
 
-# Proximity_sensor
+    # Proximity_sensor
     chown system radio /sys/class/sensors/proximity_sensor/state
     chown system radio /sys/class/sensors/proximity_sensor/prox_avg
     chown system radio /sys/class/sensors/proximity_sensor/prox_cal
@@ -166,7 +162,7 @@ on boot
     chown system radio /sys/class/sensors/proximity_sensor/name
     chown system radio /sys/class/sensors/proximity_sensor/prox_thresh
 
-# Magnetic_sensor
+    # Magnetic_sensor
     chown system radio /dev/akm8975
     chown system radio /sys/class/sensors/magnetic_sensor/raw_data
     chown system radio /sys/class/sensors/magnetic_sensor/adc
@@ -179,7 +175,7 @@ on boot
     chmod 0660 /sys/class/sensors/magnetic_sensor/selftest
     chmod 0660 /sys/class/sensors/magnetic_sensor/op_mode
 
-# Required so RIL can open kernel RPC drivers
+    # Required so RIL can open kernel RPC drivers
     chmod 0660 /dev/bcm_rpc
     chmod 0660 /dev/bcm_irpc
     chown radio radio /dev/bcm_rpc
@@ -200,7 +196,7 @@ on boot
     chmod 0770 /dev/ttyS2
     chmod 0644 /proc/cmdline
 
-# NFC
+    # NFC
     setprop ro.nfc.port "I2C"
     chmod 0600 /dev/bcm2079x
     chown nfc nfc /dev/bcm2079x
@@ -211,39 +207,39 @@ on boot
     chown nfc nfc /data/bcmnfc
     chown nfc nfc /data/bcmnfc/param
 
-# GPS UART
+    # GPS UART
     chown gps system /dev/ttyS1
     chmod 0770 /dev/ttyS1
 
     chown system system /proc/bcm_fuse_net_config
 
-# Video Telephony
+    # Video Telephony
     chmod 0666 /dev/bcm_vsp
 
-# Allow user space (atx) access to kernel pm debug
+    # Allow user space (atx) access to kernel pm debug
     chown system system /sys/module/pm_dbg/parameters/debug
     chmod 0660 /sys/module/pm_dbg/parameters/debug
     chown system system /sys/module/bcmpmu59xxx_ponkey/parameters/simulate_ponkey
     chmod 0660 /sys/module/bcmpmu59xxx_ponkey/parameters/simulate_ponkey
 
-# BEGIN BCM QUICK BOOT FEATURE
+    # BEGIN BCM QUICK BOOT FEATURE
     chown root system /sys/ponkey/ponkey_mode
     chmod 0664 /sys/ponkey/ponkey_mode
-# END BCM QUICK BOOT FEATURE
+    # END BCM QUICK BOOT FEATURE
 
-# Security driver
+    # Security driver
     chmod 0660 /dev/bcm_security
     chown radio root /dev/bcm_security
     mkdir /data/sec 0770
     chown radio root /data/sec
 
-# BCMPMU drivers
+    # BCMPMU drivers
     chown -R system system /sys/devices/platform/bcmpmu59xxx_core/*
 
-# Change owner of mtest system to allow atx/atxd to write this file:
+    # Change owner of mtest system to allow atx/atxd to write this file:
     chown system system /sys/kernel/sysrpc/mtest
 
-# GPIO DVS
+    # GPIO DVS
     chown radio system /sys/class/secgpio_check/secgpio_check_all/check_init_detail
     chown radio system /sys/class/secgpio_check/secgpio_check_all/check_sleep_detail
     chown radio system /sys/class/secgpio_check/secgpio_check_all/gpio_sleep_debug
@@ -251,22 +247,20 @@ on boot
     chown radio system /sys/class/secgpio_check/secgpio_check_all/gpioinit_check
     chown radio system /sys/class/secgpio_check/secgpio_check_all/gpiosleep_check
 
-# Fake some battery state
+    # Fake some battery state
     setprop status.battery.state Slow
     setprop status.battery.level 10
     setprop status.battery.level_raw  100
     setprop status.battery.level_scale 10
 
-# Remove old socket so that it is re-created in the right context.
+    # Remove old socket so that it is re-created in the right context.
     rm /data/app/tlcd_sock
 
-# Phone
-    setprop ro.telephony.call_ring.multiple 0
 
-# Enable dithering algorithm
+    # Enable dithering algorithm
     setprop fb.force.dithering 1
 
-# Permissions for gps.
+    # Permissions for gps.
     mkdir /data/gps 0770 gps system
     chown gps system /data/gps
     chmod 0770 /data/gps
@@ -290,36 +284,36 @@ on boot
     chmod 0660 /dev/bcm_gps
     chown radio radio /dev/bcm_gps
 
-# For bluetooth. permission for host interface
+    # For bluetooth. permission for host interface
     chown root bluetooth /dev/ttyS0
     chmod 0777 /dev/ttyS0
     
-# For Multi CSC
+    # For Multi CSC
     chown radio radio /proc/LinuStoreIII/efs_info
     chmod 0664 /proc/LinuStoreIII/efs_info
 
-# For protecting key string
+    # For protecting key string
     chown radio radio /proc/LinuStoreIII/keystr
     chmod 0664 /proc/LinuStoreIII/keystr
 
-# For ril_prop
+    # For ril_prop
     chown radio radio /proc/LinuStoreIII/ril_prop
     chmod 0664 /proc/LinuStoreIII/ril_prop
 
-# For fsbuild_check
+    # For fsbuild_check
     chown radio radio /proc/LinuStoreIII/fsbuild_check
     chmod 0664 /proc/LinuStoreIII/fsbuild_check
 
-# For recovery_opts
+    # For recovery_opts
     chown system radio /proc/LinuStoreIII/recovery_opts
     chmod 0664 /proc/LinuStoreIII/recovery_opts
 
-# Audio (Earjack)
+    # Audio (Earjack)
     chown system radio /sys/class/audio/earjack/key_state
     chown system radio /sys/class/audio/earjack/state
     chown media system /sys/class/audio/earjack/reselect_jack
 
-# Battery node
+    # Battery node
     chown system radio /sys/class/power_supply/battery/batt_charging_source
     chown system radio /sys/class/power_supply/battery/batt_error_test
     chown system radio /sys/class/power_supply/battery/batt_lp_charging
@@ -346,25 +340,25 @@ on boot
     chown system radio /sys/class/power_supply/battery/wpc_pin_state
     chown system radio /sys/class/power_supply/fuelgauge/fg_curr_ua
 
-# CTIA event
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/call
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/video
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/music
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/browser
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/hotspot
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/camera
-   chown system radio /sys/class/power_supply/battery/talk_wcdma
-   chown system radio /sys/class/power_supply/battery/talk_gsm
-   chown system radio /sys/class/power_supply/battery/call
-   chown system radio /sys/class/power_supply/battery/data_call
-   chown gps radio /sys/class/power_supply/battery/gps
-   chown system radio /sys/class/power_supply/battery/wifi
-   chown system radio /sys/class/power_supply/battery/lte
+    # CTIA event
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/call
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/video
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/music
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/browser
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/hotspot
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/camera
+    chown system radio /sys/class/power_supply/battery/talk_wcdma
+    chown system radio /sys/class/power_supply/battery/talk_gsm
+    chown system radio /sys/class/power_supply/battery/call
+    chown system radio /sys/class/power_supply/battery/data_call
+    chown gps radio /sys/class/power_supply/battery/gps
+    chown system radio /sys/class/power_supply/battery/wifi
+    chown system radio /sys/class/power_supply/battery/lte
 
-# Permissions for touch
+    # Permissions for touch
     chown system radio /sys/class/sec/tsp/cmd
 
-# Permissions for Touchkey
+    # Permissions for Touchkey
     chown system radio /sys/class/sec/sec_touchkey/enable_disable 
     chown system radio /sys/class/sec/sec_touchkey/touchkey_brightness
     chown system radio /sys/class/sec/sec_touchkey/touchkey_menu
@@ -379,7 +373,7 @@ on boot
     chown system radio /sys/class/sec/sec_touchkey/touchkey_threshold
     chown system system /sys/devices/virtual/sec/sec_touchkey/brightness
 
-# Permissions for Camera
+    # Permissions for Camera
     chown system radio /sys/class/camera/rear/rear_camfw
     chown system radio /sys/class/camera/rear/rear_camtype
     chown system radio /sys/class/camera/rear/rear_flash
@@ -388,22 +382,22 @@ on boot
     chmod 220 /sys/class/camera/rear/rear_camfw
     chmod 220 /sys/class/camera/rear/rear_camtype
 
-# Switch Device
+    # Switch Device
     chown system radio /sys/class/sec/switch/adc
 
-# serial_no permission change
+    # serial_no permission change
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
 
-# KSM
+    # KSM
     write /sys/kernel/mm/ksm/pages_to_scan 100
     write /sys/kernel/mm/ksm/sleep_millisecs 500
     write /sys/kernel/mm/ksm/run 1
 
-# Disable swap page clustering -- recommended in https://source.android.com/devices/low-ram.html
+    # Disable swap page clustering -- recommended in https://source.android.com/devices/low-ram.html
     write /proc/sys/vm/page-cluster 0
 
-# Swap tweaks
+    # Swap tweaks
     write /proc/sys/vm/swappiness 65
     write /proc/sys/vm/dirty_background_ratio 5
     write /proc/sys/vm/dirty_expire_centisecs 200
@@ -429,25 +423,25 @@ on fs
 
     setprop ro.crypto.fuse_sdcard true
 
-# Enable PMTUD tcp_mtu_probing
+    # Enable PMTUD tcp_mtu_probing
     write /proc/sys/net/ipv4/tcp_mtu_probing 1
 
-# Needed to avoid the 7-minute-halt issue in (DOS) passive mode FTP on vodafone network
+    # Needed to avoid the 7-minute-halt issue in (DOS) passive mode FTP on vodafone network
     write /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_be_liberal 1
 
-# Permissions for System Server and daemons.
+    # Permissions for System Server and daemons.
     chown system system /sys/devices/platform/pwm-backlight.0/backlight/panel/brightness
 
-# Don't require sim
+    # Don't require sim
     setprop keyguard.no_require_sim 1
 
-# For NV Read/Write
+    # For NV Read/Write
     chown radio system /dev/block/mmcblk0p1
     chmod 0770 /dev/block/mmcblk0p1
 
     chmod 6755 /system/xbin/su
 
-# For ASE application
+    # For ASE application
     mkdir /data/brcm
     mkdir /data/brcm/ase
     mkdir /data/brcm/ase/extras
@@ -457,15 +451,15 @@ on fs
     chmod 0775 /data/brcm/ase/extras
     chmod 0775 /data/brcm/ase/scripts
 
-# runSysCmd
+    # runSysCmd
     mkdir /data/brcm/utils
     chmod 0775 /data/brcm/utils
 
-# Logging required to save file in /data/brcm for configuration
+    # Logging required to save file in /data/brcm for configuration
     mkdir /data/brcm
     chmod 0775 /data/brcm
 
-# For touch FW
+    # For touch FW
     chown system system /sys/class/sec/tsp/cmd
     chmod 0660 /sys/class/sec/tsp/cmd
     chown system system /sys/class/sec/tsp/cmd_status
@@ -490,11 +484,11 @@ on fs
     chown system system /sys/class/sec/sec_touchscreen/touchkey_back
     chmod 0660 /sys/class/sec/sec_touchscreen/touchkey_back
 
-# CPU Freq
+    # CPU Freq
     chown media root /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
-# Make directory for storing sales code
+    # Make directory for storing sales code
     mkdir /efs/imei 0775 radio system
 
 on post-fs
@@ -502,7 +496,7 @@ on post-fs
     chown radio system /efs
     chmod 0771 /efs
 
-# Create filesystem if necessary
+    # Create filesystem if necessary
     service setup_fs /system/bin/setup_fs \
                 /dev/block/mmcblk0p15 \
                 /dev/block/mmcblk0p11
@@ -511,13 +505,13 @@ on post-fs
         group root
         oneshot
 
-# Bosch Sensor Deamon
+    # Bosch Sensor Deamon
     service sensord /system/bin/sensord
         class main
         user system
         group system
 
-# RILD
+    # RILD
     service ril-daemon /system/bin/rild
         class main
         socket rild stream 660 root radio
@@ -558,7 +552,7 @@ on post-fs
         group system wakelock
         oneshot
 
-# For WiFi MFG(TestMode)
+    # For WiFi MFG(TestMode)
     service mfgloader /system/bin/mfgloader
         class main
         disabled
@@ -584,14 +578,14 @@ on property:init.svc.macloader=stopped
         chmod 0664 /data/.cid.info
         chown system root /data/.rev
         chmod 0660 /data/.rev
-# End of wifi
+    # End of wifi
 
     service gpsd /system/bin/glgps -c /system/etc/gps/glconfig.xml
         class late_start
         user gps
         group system wakelock root inet radio wifi sdcard_rw
 
-# Run bkmgrd automatically on startup
+    # Run bkmgrd automatically on startup
     service bkmgrd /system/bin/bkmgrd
         class main
         oneshot
@@ -631,7 +625,7 @@ on property:dev.bootcomplete=1
     write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 20000
     write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 2000
 
-# Change dirty_bytes and dirty_background_bytes for 4GB TLC memory
+    # Change dirty_bytes and dirty_background_bytes for 4GB TLC memory
     write proc/sys/vm/dirty_bytes 14680064
     write proc/sys/vm/dirty_background_bytes 2097152
 
