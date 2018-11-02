@@ -62,10 +62,6 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.primary.default
 
-# Gello
-PRODUCT_PACKAGES += \
-    Gello
-
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ksm.default=0
