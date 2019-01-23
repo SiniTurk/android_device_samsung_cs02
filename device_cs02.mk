@@ -39,12 +39,6 @@ PRODUCT_COPY_FILES += \
 	device/samsung/cs02/keylayouts/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 	device/samsung/cs02/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
 
-# Insecure ADBD
-# (ro.adb.secure=3)
-ADDITIONAL_DEFAULT_PROPERTIES += \
-	ro.adb.secure=0 \
-	persist.service.adb.enable=1
-
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ksm.default=1	
