@@ -81,7 +81,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libnfc-nci \
     libnfc_nci_jni \
-    nfc.nci.hawaii \
+    nfc_nci.hawaii \
     NfcNci \
     Tag \
     com.android.nfc_extras

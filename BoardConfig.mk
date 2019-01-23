@@ -41,6 +41,10 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/cs02/bluetooth
 BOARD_BLUEDROID_VENDOR_CONF := device/samsung/cs02/bluetooth/libbt_vndcfg.txt
 
+# NFC
+BOARD_NFC_CHIPSET := bcm2079x
+BOARD_NFC_HAL_SUFFIX := hawaii
+
 # Connectivity - Wi-Fi
 BOARD_HAVE_SAMSUNG_WIFI     := true
 WPA_BUILD_SUPPLICANT 		:= true
