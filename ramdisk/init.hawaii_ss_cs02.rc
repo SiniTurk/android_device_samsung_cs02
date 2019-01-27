@@ -6,7 +6,7 @@ on early-init
 
 on init
     export LD_PRELOAD "/system/lib/libshim.so"
-    export LD_SHIM_LIBS "/system/lib/hw/camera.hawaii.so|libshim_camera.so:/system/lib/libwvm.so|libshim_wvm.so:/system/lib/hw/audio.primary.hawaii.so|libshim_audio.so"
+    export LD_SHIM_LIBS "/system/lib/hw/camera.hawaii.so|libshim_camera.so:/system/lib/libwvm.so|libshim_wvm.so:/system/lib/hw/audio.primary.hawaii.so|libshim_audio.so:/system/lib/libbrcm_ril.so|libshim_ril.so"
 
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0

@@ -85,3 +85,17 @@ LOCAL_MODULE_TAGS := optional
 
 
 include $(BUILD_SHARED_LIBRARY)
+
+
+# RIL
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+    ifc_utils.c
+
+LOCAL_SHARED_LIBRARIES := liblog libcutils libnetutils
+LOCAL_MODULE := libshim_ril
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_SHARED_LIBRARY)

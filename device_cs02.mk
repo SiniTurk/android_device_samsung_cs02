@@ -94,7 +94,8 @@ PRODUCT_PACKAGES += \
     libshim \
     libshim_camera \
     libshim_wvm \
-    libshim_audio
+    libshim_audio \
+    libshim_ril
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
