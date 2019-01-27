@@ -38,12 +38,6 @@ PRODUCT_PACKAGES += \
     charger_res_images \
     cm_charger_res_images
 
-# Insecure ADBD
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.adb.secure=0 \
-    ro.secure=0 \
-    persist.service.adb.enable=1
-
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
