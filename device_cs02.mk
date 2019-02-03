@@ -107,9 +107,13 @@ PRODUCT_PACKAGES += \
     Tag \
     com.android.nfc_extras
 
-# Shim library
+# Shim libraries
 PRODUCT_PACKAGES += \
-    libshim
+    libshim \
+    libshim_camera \
+    libshim_wvm \
+    libshim_audio \
+    libshim_ril
 
 # NFC
 PRODUCT_COPY_FILES += \
