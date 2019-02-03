@@ -21,3 +21,6 @@ allow init hci_attach_dev:chr_file { write };
 allow init self:capability sys_module; # TODO: want sys_ptrace too
 
 allow init logd:dir getattr;
+
+# Allow noatsecure for LD_PRELOAD/LD_SHIM_LIBS
+allow init { domain -lmkd }:process noatsecure;
