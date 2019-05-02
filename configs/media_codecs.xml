@@ -80,9 +80,9 @@ Only the three quirks included above are recognized at this point:
     <Include href="media_codecs_google_telephony.xml" />
 
     <Decoders>
-        <MediaCodec name="OMX.brcm.video.h264.hw.decoder" type="video/avc">
+        <!-- <MediaCodec name="OMX.brcm.video.h264.hw.decoder" type="video/avc">
             <Quirk name="requires-allocate-on-input-ports" />
-        </MediaCodec>
+        </MediaCodec> -->
 
         <MediaCodec name="OMX.brcm.audio.mp3.decoder" type="audio/mpeg" />
         <MediaCodec name="OMX.brcm.audio.amrnb.decoder" type="audio/3gpp" />
@@ -90,7 +90,7 @@ Only the three quirks included above are recognized at this point:
     </Decoders>
 	
     <Encoders>
-        <MediaCodec name="OMX.brcm.video.h264.hw.encoder" type="video/avc" />
+        <!-- <MediaCodec name="OMX.brcm.video.h264.hw.encoder" type="video/avc" /> -->
         <MediaCodec name="OMX.brcm.audio.aac.encoder" type="audio/mp4a-latm" />
     </Encoders>
 
