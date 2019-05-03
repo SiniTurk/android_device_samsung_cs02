@@ -73,17 +73,17 @@ Only the three quirks included above are recognized at this point:
             <Limit name="sample-rate" ranges="8000-192000" />
         </MediaCodec>
 
-        <MediaCodec name="OMX.brcm.video.mpeg4.hw.decoder" type="video/mp4v-es">
+        <!-- <MediaCodec name="OMX.brcm.video.mpeg4.hw.decoder" type="video/mp4v-es">
             <Quirk name="requires-allocate-on-input-ports" />
-        </MediaCodec>
-        <MediaCodec name="OMX.brcm.video.h264.hw.decoder" type="video/avc">
+        </MediaCodec> -->
+        <!-- <MediaCodec name="OMX.brcm.video.h264.hw.decoder" type="video/avc">
             <Quirk name="requires-allocate-on-input-ports" />
-        </MediaCodec>
+        </MediaCodec> -->
     </Decoders>
 
     <Encoders>
-        <MediaCodec name="OMX.brcm.video.h264.async.hw.encoder" type="video/avc" />
-        <MediaCodec name="OMX.brcm.video.h264.hw.encoder" type="video/avc" />
+        <!-- <MediaCodec name="OMX.brcm.video.h264.async.hw.encoder" type="video/avc" /> -->
+        <!-- <MediaCodec name="OMX.brcm.video.h264.hw.encoder" type="video/avc" /> -->
     </Encoders>
 
     <Include href="media_codecs_google_video_le.xml" />
