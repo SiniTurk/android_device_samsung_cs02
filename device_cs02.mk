@@ -97,6 +97,10 @@ PRODUCT_PACKAGES += \
     libshim_audio \
     libshim_ril
 
+# Modified WebView
+PRODUCT_PACKAGES += \
+    webview-hawaii
+
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
