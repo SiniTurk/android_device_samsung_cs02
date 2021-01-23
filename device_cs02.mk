@@ -15,7 +15,6 @@ PRODUCT_COPY_FILES += \
     device/samsung/cs02/ramdisk/init.hawaii_ss_cs02.rc:root/init.hawaii_ss_cs02.rc \
     device/samsung/cs02/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
     device/samsung/cs02/ramdisk/init.log.rc:root/init.log.rc \
-    device/samsung/cs02/ramdisk/charger:root/charger \
     device/samsung/cs02/ramdisk/ueventd.hawaii_ss_cs02.rc:root/ueventd.hawaii_ss_cs02.rc
 
 PRODUCT_COPY_FILES += \
@@ -32,11 +31,6 @@ PRODUCT_COPY_FILES += \
     device/samsung/cs02/keylayouts/bcm_keypad_v2.kl:system/usr/keylayout/bcm_keypad_v2.kl \
     device/samsung/cs02/keylayouts/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     device/samsung/cs02/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
-
-# Charger
-PRODUCT_PACKAGES += \
-    charger_res_images \
-    cm_charger_res_images
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \

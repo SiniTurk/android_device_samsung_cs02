@@ -9,7 +9,6 @@
 /dev/bcm_voip_chrdev                                        u:object_r:audio_device:s0
 /dev/bcm_security                                           u:object_r:radio_device:s0
 /dev/pmem                                                   u:object_r:gpu_device:s0
-/dev/graphics/fb0                                           u:object_r:gpu_device:s0
 /dev/i2c-[0-8]                                              u:object_r:camera_device:s0            
 /dev/bcm_irpc                                               u:object_r:radio_device:s0
 

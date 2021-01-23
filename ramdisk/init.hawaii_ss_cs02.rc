@@ -654,9 +654,10 @@ on property:sys.perf.profile=2
 service startadb /system/etc/startadb.sh
     oneshot
 
-service battery_charger /charger
+service charger /sbin/healthd -c
     class charger
     critical
+    seclabel u:r:healthd:s0
 
 on property:ro.dumpstate.dmesg=1
     write /proc/sys/kernel/dmesg_restrict 0
