@@ -18,9 +18,6 @@ TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
 BOARD_VENDOR := samsung
 
-# Assert
-TARGET_OTA_ASSERT_DEVICE := cs02,G350,SM-G350,hawaii
-
 # Kernel
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
