@@ -121,6 +121,10 @@ PRODUCT_COPY_FILES += \
     device/samsung/cs02/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
     device/samsung/cs02/nfc/libnfc-brcm-20791b05.conf:system/etc/libnfc-brcm-20791b05.conf
 
+# Modified WebView
+PRODUCT_PACKAGES += \
+    webview-hawaii
+
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
