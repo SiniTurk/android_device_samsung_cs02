@@ -33,13 +33,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/samsung/cs02/configs/media_codecs.xml:system/etc/media_codecs.xml
 
-# Insecure ADB
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    ro.secure=0 \
-    ro.adb.secure=0 \
-    persist.service.adb.enable=1 \
-    persist.sys.usb.config=mtp,adb
-
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
