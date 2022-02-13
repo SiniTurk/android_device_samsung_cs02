@@ -404,20 +404,6 @@ on boot
     write /proc/sys/vm/dirty_expire_centisecs 200
     write /proc/sys/vm/min_free_order_shift 4
 
-on charger
-    mkdir /system
-    mkdir /data
-    mount ext4 /dev/block/mmcblk0p17 /system ro wait noatime
-    exec sfsck /dev/block/mmcblk0p19 ext4
-    mount ext4 /dev/block/mmcblk0p19 /data wait nosuid nodev noatime discard,noauto_da_alloc,journal_async_commit
-
-    mkdir /data/log 0777
-
-    chmod 0666 /dev/log/radio
-    chmod 0666 /dev/log/main
-    chmod 0666 /dev/log/event   
-    class_start sec-charger
-
 on fs
     mount_all /fstab.hawaii_ss_cs02
     swapon_all fstab.hawaii_ss_cs02
@@ -570,10 +556,6 @@ on post-fs
         class main
         oneshot
 
-    service lpm /system/bin/lpm
-        class sec-charger
-        critical
-
 on property:init.svc.macloader=stopped
         chown system root /data/.cid.info
         chmod 0664 /data/.cid.info
@@ -632,3 +614,11 @@ on property:dev.bootcomplete=1
 
 on property:ro.dumpstate.dmesg=1
     write /proc/sys/kernel/dmesg_restrict 0
+
+on property:ro.bootmode=charger
+    class_start charger
+
+service charger /sbin/healthd -c
+    class charger
+    critical
+    seclabel u:r:healthd:s0
